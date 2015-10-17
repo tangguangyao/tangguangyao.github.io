@@ -165,8 +165,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/17/chorme的debug工具Profiles使用方法/" itemprop="url">
-                chorme的debug工具Profiles使用方法
+              <a class="post-title-link" href="/2015/10/17/chrome的debug工具Profiles使用方法/" itemprop="url">
+                chrome的debug工具Profiles使用方法
               </a>
             
           
@@ -197,7 +197,7 @@
 
       
         
-          <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
+          <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
 <h2 id="Profiles是什么">Profiles是什么</h2><p>Profiles在哪里<br>如下图<br><img src="/img/res/3/profiles.png" alt="前端修炼"><br>没错，就在我们最长使用的导航里面，大家基本没有用到过吧。</p>
 <h2 id="Profiles具体可以干什么">Profiles具体可以干什么</h2><p><strong>定位性能问题，借助它我们可以</strong>  </p>
 <ul>
@@ -207,7 +207,7 @@
 <h2 id="使用方法一">使用方法一</h2><p>我们想查看点击一个按钮后，到展示页面的性能，我们可以  </p>
 <ol>
 <li>打开工具，如下图，点击<em>start</em> ，然后点击按钮<br><img src="/img/res/3/profiles2.png" alt="前端修炼">  </li>
-<li>完整页面展示后，点击<em>stop</em>（注意，中间不要有其他操作，避免干扰)，然后就会生成一个性能分析的数据</li>
+<li>完整内容展示后，点击<em>stop</em>（注意，中间不要有其他操作，避免干扰)，然后就会生成一个性能分析的数据</li>
 </ol>
 <p><strong>实战</strong><br>我们使用一段简单的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure></p>
 <p>下图是生成的报告<br><img src="/img/res/3/profiles3.png" alt="前端修炼">  </p>
