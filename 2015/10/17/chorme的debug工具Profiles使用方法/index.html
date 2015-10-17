@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="js," />
 
 
 
@@ -39,15 +39,41 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前端修炼之路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yao's 前端修炼之路">
-<meta property="og:url" content="http://tangguangyao.github.io/index.html">
+<meta name="description" content="简介本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。
+Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
+Profiles具体可以干什么定位性能问题，借助它我们可以  
+
+可以借助Profiles定位出比较耗时的函数
+查找页面卡顿的原因
+
+使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chorme的debug工具Profiles使用方法">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/10/17/chorme的debug工具Profiles使用方法/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="前端修炼之路">
+<meta property="og:description" content="简介本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。
+Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
+Profiles具体可以干什么定位性能问题，借助它我们可以  
+
+可以借助Profiles定位出比较耗时的函数
+查找页面卡顿的原因
+
+使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles2.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles3.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
+<meta property="og:updated_time" content="2015-10-17T07:29:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yao's 前端修炼之路">
-<meta name="twitter:description" content="前端修炼之路">
+<meta name="twitter:title" content="chorme的debug工具Profiles使用方法">
+<meta name="twitter:description" content="简介本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。
+Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
+Profiles具体可以干什么定位性能问题，借助它我们可以  
+
+可以借助Profiles定位出比较耗时的函数
+查找页面卡顿的原因
+
+使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +85,7 @@
 
 
 
-  <title> Yao's 前端修炼之路 </title>
+  <title> chorme的debug工具Profiles使用方法 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -90,9 +116,7 @@
 
 
 
-  <div class="container one-column 
-   page-home 
-">
+  <div class="container one-column page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -152,9 +176,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div id="content" class="content"> 
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
@@ -165,9 +189,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/17/chorme的debug工具Profiles使用方法/" itemprop="url">
-                chorme的debug工具Profiles使用方法
-              </a>
+              chorme的debug工具Profiles使用方法
             
           
         </h1>
@@ -196,8 +218,7 @@
       
 
       
-        
-          <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
+        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chorme的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
 <h2 id="Profiles是什么">Profiles是什么</h2><p>Profiles在哪里<br>如下图<br><img src="/img/res/3/profiles.png" alt="前端修炼"><br>没错，就在我们最长使用的导航里面，大家基本没有用到过吧。</p>
 <h2 id="Profiles具体可以干什么">Profiles具体可以干什么</h2><p><strong>定位性能问题，借助它我们可以</strong>  </p>
 <ul>
@@ -224,202 +245,52 @@
 <p>其实这个问题我想了解两层，第一是js是单线程，阻塞；<br>第二个是如何定位问题，那么如果能借助这个工具分析，我就觉得很厉害了  </p>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
-        
       
     </div>
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+        </div>
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/15/javascript书籍推荐/" rel="next">javascript书籍推荐</a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </article>
 
 
-    
-      
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/15/javascript书籍推荐/" itemprop="url">
-                javascript书籍推荐
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-15T21:39:02+08:00" content="2015-10-15">
-            2015-10-15
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="摘要">摘要</h2><p>今天整理一下我觉得不错，看过的javascript书籍</p>
-<h2 id="入门篇">入门篇</h2><p><strong>《JavaScript DOM编程艺术（第2版）》</strong><br>入门的好书，最开始接触javascript时，强烈推荐阅读</p>
-<p><strong>《精通JavaScript+jQuery》</strong><br>这本书是我读的第一本js相关书籍，看了2-3遍，也很不错</p>
-<h2 id="进阶篇">进阶篇</h2><p><strong>《JavaScript高级程序设计（第3版）》</strong><br>必须看，而且不能一开始就看，这本书最好是在使用了js一段时间，做了一些简单的项目，再看。<br>而且这本书，我当时至少看了3边，还做了笔记。<br>这本书每看一次，都会有不同的收获。  </p>
-<p><strong>《javascript权威指南》</strong><br>这本书，我没有买也没有看，不过很经典，还是推荐。<br>我觉得在我看了3遍《JavaScript高级程序设计（第2版）》 后（我当时看的时候是第二版），这本书其实可以不用怎么看。</p>
-<h2 id="高级篇">高级篇</h2><p><strong>《JavaScript语言精粹》</strong><br>这本书不错，不厚，但是很值得一读</p>
-<p><strong>《JavaScript设计模式》</strong><br>讲设计模式的，对于大型应用，或者系统的开发，很有用。<br>对于设计模式，作为一个高级开发人员也是必须掌握的。</p>
-<p><strong>《JavaScript框架设计》</strong><br>对于如何造轮子，轮子是怎么造的，很有帮助<br>对于一个想写框架的同学，这本书很好，也是国内的一个大牛写的</p>
-<h2 id="其他书籍">其他书籍</h2><p><strong>《编写可维护的JavaScript》</strong><br>对于大型的团队协作，这个书很不错<br>没有什么技术难点，主要讲开发标准，开发习惯的<br>习惯这个东西其实很重要的</p>
-<p><strong>《javascript性能优化》</strong><br>性能相关的，可以选择阅读</p>
-<p><strong>《基于MVC的JavaScript Web富应用开发》</strong><br>这本书我看的比较早，那时候还刚刚开始推webApp，单页面应用<br>书籍讲mvc很好，只是现在mvc,mvvm比较流行了，也是选择阅读  </p>
-<h2 id="nodejs">nodejs</h2><p><strong>《深入浅出Node.js》</strong><br>这本书不是入门的，对于nodejs入门，其实可以看看github项目<br>找几个网上的教材跟着做做，就好了<br>当做了几个项目后，在看这本书，就会发现能学到很多</p>
-<h2 id="html5,css3">html5,css3</h2><p>零散的看过几本书，没有什么特别推荐的<br>主要看看api，了解下用法就行，主要看实战</p>
-<h2 id="非前端">非前端</h2><p><strong>《重构 改善既有代码的设计》</strong><br>设计层面的</p>
-<p><strong>《编程珠玑》</strong><br><strong>《编程之美：微软技术面试心得》</strong><br>刚刚入手的两本书<br>主要是想提高一些计算机基础知识用</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
+    <div class="post-spread">
       
     </div>
+  </div>
 
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/14/面试随笔/" itemprop="url">
-                作为百度FE面试官的一些体会
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-14T13:45:59+08:00" content="2015-10-14">
-            2015-10-14
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="简单的介绍">简单的介绍</h2><p>现在在百度参与了一些Fe的招聘工作，近期缺口比较大，导致最近基本每天至少一场面试。面试多了也想从面试官的角度分享一些心得。</p>
-<h2 id="关于实习生，校招和社招的侧重点">关于实习生，校招和社招的侧重点</h2><ul>
-<li>实习生和校招侧重： <ul>
-<li>基础知识</li>
-<li>前端项目经验</li>
-<li>可培养的潜力，背景</li>
-</ul>
-</li>
-</ul>
-<p>对于实习生，上面要求中，基本需要满足两个<br>曾经有一个实习生来面试，问道javascript相关知识，回答道没有用过，所以来实习（霸气。。），但是这个实习生计算机基础能力，聪明程度，沟通能力都很好，最后招进来后，果然培养不到一个月就很厉害了。</p>
-<ul>
-<li>对于社招侧重:<br>  主要看中项目经验，技术深度，社招的其实招进来就是要能够开始介入项目的，培养时间不可能太多</li>
-</ul>
-<h2 id="关于简历">关于简历</h2><p>什么样算是一个好简历，从我的角度，我比较喜欢看到简历中能够写清楚项目，并且能够列举出项目中自己实现的技术亮点。<br>什么样的简历很尴尬，单纯的列举自己会什么，例如我曾看到一个简历：<br>写到javascript 非常精通，我当时直接问了下，对于promise的理解（回答不出来）<br>jQuery 也是非常精通，我问了下看了源码没（回答想看但是还没有看。。。）。瞬间我就尴尬了，不知道再问什么。。。</p>
-<h2 id="关于网上题库">关于网上题库</h2><p>这个还是有一些用的，有的面试官会很标准化的，有一个自己的题库，每次会在题库里面问。<br>以我举例，我个人有一个大概的题库，主要是在没有什么可问的时候去问，我个人比较偏向于候选人的项目，从项目中挖掘出一些技术点，找出一些可以优化的地方，让候选人需思考。</p>
-<h2 id="关于算法">关于算法</h2><p>其实前端用到算法的地方并不是很多，但是这个其实是一个比较重要的考察点，主要看看看候选人的一些计算机基础，思维，解决问题的能力等。<br>一般算法不是很难，如果有难度，也会给些提示，看看能不能在提示下回答出，这个也可以考察出候选的培养潜力。</p>
-<h2 id="关于社招的级别">关于社招的级别</h2><p>一般招普通工程师，对于技术上，一般会看项目上的经验，平时项目的深度，在一到两个技术上有深入的研究。平时项目从设计模式角度有所思考。<br>对于高级别的其实更加看重，对于新技术的一个探索，对于前端性能了解，易用性的思考，新技术的推动力等</p>
-<h2 id="我认为的一个优秀的候选人">我认为的一个优秀的候选人</h2><ul>
-<li>对于promise熟悉</li>
-<li>对于设计模式有理解</li>
-<li>mvc,mvvm有了解，最好使用过</li>
-<li>对于网页性能有研究</li>
-<li>对于新框架，技术有探索，并且能够推进到项目中</li>
-<li>不局限于前端，有一定的广度</li>
-</ul>
-<h2 id="我期望候选人的对前端的理解">我期望候选人的对前端的理解</h2><ul>
-<li>现在javascript可以做很多事情了，全栈（nodejs） 或者 全端 (react native)，所以不要在认为FE做的仅仅是交互（当然，交互是非常非常重要的）</li>
-<li>基于上面的愿意，所以我们也看着计算机的技术能力</li>
-</ul>
-<h2 id="最后的最后广告时间">最后的最后广告时间</h2><p>如果您有兴趣，欢迎简历 tangguangyao#baidu.com (#-&gt;@)</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
  </div>
 
         
 
+        
+          <div class="comments" id="comments">
+            
+          </div>
         
       </div>
 
@@ -436,6 +307,15 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
       
 
       <section class="site-overview">
@@ -483,6 +363,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles是什么"><span class="nav-number">2.</span> <span class="nav-text">Profiles是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles具体可以干什么"><span class="nav-number">3.</span> <span class="nav-text">Profiles具体可以干什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法一"><span class="nav-number">4.</span> <span class="nav-text">使用方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法二"><span class="nav-number">5.</span> <span class="nav-text">使用方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举一个实践中用到的例子"><span class="nav-number">6.</span> <span class="nav-text">举一个实践中用到的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
       
 
     </div>
@@ -552,6 +443,165 @@
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
 
   <script type="text/javascript">
     $(document).ready(function () {
