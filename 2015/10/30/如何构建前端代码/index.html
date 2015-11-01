@@ -39,22 +39,23 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="第一次听说生命周期这个概念还是在一次面试中，面试官让我说说一个框架的生命周期，然后。。。然后。。。面试就结束了  
-好吧，回到正题，生命周期是什么，百度百科上面搜一下生命周期、软件生命周期 很多描述。我所理解的生命周期就是一个事物的核心流程，例如：一个小球从松开手到落地必然经过：向下加速，和地面的碰撞，反弹，停止等步骤，通俗的讲，这几个步骤就是小球落地的生命周期  
-生命周期的重要性然而，生命周期">
+<meta name="description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
+举一个requirejs的例子，在一个复杂点的前端系统中，你">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于软件的生命周期">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/10/27/关于生命周期/index.html">
+<meta property="og:title" content="如何构建前端代码">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/10/30/如何构建前端代码/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="第一次听说生命周期这个概念还是在一次面试中，面试官让我说说一个框架的生命周期，然后。。。然后。。。面试就结束了  
-好吧，回到正题，生命周期是什么，百度百科上面搜一下生命周期、软件生命周期 很多描述。我所理解的生命周期就是一个事物的核心流程，例如：一个小球从松开手到落地必然经过：向下加速，和地面的碰撞，反弹，停止等步骤，通俗的讲，这几个步骤就是小球落地的生命周期  
-生命周期的重要性然而，生命周期">
-<meta property="og:updated_time" content="2015-10-28T13:35:45.000Z">
+<meta property="og:description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
+举一个requirejs的例子，在一个复杂点的前端系统中，你">
+<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
+<meta property="og:updated_time" content="2015-11-01T08:44:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于软件的生命周期">
-<meta name="twitter:description" content="第一次听说生命周期这个概念还是在一次面试中，面试官让我说说一个框架的生命周期，然后。。。然后。。。面试就结束了  
-好吧，回到正题，生命周期是什么，百度百科上面搜一下生命周期、软件生命周期 很多描述。我所理解的生命周期就是一个事物的核心流程，例如：一个小球从松开手到落地必然经过：向下加速，和地面的碰撞，反弹，停止等步骤，通俗的讲，这几个步骤就是小球落地的生命周期  
-生命周期的重要性然而，生命周期">
+<meta name="twitter:title" content="如何构建前端代码">
+<meta name="twitter:description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
+举一个requirejs的例子，在一个复杂点的前端系统中，你">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +67,7 @@
 
 
 
-  <title> 关于软件的生命周期 | Yao's 前端修炼之路 </title>
+  <title> 如何构建前端代码 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +171,7 @@
           
           
             
-              关于软件的生命周期
+              如何构建前端代码
             
           
         </h1>
@@ -179,8 +180,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-27T20:27:43+08:00" content="2015-10-27">
-            2015-10-27
+          <time itemprop="dateCreated" datetime="2015-10-30T21:25:53+08:00" content="2015-10-30">
+            2015-10-30
           </time>
         </span>
 
@@ -199,63 +200,30 @@
       
 
       
-        <span itemprop="articleBody"><p>第一次听说生命周期这个概念还是在一次面试中，面试官让我说说一个框架的生命周期，然后。。。然后。。。面试就结束了  </p>
-<p>好吧，回到正题，生命周期是什么，百度百科上面搜一下<code>生命周期</code>、<code>软件生命周期</code> 很多描述。<br>我所理解的生命周期就是一个事物的核心流程，例如：<br>一个小球从松开手到落地必然经过：向下加速，和地面的碰撞，反弹，停止等步骤，通俗的讲，这几个步骤就是小球落地的生命周期  </p>
-<h2 id="生命周期的重要性">生命周期的重要性</h2><p>然而，生命周期对于我们的软件开发有什么用呢，对于前端，如果你只是做做交互，实现一些简单的功能，生命周期的需求其实不是那么强烈。<br>但是如果你使用一些复杂的框架，复杂的组件，你就会发现生命周期不管是在开发，修改，优化，还是在调试中都是一个关键的因素。</p>
-<p>了解程序生命周期，就是了解程序的核心步骤，了解程序运行的几个关键节点。<br>外面比较流行的框架，流行的ui库（工具类除外）都会有清晰的生命周期，在他们的生命周期中，会告诉你，每一步会做什么，程序执行的过程中会暴露什么方法或者接口给你调用，告诉你哪一步适合哪种操作。当你熟悉了框架的生命周期，你才能更好的驾驭他，知道什么时候该做什么正确的事情，如何用正确的姿势销毁才不会导致内存泄露等等。  </p>
-<p>曾经有人告诉我，看框架的第一件事，就是去看他的生命周期，我很赞同。  </p>
-<p>假如你需要去造轮子，我觉得第一件事，也是梳理清晰核心流程（生命周期），然后开始设计，最后码代码。</p>
-<h2 id="框架的生命周期">框架的生命周期</h2><p>直接举例子：  </p>
-<p><strong>reactjs的生命周期</strong><br>目前也在学习阶段，下面内容从一些介绍文章中总结而来<br>初始化阶段  </p>
+        <span itemprop="articleBody"><h2 id="基本认识">基本认识</h2><h3 id="开发环境和线上环境的区别">开发环境和线上环境的区别</h3><p>在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   </p>
+<p>但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  </p>
+<p>举一个requirejs的例子，在一个复杂点的前端系统中，你能想象不打包直接上线吗，那样换来的可能就是打开首页就需要download几十个甚至上百个模块资源，这种行为是对网络资源的一种无谓消耗。所以对应requirejs有个r.js，就是专门消灭这种无谓请求消耗的，它做的事情也比较简单，按照一定规则，把各种模块合并成一个，这样在上线是一次请求就能download需要的所有js。</p>
+<h3 id="开发环境代码和线上代码区别">开发环境代码和线上代码区别</h3><p>首先大家可以在构建时取消类似压缩，混淆这几部，可以观察下，构建完成后的代码，会和开发时你所写的有差别，开发环境的代码都经过了编译处理，跟进一定的规则重新编译过。  </p>
+<p>举一个例子，我们在使用css3时，如果去自己写样式去适配chorme,safari,opera等等会累死。但是我们按照一个规则写一个，在构建时，代码自动做补全，是不是就很方便，能提高不少效率。  </p>
+<p>在举个例子，现在比较前沿的已经在开发环境下使用ES6了，但是想要在浏览器端直接运行还需要一段日子，但是没事，我们有Babel之类的工具，可以在编译时实现ES6到ES5的代码转换。这种用法我还没有用过，但是通过构建，我们可以用于尝试一些新的东西。提前做一些技术积累。</p>
+<h3 id="前端工程化核心环节">前端工程化核心环节</h3><p>从前面两点大家应该能看出构建这一步的重要性了吧，可以说需要做到前端工程化，提高开发效率等，构建编译这一个步骤绝对是核心步骤之一。他的角色不逊色于搭建service，项目脚手架等等</p>
+<h2 id="具体举例">具体举例</h2><p>百度前端不仅有个fis（前端集成解决方案），还有一个edp，也是一个前端集成解决方法，主要是百度商业体系的前端在使用。<br>由于我们一直在使用edp，所以下面用edp举例去了解下前端构建  </p>
+<p>下面介绍一下我们自己系统中的一些使用</p>
 <ol>
-<li>getDefaultProps  </li>
-<li>getInitialState  </li>
-<li>componentWillMount - 在render之前调用此方法，在render之前需要做的事情就在这里处理  </li>
-<li>render - 渲染并返回一个虚拟DOM  </li>
-<li>componentDidMount -在render之后，react会使用render返回的虚拟DOM来创建真实DOM，完成之后调用此方法    </li>
+<li>首先是js模块的合并，我们会按照首屏加载和可以懒加载的功能划分，将模块合并成整体，这样就避免了散文件的出现。首先散文件是有害处的，第一是，散文件可能没有版本号的区分，这样因为缓存导致bug；第二是散文件会严重拖慢性能，因为很多散文件不仅消耗请求资源，而且是在串行消耗。</li>
+<li>将js用到的模板的合并，目的也是减少无谓的请求。</li>
+<li>将less转换成css进行合并</li>
+<li>将js文件压缩处理</li>
+<li>将合并后的文件进行加上文件MD5版本号处理，MD5的目的就是基于文件内容解析出版本号，这样如果某个模块没有变更过，可以一直使用缓存，提高性能。</li>
+<li>将合并后并且包含MD5的文件的path更新到首页html的require的config中</li>
+<li>修改文件引用对应的path，因为类似于js引用的模板和css都需要更新到打包合并的path上</li>
+<li>清理输出时的无用文件</li>
+<li>添加版权信息等等</li>
 </ol>
-<p>更新  </p>
-<ol>
-<li>componentWillReceiveProps - 父组件或者通过组件的实例调用 setProps 改变当前组件的 props 时调用 </li>
-<li>shouldComponentUpdate - 是否需要更新 </li>
-<li>componentWillUpdate - 调用 render方之前</li>
-<li>render</li>
-<li>componentDidUpdate - 真实DOM已经完成更新</li>
-</ol>
-<p>销毁阶段</p>
-<ol>
-<li>componentWillUnmount</li>
-</ol>
-<p>了解上面的生命周期后，我首先能够保证我在基本的使用上不出大问题  </p>
-<p><strong>我们使用的mvc框架er的一个模块的生命周期</strong><br>下面是我自己总结比较详细的流程<br>初始化</p>
-<ol>
-<li>调用enter方法开始生命周期</li>
-<li>触发enter事件</li>
-<li>使用createModel方法获取关联的Model对象</li>
-<li>执行this.model.load()加载数据，并等待数据加载完毕</li>
-<li>执行forwardToView方法开始处理View相关的逻辑</li>
-<li>触发modelloaded事件</li>
-<li>调用createView方法获取关联的View对象</li>
-<li>触发beforerender事件</li>
-<li>执行this.view.render()渲染视图</li>
-<li>触发rendered事件</li>
-<li>调用initBehavior方法</li>
-<li>触发entercomplete事件  </li>
-</ol>
-<p>销毁</p>
-<ol>
-<li>调用leave方法开始退出Action，会执行 this.model = null；this.view = null；</li>
-<li>触发beforeleave事件</li>
-<li>如果Model有dispose方法，则执行this.model.dispose()销毁Model对象</li>
-<li>如果View有dispose方法，则执行this.view.dispose()销毁View对象</li>
-<li>触发leave事件</li>
-</ol>
-<p>正是上面这个清晰的流程图，我遇到问题时，一般都能比较准确的定位到问题出在哪里。不然只能靠盲目debugger去试和猜</p>
-<h2 id="生命周期的实际应用">生命周期的实际应用</h2><ol>
-<li>首先是保证正确姿势的使用框架或者组件，不埋奇奇怪怪的坑，这个非常重要</li>
-<li>调试bug时，通过观察出错的点发生在哪个流程中，可以快速缩小范围，而且经常会发现出问题的点就是在错误的节点处理错误的事情</li>
-<li>生命周期的了解是阅读源码的基础，先了解了核心，再去关注细节实现</li>
-</ol>
+<p>上面是一个基本流程，如果有特殊的需求，可以继续添加处理模块。<br>例如想引入reactjs，如果是构建是打包的话，我们肯定不希望上线的代码里面有一个browser.min.js文件，这样不仅增加了静态资源，而且增加了一个jsx翻译处理。那么我们可以在构建时增加一个jsx2js的步骤，这样就达到了，开发使用jsx，但是发布上线时，自动处理成了js代码。</p>
+<h2 id="关于性能优化">关于性能优化</h2><p>这种构建处理，我理解出发点都是从性能角度考虑的。<br>对于一线的业务开发过程，我们期望的是高效的开发业务，并不能把性能等等要求强加到业务开发中，不然我们业务开发是低效的，而且，随着性能优化策略的变更，我们无法随意的在业务中修改代码及时配合，就算是有人力修改，也可能导致bug。<br>所以将构建和业务解耦也是很关键的，只有业务开发符合某个规范，我们可以随时更新优化策略，对于构建代码做出调整而不影响业务。</p>
+<h2 id="注意事项">注意事项</h2><p>大家可以看看前面几篇文章《如何避免工程效率陷阱》，《如何在大公司中成长》我们在拥抱前端工程化时，不要停留在使用阶段，也需要花点时间研究下原理，不然就很容易被工程了，因为你要相信未来前端的工程化只会让你的业务开发更加简单，关心的东西更少。</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
       
     </div>
@@ -267,13 +235,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/30/如何构建前端代码/" rel="prev">如何构建前端代码</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/22/有趣的面试题/" rel="next">有趣的面试题</a>
+              <a href="/2015/10/27/关于生命周期/" rel="next">关于软件的生命周期</a>
             
           </div>
         </div>
@@ -377,7 +343,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期的重要性"><span class="nav-number">1.</span> <span class="nav-text">生命周期的重要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架的生命周期"><span class="nav-number">2.</span> <span class="nav-text">框架的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期的实际应用"><span class="nav-number">3.</span> <span class="nav-text">生命周期的实际应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本认识"><span class="nav-number">1.</span> <span class="nav-text">基本认识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境和线上环境的区别"><span class="nav-number">1.1.</span> <span class="nav-text">开发环境和线上环境的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境代码和线上代码区别"><span class="nav-number">1.2.</span> <span class="nav-text">开发环境代码和线上代码区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端工程化核心环节"><span class="nav-number">1.3.</span> <span class="nav-text">前端工程化核心环节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体举例"><span class="nav-number">2.</span> <span class="nav-text">具体举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于性能优化"><span class="nav-number">3.</span> <span class="nav-text">关于性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
