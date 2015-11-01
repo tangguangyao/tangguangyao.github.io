@@ -39,23 +39,26 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+<meta name="description" content="基本认识开发环境和线上环境的区别  
+在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
 但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
-举一个requirejs的例子，在一个复杂点的前端系统中，你">
+举一个requirejs的例子，在一个复杂点的前端系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何构建前端代码">
 <meta property="og:url" content="http://tangguangyao.github.io/2015/10/30/如何构建前端代码/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+<meta property="og:description" content="基本认识开发环境和线上环境的区别  
+在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
 但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
-举一个requirejs的例子，在一个复杂点的前端系统中，你">
+举一个requirejs的例子，在一个复杂点的前端系统">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-11-01T09:00:16.000Z">
+<meta property="og:updated_time" content="2015-11-01T09:08:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何构建前端代码">
-<meta name="twitter:description" content="基本认识开发环境和线上环境的区别在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
+<meta name="twitter:description" content="基本认识开发环境和线上环境的区别  
+在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   
 但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  
-举一个requirejs的例子，在一个复杂点的前端系统中，你">
+举一个requirejs的例子，在一个复杂点的前端系统">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -200,13 +203,16 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="基本认识">基本认识</h2><h4 id="开发环境和线上环境的区别">开发环境和线上环境的区别</h4><p>在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   </p>
+        <span itemprop="articleBody"><h2 id="基本认识">基本认识</h2><p><strong>开发环境和线上环境的区别</strong>  </p>
+<p>在很久以前，前端的部署其实比较简单，开发环境下，静态资源往服务器上面一扔就ok了，如果考虑下优化或者代码保护，也只是加一个代码压缩和混淆。没错，刚入行的时候我就是这么干的。。。   </p>
 <p>但是随着前端复杂度的发展，上面的做法已经无法满足需求了，特别是AMD,CMD概念的引入，打包合并就变成一项基本工作了。  </p>
 <p>举一个requirejs的例子，在一个复杂点的前端系统中，你能想象不打包直接上线吗，那样换来的可能就是打开首页就需要download几十个甚至上百个模块资源，这种行为是对网络资源的一种无谓消耗。所以对应requirejs有个r.js，就是专门消灭这种无谓请求消耗的，它做的事情也比较简单，按照一定规则，把各种模块合并成一个，这样在上线是一次请求就能download需要的所有js。</p>
-<h4 id="开发环境代码和线上代码区别">开发环境代码和线上代码区别</h4><p>首先大家可以在构建时取消类似压缩，混淆这几部，可以观察下，构建完成后的代码，会和开发时你所写的有差别，开发环境的代码都经过了编译处理，根据一定的规则重新编译过。  </p>
+<p><strong>开发环境代码和线上代码区别</strong></p>
+<p>首先大家可以在构建时取消类似压缩，混淆这几部，可以观察下，构建完成后的代码，会和开发时你所写的有差别，开发环境的代码都经过了编译处理，根据一定的规则重新编译过。  </p>
 <p>举一个例子，我们在使用css3时，如果去自己写样式去适配chorme,safari,opera等等会累死。但是我们按照一个规则写一个，在构建时，代码自动做补全，是不是就很方便，能提高不少效率。  </p>
 <p>再举个例子，现在比较前沿的已经在开发环境下使用ES6了，但是想要在浏览器端直接运行还需要一段日子，但是没事，我们有Babel之类的工具，可以在编译时实现ES6到ES5的代码转换。这种用法我还没有用过，但是通过构建，我们可以用于尝试一些新的东西。提前做一些技术积累。</p>
-<h4 id="前端工程化核心环节">前端工程化核心环节</h4><p>从前面两点大家应该能看出构建这一步的重要性了吧，可以说需要做到前端工程化，提高开发效率等，构建编译这一个步骤绝对是核心步骤之一。他的角色不逊色于搭建service，项目脚手架等等</p>
+<p><strong>前端工程化核心环节</strong></p>
+<p>从前面两点大家应该能看出构建这一步的重要性了吧，可以说需要做到前端工程化，提高开发效率等，构建编译这一个步骤绝对是核心步骤之一。他的角色不逊色于搭建service，项目脚手架等等</p>
 <h2 id="具体举例">具体举例</h2><p>百度前端不仅有个fis（前端集成解决方案），还有一个edp，也是一个前端集成解决方法，主要是百度商业体系的前端在使用。<br>由于我们一直在使用edp，所以下面用edp举例去了解下前端构建  </p>
 <p>下面介绍一下我们自己系统中的一些使用</p>
 <ol>
@@ -343,7 +349,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本认识"><span class="nav-number">1.</span> <span class="nav-text">基本认识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境和线上环境的区别"><span class="nav-number">1.0.1.</span> <span class="nav-text">开发环境和线上环境的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境代码和线上代码区别"><span class="nav-number">1.0.2.</span> <span class="nav-text">开发环境代码和线上代码区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前端工程化核心环节"><span class="nav-number">1.0.3.</span> <span class="nav-text">前端工程化核心环节</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体举例"><span class="nav-number">2.</span> <span class="nav-text">具体举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于性能优化"><span class="nav-number">3.</span> <span class="nav-text">关于性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本认识"><span class="nav-number">1.</span> <span class="nav-text">基本认识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体举例"><span class="nav-number">2.</span> <span class="nav-text">具体举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于性能优化"><span class="nav-number">3.</span> <span class="nav-text">关于性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
