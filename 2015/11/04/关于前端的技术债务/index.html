@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="js," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -39,41 +39,26 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
-
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+<meta name="description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
+其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
+但是本文的背景是在一些大型的前端项目中
+技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chrome的debug工具Profiles使用方法">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/10/17/chrome的debug工具Profiles使用方法/index.html">
+<meta property="og:title" content="关于前端的技术债务">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/11/04/关于前端的技术债务/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
-
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles2.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles3.png">
+<meta property="og:description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
+其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
+但是本文的背景是在一些大型的前端项目中
+技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-10-18T03:16:28.000Z">
+<meta property="og:updated_time" content="2015-11-05T11:35:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chrome的debug工具Profiles使用方法">
-<meta name="twitter:description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
-
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+<meta name="twitter:title" content="关于前端的技术债务">
+<meta name="twitter:description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
+其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
+但是本文的背景是在一些大型的前端项目中
+技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -85,7 +70,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
 
 
 
-  <title> chrome的debug工具Profiles使用方法 | Yao's 前端修炼之路 </title>
+  <title> 关于前端的技术债务 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -189,7 +174,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
           
           
             
-              chrome的debug工具Profiles使用方法
+              关于前端的技术债务
             
           
         </h1>
@@ -198,8 +183,8 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-17T14:35:03+08:00" content="2015-10-17">
-            2015-10-17
+          <time itemprop="dateCreated" datetime="2015-11-04T20:39:39+08:00" content="2015-11-04">
+            2015-11-04
           </time>
         </span>
 
@@ -218,56 +203,59 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
       
 
       
-        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
-<h2 id="Profiles是什么">Profiles是什么</h2><p>Profiles在哪里<br>如下图<br><img src="/img/res/3/profiles.png" alt="前端修炼"><br>没错，就在我们最长使用的导航里面，大家基本没有用到过吧。</p>
-<h2 id="Profiles具体可以干什么">Profiles具体可以干什么</h2><p><strong>定位性能问题，借助它我们可以</strong>  </p>
-<ul>
-<li>可以借助Profiles定位出比较耗时的函数</li>
-<li>查找页面卡顿的原因</li>
-</ul>
-<h2 id="使用方法一">使用方法一</h2><p>我们想查看点击一个按钮后，到展示页面的性能，我们可以  </p>
-<ol>
-<li>打开工具，如下图，点击<em>start</em> ，然后点击按钮<br><img src="/img/res/3/profiles2.png" alt="前端修炼">  </li>
-<li>完整内容展示后，点击<em>stop</em>（注意，中间不要有其他操作，避免干扰)，然后就会生成一个性能分析的数据</li>
-</ol>
-<p><strong>实战</strong><br>我们使用一段简单的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure></p>
-<p>下图是生成的报告<br><img src="/img/res/3/profiles3.png" alt="前端修炼">  </p>
-<h2 id="使用方法二">使用方法二</h2><p>使用  </p>
-<p><strong>console.profile(name)</strong>和<strong>console.profileEnd(name)</strong></p>
-<p>参数数是一个字符串，记录这次性能监控的名字</p>
-<p>例如上面代码可以修改为  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.profile(<span class="string">'test'</span>)</span><br><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br><span class="line"><span class="built_in">console</span>.profileEnd(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
-<p>这样就能可以不适用人肉点击start和stop去记录。<br>这个命名为test的Profiles就是记录console.profile(‘test’)时间点到console.profileEnd(‘test’)时间点间的性能。</p>
-<h2 id="举一个实践中用到的例子">举一个实践中用到的例子</h2><p>这个例子我也拿过来做过面试题，作为开放式题目：  </p>
+        <span itemprop="articleBody"><p>最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  </p>
+<p>其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   </p>
+<p>但是本文的背景是在一些大型的前端项目中</p>
+<h2 id="技术债务的产生">技术债务的产生</h2><p>随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更新，架构不断的升级，技术债务就暴露出来了。  </p>
 <blockquote>
-<p>我们在发出ajax时，打一个点作为开始，我们监听到ajax回来打第二个点作为结束，这两个点的时间是1000ms，但是我们通过network查看网络耗时，是300ms，请问中间700ms去哪里了？  </p>
+<p>举一个例子（如有雷同，表示慰问）：<br>最开始尝试mvc时，使用了backbone开发单页面，然后一年后，发现angularjs特别火，而且调研发现这种mvvm模式更加提高效率，这时项目中一些新的模块开始都用上了angularjs，然后随着时间的推移，发现angularjs存在性能瓶颈，这时发现reactjs的虚拟dom和单向数据流很好，然后继续在新模块中引入。然后某天一天，回头一看。。。WTF。。。发现架构混乱，维护困难，新业务开展困难等等。。。   </p>
 </blockquote>
-<p>其实这个问题我想了解两层，第一是js是单线程，阻塞；<br>第二个是如何定位问题，那么如果能借助这个工具分析，我就觉得很厉害了  </p>
+<p>架构的升级，新技术的引入，特别容易引发技术债务的出现。<br>正如我之前的文章<a href="http://tangguangyao.github.io/2015/10/18/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%A7%E5%85%AC%E5%8F%B8%E4%B8%AD%E6%88%90%E9%95%BF/">《如何在大公司成长》</a>提到的，在成熟的系统中引入新技术其实是一个挑战非常大的事情，因为首先你必须控制好技术债务。<br>首先在厉害的架构师也无法设计一个面向未来可以一直不变的框架，再流行的模式也会不断演变。如果解决不好新旧的过度就很容易出现上面的情况。  </p>
+<p>可以直白的说，在越复杂的系统上面开发，就是带着越重的脚镣在跳舞。</p>
+<blockquote>
+<p>再举一个例子，也是引发技术债务的一种情况：<br>由于进度的原因，不得不使用一些hack的方式（而不是从根源解决)去完成任务，然后在没有来得及删掉这种hack方式前，有其他人在你的基础上继续迭代和模仿，最后变得想去掉这种hack方式都去不掉。  </p>
+</blockquote>
+<h2 id="技术债务的定义">技术债务的定义</h2><p>什么样的问题称之为技术债务，我和网上观点有些不同。对于一些编程习惯，编码方式，有异味的代码等等，我认为这些应该属于代码素养的范畴，这些可以不断改善，而且完全可以小范围的重构解决，不会形成叠加效应。<br>我理解的技术债务是它的存在影响了整个系统的效率和阻碍了系统的发展，随着系统复杂度的增加，问题会不断的被放大。<br>下面一一说明，并且配合举例</p>
+<h2 id="技术债务的影响">技术债务的影响</h2><p><strong>影响日常的开发效率</strong><br>我认为这个应该属于最严重的影响，由于债务的原因，严重拖慢了开发效率，导致开发人员开法困难。  </p>
+<blockquote>
+<p>举例：<br>两个模块共用一个修改组件，由于两个模块底层依赖不一样，导致需要重复开发两次。而且每一次需求升级，都是两次的重复开发。这种情况的结果直接导致人力成倍翻倍。</p>
+</blockquote>
+<p><strong>提高了开发人员的学习成本</strong><br>这也是对于工程效率的影响，由于技术债务的积累，导致开发人员需要花更多的时间去理解开发任务，需要更多的时间学习理解。  </p>
+<blockquote>
+<p>举例<br>由于历史原因，同样一个组件/模块有两种实现方式，新同学在选择时第一感觉就是迷茫，乱，烦躁，不知所措，还需要花人力去了解哪个更加合适，哪个会有什么样的坑等等，如果选择错误了，还需要花无谓的时间重做。  </p>
+</blockquote>
+<p><strong>持续的影响网站性能</strong><br>债务的积累必定是一些遗留问题，特点就是随着时间，会越来越多，越来越复杂，越来越不敢砍掉。直接导致的问题就是，遗留代码太多，这些代码都是对线程的无谓消耗。最后的结果就是网站越来越慢  </p>
+<blockquote>
+<p>举例<br>控件最初使用的是1.0版本，换2.0时，由于旧的业务没有随着升级，就导致系统里面ui库多版本，这样，ui初始化就需要初始化两份，而且合并打包的时候，代码也会多出很多。</p>
+</blockquote>
+<p><strong>容易触发bug</strong><br>旧代码的错误使用，或者使用不当，经常会导致一些莫名其妙的bug，而且极其难定位。  </p>
+<blockquote>
+<p>举例<br>在开发中不小心使用了旧代码的一些功能，而其他人员在清理或者修改重构时没有考虑，直接就会间接的产生bug。也是因为这种原因，旧代码也越来越不敢清理</p>
+</blockquote>
+<p><strong>成为了业务规划的瓶颈</strong><br>由于一些架构因素，导致某些业务功能无法实现，或者实现起来的成本特别高。  </p>
+<blockquote>
+<p>举例<br>两个模块由于底层的技术架构不同，如果pm希望模块间有一些数据的互通，或者功能的互相调用，这种需求就是受到技术的限制而实现不了（当然可以通过一些hack或者非常规方式实现，但是每一次hack都是一次新债务的产生）</p>
+</blockquote>
+<h2 id="如何避免技术债务">如何避免技术债务</h2><p>技术债务能避免吗？<br>我觉得不可能，因为随着复杂度的增长，债务也在慢慢增长，只是快和慢的问题，也许你今天写的一个完美的功能，一年以后，对于新的架构就是一个债务，因为技术在不断再更新换代，没有任何一种模式是银弹。<br>如果非要有一种办法避免，我能想到的就拒绝新技术引入，一种模式坚持到底，但这肯定是不实际。  </p>
+<p>所以个人觉得对于技术债务<br>我们首先我们需要认识到债务的存在，最好有一个债务管理机制。例如有一个债务范围的控制，当影响面达到一定程度，就必须去清理。<br>其次认识到清理债务对当下的收益可能不明显，但是收益在未来会不断放大，所以对于债务的清理，我们必须要去面对，而不是逃避。<br>最后，还需要在平时的开发中，有技术债务的意识，例如，临时方案真的是临时的吗？开发出来的代码可维护吗？</p>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+<h2 id="下篇文章预告">下篇文章预告</h2><p>聊聊code review</p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/js/" rel="tag">#js</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/18/如何在大公司中成长/" rel="prev">如何在大公司中成长</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/15/javascript书籍推荐/" rel="next">javascript书籍推荐</a>
+              <a href="/2015/10/30/如何构建前端代码/" rel="next">如何构建前端代码</a>
             
           </div>
         </div>
@@ -371,7 +359,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles是什么"><span class="nav-number">2.</span> <span class="nav-text">Profiles是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles具体可以干什么"><span class="nav-number">3.</span> <span class="nav-text">Profiles具体可以干什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法一"><span class="nav-number">4.</span> <span class="nav-text">使用方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法二"><span class="nav-number">5.</span> <span class="nav-text">使用方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举一个实践中用到的例子"><span class="nav-number">6.</span> <span class="nav-text">举一个实践中用到的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的产生"><span class="nav-number">1.</span> <span class="nav-text">技术债务的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的定义"><span class="nav-number">2.</span> <span class="nav-text">技术债务的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的影响"><span class="nav-number">3.</span> <span class="nav-text">技术债务的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何避免技术债务"><span class="nav-number">4.</span> <span class="nav-text">如何避免技术债务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下篇文章预告"><span class="nav-number">6.</span> <span class="nav-text">下篇文章预告</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
