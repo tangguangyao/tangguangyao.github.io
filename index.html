@@ -165,6 +165,116 @@
           
           
             
+              <a class="post-title-link" href="/2015/11/10/你会用setTimeout吗/" itemprop="url">
+                你会用setTimeout吗
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-10T20:23:31+08:00" content="2015-11-10">
+            2015-11-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="教科书里面的setTimeout">教科书里面的setTimeout</h2><p><strong>定义很简单</strong><br>setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  </p>
+<p><strong>广泛应用场景</strong><br>定时器，轮播图，动画效果，自动滚动等等</p>
+<p>上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。</p>
+<p>但是setTimeout真的有那么简单吗？  </p>
+<p>一个题目，如果你在一段代码中发现下面内容  </p>
+<pre><code><span class="keyword">var</span> startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();
+setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
+    <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>() - startTime);
+}, <span class="number">100</span>)
+</code></pre><p>请问最后打印的是多少?<br>我觉得正确答案是，取决于后面同步执行的js需要占用多少时间，在加上setTimeout延迟的时间。  </p>
+<p>再加一个题目,只有下面代码  </p>
+<pre><code>setTimeout<span class="comment">(function ()</span> {
+    fu<span class="label">nc1</span><span class="comment">()</span>;
+}, <span class="number">0</span>)
+fu<span class="label">nc2</span><span class="comment">()</span>;
+</code></pre><p>func1和func2谁会先执行？ </p>
+<p>这个答案应该比较简单，func2先执行，func1后面执行。</p>
+<p>再来一题</p>
+<pre><code>setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+    func1（）
+}, <span class="number">0</span>)
+</code></pre><p>和  </p>
+<pre><code> setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+    func1（）
+})
+</code></pre><p>有什么差别？  </p>
+<blockquote>
+<p>0秒延迟，此回调将会放到一个能理解执行的时段进行触发。javascript代码大体上是自顶向下的，但中间穿插着有关DOM渲染，事件回应等异步代码，他们将组成一个队列，零秒延迟将会实现插队操作。<br>不写第二个参数，浏览器自动配置时间，在IE，FireFox中，第一次配可能给个很大的数字，100ms上下，往后会缩小到最小时间间隔，Safari，chrome，opera则多为10ms上下。  </p>
+</blockquote>
+<p>上面答案来自《javascript框架设计》</p>
+<p>好了，看了上面几个题目是不是感觉setTimeout不是想象中那样了。</p>
+<h2 id="setTimeout和单线程">setTimeout和单线程</h2><p>下面是我自己的一些理解<br>首先需要注意javascript是单线程的，特点就是容易出现阻塞。如果一段程序处理时间很长，很容易导致整个页面hold住。什么交互都处理不了怎么办？  </p>
+<p>简化负责度？负责逻辑后端处理？html5的多线程？  </p>
+<p>上面都是ok的做法，但是setTimeout也是处理这种问题的一把好手。  </p>
+<p>setTimeout一个很关键的用法就是分片，如果一段程序过大，我们可以拆分成若干细小的块。<br>例如上面的情况，我们将那一段复杂的逻辑拆分处理，分片塞入队列。这样即使在复杂程序没有处理完时，我们操作页面，也是能得到即使响应的。其实就是将交互插入到了复杂程序中执行。  </p>
+<p>换一种思路，上面就是利用setTimeout实现一种伪多线程的概念。  </p>
+<p>有个函数库<code>Concurrent.Thread.js</code> 就是实现js的多线程的。</p>
+<p>一个简单实用例子，引入<code>Concurrent.Thread.js</code>后</p>
+<pre><code>Concurrent.Thread.<span class="keyword">create</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{
+    for (var i = 0;i&lt;1000000;i++) {
+        console.log(i);
+    }</span>;</span>
+});
+$(<span class="string">'#test'</span>).click(<span class="function"><span class="keyword">function</span>  <span class="params">()</span> <span class="comment">{
+    alert(1);
+}</span>);</span>
+</code></pre><p>虽然有个巨大的循环，但是这时不妨碍你去触发alert();</p>
+<p>是不是很厉害~</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/08/为什么要坚持code review/" itemprop="url">
                 为什么要坚持code review
               </a>
@@ -984,102 +1094,13 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/14/面试随笔/" itemprop="url">
-                作为百度FE面试官的一些体会
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-14T13:45:59+08:00" content="2015-10-14">
-            2015-10-14
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="简单的介绍">简单的介绍</h2><p>现在在百度参与了一些Fe的招聘工作，近期缺口比较大，导致最近基本每天至少一场面试。面试多了也想从面试官的角度分享一些心得。</p>
-<h2 id="关于实习生，校招和社招的侧重点">关于实习生，校招和社招的侧重点</h2><ul>
-<li>实习生和校招侧重： <ul>
-<li>基础知识</li>
-<li>前端项目经验</li>
-<li>可培养的潜力，背景</li>
-</ul>
-</li>
-</ul>
-<p>对于实习生，上面要求中，基本需要满足两个<br>曾经有一个实习生来面试，问道javascript相关知识，回答道没有用过，所以来实习（霸气。。），但是这个实习生计算机基础能力，聪明程度，沟通能力都很好，最后招进来后，果然培养不到一个月就很厉害了。</p>
-<ul>
-<li>对于社招侧重:<br>  主要看中项目经验，技术深度，社招的其实招进来就是要能够开始介入项目的，培养时间不可能太多</li>
-</ul>
-<h2 id="关于简历">关于简历</h2><p>什么样算是一个好简历，从我的角度，我比较喜欢看到简历中能够写清楚项目，并且能够列举出项目中自己实现的技术亮点。<br>什么样的简历很尴尬，单纯的列举自己会什么，例如我曾看到一个简历：<br>写到javascript 非常精通，我当时直接问了下，对于promise的理解（回答不出来）<br>jQuery 也是非常精通，我问了下看了源码没（回答想看但是还没有看。。。）。瞬间我就尴尬了，不知道再问什么。。。</p>
-<h2 id="关于网上题库">关于网上题库</h2><p>这个还是有一些用的，有的面试官会很标准化的，有一个自己的题库，每次会在题库里面问。<br>以我举例，我个人有一个大概的题库，主要是在没有什么可问的时候去问，我个人比较偏向于候选人的项目，从项目中挖掘出一些技术点，找出一些可以优化的地方，让候选人需思考。</p>
-<h2 id="关于算法">关于算法</h2><p>其实前端用到算法的地方并不是很多，但是这个其实是一个比较重要的考察点，主要看看看候选人的一些计算机基础，思维，解决问题的能力等。<br>一般算法不是很难，如果有难度，也会给些提示，看看能不能在提示下回答出，这个也可以考察出候选的培养潜力。</p>
-<h2 id="关于社招的级别">关于社招的级别</h2><p>一般招普通工程师，对于技术上，一般会看项目上的经验，平时项目的深度，在一到两个技术上有深入的研究。平时项目从设计模式角度有所思考。<br>对于高级别的其实更加看重，对于新技术的一个探索，对于前端性能了解，易用性的思考，新技术的推动力等</p>
-<h2 id="我认为的一个优秀的候选人">我认为的一个优秀的候选人</h2><ul>
-<li>对于promise熟悉</li>
-<li>对于设计模式有理解</li>
-<li>mvc,mvvm有了解，最好使用过</li>
-<li>对于网页性能有研究</li>
-<li>对于新框架，技术有探索，并且能够推进到项目中</li>
-<li>不局限于前端，有一定的广度</li>
-</ul>
-<h2 id="我期望候选人的对前端的理解">我期望候选人的对前端的理解</h2><ul>
-<li>现在javascript可以做很多事情了，全栈（nodejs） 或者 全端 (react native)，所以不要在认为FE做的仅仅是交互（当然，交互是非常非常重要的）</li>
-<li>基于上面的愿意，所以我们也看着计算机的技术能力</li>
-</ul>
-<h2 id="最后的最后广告时间">最后的最后广告时间</h2><p>如果您有兴趣，欢迎简历 tangguangyao#baidu.com (#-&gt;@)</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+  </nav>
+
  </div>
 
         
@@ -1111,7 +1132,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

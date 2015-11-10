@@ -39,29 +39,31 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="面试题n个数中，n-1个重复偶数次，1个出现奇数次，怎么找出出现奇数次的那个数
-这个问题是一个同事面试时问到的题目，我觉得很有趣，就拿来自己用了，题目的答案在最下面。
-在看这个问题前，先聊聊一个前端面试一个问题前端面试是否考察算法大概2年前，我在微博上面看到两位大牛的争论：
-
-@pureFE对@真阿当 说：阿当哥你好：我是一名在校学生，文科专业。前一段找实习的过程中注意到一些公司有算法要求。对于前">
+<meta name="description" content="教科书里面的setTimeout定义很简单setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  
+广泛应用场景定时器，轮播图，动画效果，自动滚动等等
+上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。
+但是setTimeout真的有那么简单吗？  
+一个题目，如果你在一段代码中发现下面内容  
+var startTime = new Date()">
 <meta property="og:type" content="article">
-<meta property="og:title" content="有趣的面试题">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/10/22/有趣的面试题/index.html">
+<meta property="og:title" content="你会用setTimeout吗">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/11/10/你会用setTimeout吗/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="面试题n个数中，n-1个重复偶数次，1个出现奇数次，怎么找出出现奇数次的那个数
-这个问题是一个同事面试时问到的题目，我觉得很有趣，就拿来自己用了，题目的答案在最下面。
-在看这个问题前，先聊聊一个前端面试一个问题前端面试是否考察算法大概2年前，我在微博上面看到两位大牛的争论：
-
-@pureFE对@真阿当 说：阿当哥你好：我是一名在校学生，文科专业。前一段找实习的过程中注意到一些公司有算法要求。对于前">
-<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-10-25T05:07:20.000Z">
+<meta property="og:description" content="教科书里面的setTimeout定义很简单setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  
+广泛应用场景定时器，轮播图，动画效果，自动滚动等等
+上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。
+但是setTimeout真的有那么简单吗？  
+一个题目，如果你在一段代码中发现下面内容  
+var startTime = new Date()">
+<meta property="og:updated_time" content="2015-11-10T13:46:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有趣的面试题">
-<meta name="twitter:description" content="面试题n个数中，n-1个重复偶数次，1个出现奇数次，怎么找出出现奇数次的那个数
-这个问题是一个同事面试时问到的题目，我觉得很有趣，就拿来自己用了，题目的答案在最下面。
-在看这个问题前，先聊聊一个前端面试一个问题前端面试是否考察算法大概2年前，我在微博上面看到两位大牛的争论：
-
-@pureFE对@真阿当 说：阿当哥你好：我是一名在校学生，文科专业。前一段找实习的过程中注意到一些公司有算法要求。对于前">
+<meta name="twitter:title" content="你会用setTimeout吗">
+<meta name="twitter:description" content="教科书里面的setTimeout定义很简单setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  
+广泛应用场景定时器，轮播图，动画效果，自动滚动等等
+上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。
+但是setTimeout真的有那么简单吗？  
+一个题目，如果你在一段代码中发现下面内容  
+var startTime = new Date()">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -73,7 +75,7 @@
 
 
 
-  <title> 有趣的面试题 | Yao's 前端修炼之路 </title>
+  <title> 你会用setTimeout吗 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -177,7 +179,7 @@
           
           
             
-              有趣的面试题
+              你会用setTimeout吗
             
           
         </h1>
@@ -186,8 +188,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-22T22:12:50+08:00" content="2015-10-22">
-            2015-10-22
+          <time itemprop="dateCreated" datetime="2015-11-10T20:23:31+08:00" content="2015-11-10">
+            2015-11-10
           </time>
         </span>
 
@@ -206,35 +208,54 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="面试题">面试题</h2><p>n个数中，n-1个重复偶数次，1个出现奇数次，怎么找出出现奇数次的那个数</p>
-<p>这个问题是一个同事面试时问到的题目，我觉得很有趣，就拿来自己用了，题目的答案在最下面。</p>
-<p>在看这个问题前，先聊聊一个前端面试一个问题<br><strong>前端面试是否考察算法</strong><br>大概2年前，我在微博上面看到两位大牛的争论：</p>
+        <span itemprop="articleBody"><h2 id="教科书里面的setTimeout">教科书里面的setTimeout</h2><p><strong>定义很简单</strong><br>setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  </p>
+<p><strong>广泛应用场景</strong><br>定时器，轮播图，动画效果，自动滚动等等</p>
+<p>上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。</p>
+<p>但是setTimeout真的有那么简单吗？  </p>
+<p>一个题目，如果你在一段代码中发现下面内容  </p>
+<pre><code><span class="keyword">var</span> startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();
+setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
+    <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>() - startTime);
+}, <span class="number">100</span>)
+</code></pre><p>请问最后打印的是多少?<br>我觉得正确答案是，取决于后面同步执行的js需要占用多少时间，在加上setTimeout延迟的时间。  </p>
+<p>再加一个题目,只有下面代码  </p>
+<pre><code>setTimeout<span class="comment">(function ()</span> {
+    fu<span class="label">nc1</span><span class="comment">()</span>;
+}, <span class="number">0</span>)
+fu<span class="label">nc2</span><span class="comment">()</span>;
+</code></pre><p>func1和func2谁会先执行？ </p>
+<p>这个答案应该比较简单，func2先执行，func1后面执行。</p>
+<p>再来一题</p>
+<pre><code>setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+    func1（）
+}, <span class="number">0</span>)
+</code></pre><p>和  </p>
+<pre><code> setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+    func1（）
+})
+</code></pre><p>有什么差别？  </p>
 <blockquote>
-<p>@pureFE对@真阿当 说：阿当哥你好：我是一名在校学生，文科专业。前一段找实习的过程中注意到一些公司有算法要求。对于前端来说，专业知识的补习路线应该如何安排，应该像计算机专业那样从C、数据结构等等开始吗？对于前端开发者来说，专业知识应该达到何种程度才是合格？不知您能否指点一二，感激不尽！</p>
-<p>@真阿当: 前端在实战中对算法和数据结构几乎没有要求，在你当下的境况学习这些知识对你找工作一点帮助也没有。前端开发的门槛低，所以有很多非科班出身的人从这个领域进入IT圈，你无需为“非科班出身”背上压力。为找工作的话，建议最快的路线是：先学css、后学一些基础js书……</p>
-<p>@寒冬winter:100%反对。</p>
-<p>回复@真阿当: 阿当你经常说前端工程师应该团结起来加强影响力，你就是这么让大家加强的么？没有算法能力，前端工程师怎么去实现新的交互效果？没有数据结构知识，前端工程师怎么处理大数据？没有这样的能力，前端怎么去承担更重要的职责？</p>
-<p>@真阿当:算了，不争了，我该表达的都表达完了。求同存异。我的言论也只代表我个人看法，不保证一定是对的，各人有各人自己认同的发展路线。更倾向于哪种观点，决策权在诸位自己手上，冷暖自知谁也替不了你。不要动不动就“误人子弟”帽子扣下来，我担不起，也不想担。一家之言，说的是自己的真实感想。到此为止</p>
-<p>@真阿当回复@糕富帅是我的人生理想:恩，是的，我说过要想前端能走得远一些，至少用原生js锻炼半年以上。我说的是“如何成为一个高级工程师”，而不是“如何跨入门槛”。绝大多数公司在面试时只会看这个人“在这个领域的基本功”怎么样，过不了这一关，跨不过入行的门槛。所以要先学会怎么通过面试。</p>
-<p>@寒冬winter:目前为止我好像没听说哪个前端因为学习计算机基础知识耽误了专业技能，从当年51js我认识的人来看，基础好的无一例外几年后立于行业顶点，而那些”顺应市场”的人，不知去了哪里。实际上，这只关乎人的素质，舍弃了基础节约的时间并不能用于其它知识或者英语。</p>
+<p>0秒延迟，此回调将会放到一个能理解执行的时段进行触发。javascript代码大体上是自顶向下的，但中间穿插着有关DOM渲染，事件回应等异步代码，他们将组成一个队列，零秒延迟将会实现插队操作。<br>不写第二个参数，浏览器自动配置时间，在IE，FireFox中，第一次配可能给个很大的数字，100ms上下，往后会缩小到最小时间间隔，Safari，chrome，opera则多为10ms上下。  </p>
 </blockquote>
-<p>我这边的答案也是需要的，直接举一些例子：  </p>
-<ol>
-<li><p>最近很火的框架reactjs，他的核心就是实现了一个虚拟dom，每次页面的更新都能通过虚拟dom计算出最小变更内容，从而达到页面高效的刷新，实现最小diff的算法很关键</p>
-</li>
-<li><p>腾讯在手机web上实现了利用localstorage存储js,然后js实现增量更新的算法，达到每次刷新仅仅请求变更了的js内容，这样就解决了手机端流量宝贵和网速慢的问题，实现增量更新的算法很关键</p>
-</li>
-<li><p>我刚来百度时，组内有一位echart的贡献者,在一次组内分享中,一个大数据量储存的优化的问题，大概是下面这样的数<br>[100001, 100002, 100003 …]<br>在通过canvas绘图时，会比较费内存，然后他就使用时间换空间的方式处理如下<br>[1, 2, 3 …]  设定base 是100000<br>这样就解决了一定数据量内存过大的问题。</p>
-</li>
-</ol>
-<p>我觉得上面的例子就足够支撑算法在前端的重要性了，因为现在的前端不在仅仅是还原一些UI设计，做做交互了，实现一些功能了。<br>现在的前端越来越复杂，涉及面越来越多，向后延生可以利用nodejs去做服务端（全栈工程师）；平行延生可以用react native去做native的开发；纵向延生，也会考虑webapp内存泄露，性能调优，打包编译，线上部署等等。<br>这些东西研究的越深，对于计算机基础知识的要求就越高，当然其中就包含了算法基础了。<br>那么问题来了，如果我们对于算法没有研究怎么办，其实我开始就是对算法没有什么研究，也不知道怎么运用在工作中，只是后来的工作中，慢慢发现自己对于计算机一些基础的匮乏，根据需要一点点补充的。<br>我一次在前端接触简单的算法是在看一个桌球游戏的源码时，游戏里面球的碰撞，反弹，加速度等，都是一些简单的计算和物理知识，挺有趣的<br>游戏github地址，我加了一些注释<br><a href="https://github.com/tangguangyao/Snooker" target="_blank" rel="external">https://github.com/tangguangyao/Snooker</a></p>
-<p>回到面试题，我们可以聊聊这个题目为什么我觉得挺不错的  </p>
-<ol>
-<li>如果没有算法基础的人，如果思维不错，至少能够在一定时间内给出一个比较笨的解决方案，然后给与一些提示，能够引导到我期望的答案  </li>
-<li>对于有算法基础的人，能够大概说出几种解决方案，在我们余下的沟通中，回答一个我期望的答案，甚至更好的答案</li>
-</ol>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-<p><code>答案</code><br>使用！(取非)的方式，出现第一次记录1，第二次回到0，第三次记录1…这样循环一次所有数，最后记录为1的就是我们需要的那个奇数</p>
+<p>上面答案来自《javascript框架设计》</p>
+<p>好了，看了上面几个题目是不是感觉setTimeout不是想象中那样了。</p>
+<h2 id="setTimeout和单线程">setTimeout和单线程</h2><p>下面是我自己的一些理解<br>首先需要注意javascript是单线程的，特点就是容易出现阻塞。如果一段程序处理时间很长，很容易导致整个页面hold住。什么交互都处理不了怎么办？  </p>
+<p>简化负责度？负责逻辑后端处理？html5的多线程？  </p>
+<p>上面都是ok的做法，但是setTimeout也是处理这种问题的一把好手。  </p>
+<p>setTimeout一个很关键的用法就是分片，如果一段程序过大，我们可以拆分成若干细小的块。<br>例如上面的情况，我们将那一段复杂的逻辑拆分处理，分片塞入队列。这样即使在复杂程序没有处理完时，我们操作页面，也是能得到即使响应的。其实就是将交互插入到了复杂程序中执行。  </p>
+<p>换一种思路，上面就是利用setTimeout实现一种伪多线程的概念。  </p>
+<p>有个函数库<code>Concurrent.Thread.js</code> 就是实现js的多线程的。</p>
+<p>一个简单实用例子，引入<code>Concurrent.Thread.js</code>后</p>
+<pre><code>Concurrent.Thread.<span class="keyword">create</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{
+    for (var i = 0;i&lt;1000000;i++) {
+        console.log(i);
+    }</span>;</span>
+});
+$(<span class="string">'#test'</span>).click(<span class="function"><span class="keyword">function</span>  <span class="params">()</span> <span class="comment">{
+    alert(1);
+}</span>);</span>
+</code></pre><p>虽然有个巨大的循环，但是这时不妨碍你去触发alert();</p>
+<p>是不是很厉害~</p>
 </span>
       
     </div>
@@ -246,13 +267,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/27/关于生命周期/" rel="prev">关于软件的生命周期</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/20/如何避免工程效率陷阱/" rel="next">如何避免工程效率陷阱</a>
+              <a href="/2015/11/08/为什么要坚持code review/" rel="next">为什么要坚持code review</a>
             
           </div>
         </div>
@@ -356,7 +375,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#面试题"><span class="nav-number">1.</span> <span class="nav-text">面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">2.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#教科书里面的setTimeout"><span class="nav-number">1.</span> <span class="nav-text">教科书里面的setTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setTimeout和单线程"><span class="nav-number">2.</span> <span class="nav-text">setTimeout和单线程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
