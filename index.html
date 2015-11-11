@@ -235,7 +235,7 @@ fu<span class="label">nc2</span><span class="comment">()</span>;
 <p>setTimeout一个很关键的用法就是分片，如果一段程序过大，我们可以拆分成若干细小的块。<br>例如上面的情况，我们将那一段复杂的逻辑拆分处理，分片塞入队列。这样即使在复杂程序没有处理完时，我们操作页面，也是能得到即使响应的。其实就是将交互插入到了复杂程序中执行。  </p>
 <p>换一种思路，上面就是利用setTimeout实现一种伪多线程的概念。  </p>
 <p>有个函数库<code>Concurrent.Thread.js</code> 就是实现js的多线程的。</p>
-<p>一个简单实用例子，引入<code>Concurrent.Thread.js</code>后</p>
+<p>一个简单使用的例子，引入<code>Concurrent.Thread.js</code>后</p>
 <pre><code>Concurrent.Thread.<span class="keyword">create</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{
     for (var i = 0;i&lt;1000000;i++) {
         console.log(i);
@@ -247,10 +247,11 @@ $(<span class="string">'#test'</span>).click(<span class="function"><span class=
 </code></pre><p>虽然有个巨大的循环，但是这时不妨碍你去触发alert();</p>
 <p>是不是很厉害~</p>
 <p>还有一种场景，当我们需要渲染一个很复杂的DOM时，例如table组件，复杂的构图等等，假如整个过程需要3s,我们是等待完全处理完成在呈现，还是使用一个setTimeout分片,将内容一片一片的断续呈现。  </p>
-<p>其实setTimeout给我我们很多优化交互的空间。</p>
-<h2 id="如何使用">如何使用</h2><p>那么我们是需要在在项目中大量使用吗？<br>我这边的观点是非常不建议，在我们业务中，基本上是禁止在业务逻辑中使用setTimeout的，因为我所看到的很多使用方式都是一些问题不好解决，setTimeout作为一个hack的方式。<br>例如，当一个实例还没有初始化的前，我们就使用这个实例，错误的解决办法是使用实例时加个setTimeout，确保实例先初始化。<br>为什么错误？这里其实就是使用hack的手段<br>第一是埋下了坑，打乱模块的生命周期<br>第二是出现问题时，setTimeout其实是很难调试的。</p>
+<p>其实setTimeout给了我们很多优化交互的空间。</p>
+<h2 id="如何使用">如何使用</h2><p>setTimeout这么厉害，那么我们是需要在在项目中大量使用吗？<br>我这边的观点是非常不建议，在我们业务中，基本上是禁止在业务逻辑中使用setTimeout的，因为我所看到的很多使用方式都是一些问题不好解决，setTimeout作为一个hack的方式。<br>例如，当一个实例还没有初始化的前，我们就使用这个实例，错误的解决办法是使用实例时加个setTimeout，确保实例先初始化。<br>为什么错误？这里其实就是使用hack的手段<br>第一是埋下了坑，打乱模块的生命周期<br>第二是出现问题时，setTimeout其实是很难调试的。</p>
 <p>我认为正确的使用方式是，看看生命周期（可参考《<a href="http://tangguangyao.github.io/2015/10/27/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">关于软件的生命周期</a> 》），把实例化提到使用前执行。 </p>
 <p>综上，setTimeout其实想用好还是很困难的， 他更多的出现是在框架和类库中，例如一些实现Promis的框架，就用上了setTimeout去实现异步。<br>所以假如你想去阅读一些源码，想去造一些轮子，setTimeout还是必不可少的工具。</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
         
       
