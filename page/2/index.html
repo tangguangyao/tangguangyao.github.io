@@ -165,6 +165,94 @@
           
           
             
+              <a class="post-title-link" href="/2015/10/17/chrome的debug工具Profiles使用方法/" itemprop="url">
+                chrome的debug工具Profiles使用方法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-17T14:35:03+08:00" content="2015-10-17">
+            2015-10-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
+<h2 id="Profiles是什么">Profiles是什么</h2><p>Profiles在哪里<br>如下图<br><img src="/img/res/3/profiles.png" alt="前端修炼"><br>没错，就在我们最长使用的导航里面，大家基本没有用到过吧。</p>
+<h2 id="Profiles具体可以干什么">Profiles具体可以干什么</h2><p><strong>定位性能问题，借助它我们可以</strong>  </p>
+<ul>
+<li>可以借助Profiles定位出比较耗时的函数</li>
+<li>查找页面卡顿的原因</li>
+</ul>
+<h2 id="使用方法一">使用方法一</h2><p>我们想查看点击一个按钮后，到展示页面的性能，我们可以  </p>
+<ol>
+<li>打开工具，如下图，点击<em>start</em> ，然后点击按钮<br><img src="/img/res/3/profiles2.png" alt="前端修炼">  </li>
+<li>完整内容展示后，点击<em>stop</em>（注意，中间不要有其他操作，避免干扰)，然后就会生成一个性能分析的数据</li>
+</ol>
+<p><strong>实战</strong><br>我们使用一段简单的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure></p>
+<p>下图是生成的报告<br><img src="/img/res/3/profiles3.png" alt="前端修炼">  </p>
+<h2 id="使用方法二">使用方法二</h2><p>使用  </p>
+<p><strong>console.profile(name)</strong>和<strong>console.profileEnd(name)</strong></p>
+<p>参数数是一个字符串，记录这次性能监控的名字</p>
+<p>例如上面代码可以修改为  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.profile(<span class="string">'test'</span>)</span><br><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br><span class="line"><span class="built_in">console</span>.profileEnd(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
+<p>这样就能可以不适用人肉点击start和stop去记录。<br>这个命名为test的Profiles就是记录console.profile(‘test’)时间点到console.profileEnd(‘test’)时间点间的性能。</p>
+<h2 id="举一个实践中用到的例子">举一个实践中用到的例子</h2><p>这个例子我也拿过来做过面试题，作为开放式题目：  </p>
+<blockquote>
+<p>我们在发出ajax时，打一个点作为开始，我们监听到ajax回来打第二个点作为结束，这两个点的时间是1000ms，但是我们通过network查看网络耗时，是300ms，请问中间700ms去哪里了？  </p>
+</blockquote>
+<p>其实这个问题我想了解两层，第一是js是单线程，阻塞；<br>第二个是如何定位问题，那么如果能借助这个工具分析，我就觉得很厉害了  </p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/10/15/javascript书籍推荐/" itemprop="url">
                 javascript书籍推荐
               </a>
@@ -363,7 +451,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
