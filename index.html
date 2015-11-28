@@ -197,7 +197,8 @@
 
       
         
-          <span itemprop="articleBody"><h2 id="sourceMap的偶遇">sourceMap的偶遇</h2><p>接触到sourceMap，其实是在调研ES6时发现的。  </p>
+          <span itemprop="articleBody"><p><img src="/img/res/sourceMap.png" alt="sourceMap初探索"></p>
+<h2 id="sourceMap的偶遇">sourceMap的偶遇</h2><p>接触到sourceMap，其实是在调研ES6时发现的。  </p>
 <p>在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  </p>
 <ol>
 <li>上线时的打包构建问题</li>
@@ -211,10 +212,10 @@
 <p>原理我简单的理解就是通过map文件产出一个映射关系，将编译后的代码映射到编译前的，然后debug时，浏览器解析的是编译后的，但是呈现给我们的是映射前的开发代码。</p>
 <h2 id="sourceMap曾经被忽视">sourceMap曾经被忽视</h2><p>在网上找的一些介绍Source Map的文章，发现Source Map主要是解决一些代码压缩混淆后不好调试的问题。 </p>
 <p>举个例子，jquery-min调试时非常不方便，但是加上Source Map，可以直接在浏览器中调试jquery压缩前的。  </p>
-<p>但是真正在开发环境，可能将jquery-min换成jquery，大家觉得会更加方便，无需那么麻烦的做处理，所以这也是可能没有流行起来的原因。  </p>
+<p>但是真正在开发环境，可能将jquery-min换成jquery，大家觉得会更加方便，无需那么麻烦处理，所以这也是可能没有流行起来的原因。  </p>
 <h2 id="sourceMap为什么又会被重视">sourceMap为什么又会被重视</h2><p>直接拿我遇到的问题说明，ES6语法浏览器执行不了怎么办?</p>
 <p>使用babel，ok，babel可以编译成js给浏览器执行。这个时候，编译后的代码必然会和我们开发时的不一样。  </p>
-<p>这时如果我们希望还和以前使用js一样去调试，怎办吧？</p>
+<p>这时如果我们希望还和以前使用js一样去调试，怎么办？</p>
 <p>只能利用Source Map这种，产生一种映射关系，去将开发中的代码映射到debug工具中。  </p>
 <p>除了es6，另外一个被看好的typescript（angulejs2使用typescript实现），它也同样存在这个问题（目前没有调研它的调试方式）。  </p>
 <p>可以预见，这种加入一种编译方式去写js可能是未来的一种趋势。<br>小小跑题一下，为什么个人觉得是一种趋势，编译做的越牛逼，开发的代码就会越简单，能让开发人员抓住与业务，兼容，适配，自适应的坑都交接编译去解决，大大的提高了工程效率。  </p>
