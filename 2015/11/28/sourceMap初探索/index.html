@@ -39,26 +39,41 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="上周听了厂里高工（T10）的分享，对于下面两点（技术深度和广度、解决问题的方法）有些感触。
-技术深度和广度当我们去扩展我们技术的广度时，我们千万不要成为了一个杂家，什么都学，什么都会，但是确达不到精通。  
-我们需要的一种能力是，深入的研究一门技术，并且能够抽象出一种学习的方法出来，然后能用这种方法快速适应各种其他技术或者新技术。  
-当你在某个领域真正深入到一种程度，你会发现再学习其他东西没有那">
+<meta name="description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
+在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
+
+上线时的打包构建问题
+开发环境编译问题，目前chrome都不兼容es6
+解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
+其他没有考虑到的问题等等
+
+其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="听厂里高工分享有感">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/11/16/听厂里高工分享有感/index.html">
+<meta property="og:title" content="sourceMap初探索">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/11/28/sourceMap初探索/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="上周听了厂里高工（T10）的分享，对于下面两点（技术深度和广度、解决问题的方法）有些感触。
-技术深度和广度当我们去扩展我们技术的广度时，我们千万不要成为了一个杂家，什么都学，什么都会，但是确达不到精通。  
-我们需要的一种能力是，深入的研究一门技术，并且能够抽象出一种学习的方法出来，然后能用这种方法快速适应各种其他技术或者新技术。  
-当你在某个领域真正深入到一种程度，你会发现再学习其他东西没有那">
+<meta property="og:description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
+在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
+
+上线时的打包构建问题
+开发环境编译问题，目前chrome都不兼容es6
+解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
+其他没有考虑到的问题等等
+
+其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-11-16T14:17:52.000Z">
+<meta property="og:updated_time" content="2015-11-28T12:33:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听厂里高工分享有感">
-<meta name="twitter:description" content="上周听了厂里高工（T10）的分享，对于下面两点（技术深度和广度、解决问题的方法）有些感触。
-技术深度和广度当我们去扩展我们技术的广度时，我们千万不要成为了一个杂家，什么都学，什么都会，但是确达不到精通。  
-我们需要的一种能力是，深入的研究一门技术，并且能够抽象出一种学习的方法出来，然后能用这种方法快速适应各种其他技术或者新技术。  
-当你在某个领域真正深入到一种程度，你会发现再学习其他东西没有那">
+<meta name="twitter:title" content="sourceMap初探索">
+<meta name="twitter:description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
+在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
+
+上线时的打包构建问题
+开发环境编译问题，目前chrome都不兼容es6
+解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
+其他没有考虑到的问题等等
+
+其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +85,7 @@
 
 
 
-  <title> 听厂里高工分享有感 | Yao's 前端修炼之路 </title>
+  <title> sourceMap初探索 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +189,7 @@
           
           
             
-              听厂里高工分享有感
+              sourceMap初探索
             
           
         </h1>
@@ -183,8 +198,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-16T19:14:44+08:00" content="2015-11-16">
-            2015-11-16
+          <time itemprop="dateCreated" datetime="2015-11-28T19:40:55+08:00" content="2015-11-28">
+            2015-11-28
           </time>
         </span>
 
@@ -203,15 +218,31 @@
       
 
       
-        <span itemprop="articleBody"><p>上周听了厂里高工（T10）的分享，对于下面两点（技术深度和广度、解决问题的方法）有些感触。</p>
-<h2 id="技术深度和广度">技术深度和广度</h2><p>当我们去扩展我们技术的广度时，我们千万不要成为了一个<code>杂家</code>，什么都学，什么都会，但是确达不到精通。  </p>
-<p>我们需要的一种能力是，深入的研究一门技术，并且能够抽象出一种学习的方法出来，然后能用这种方法快速适应各种其他技术或者新技术。  </p>
-<p>当你在某个领域真正深入到一种程度，你会发现再学习其他东西没有那么复杂了，会感觉很多东西非常相似。  </p>
-<p>所以请沉下心来，将一门技术深入下去。</p>
-<h2 id="解决问题的方法/态度">解决问题的方法/态度</h2><p>大神提到他之前遇到的大神处理问题的方法，很简单  </p>
-<p><strong>直接针对问题直接去解决问题</strong>  </p>
-<p>想想我们处理问题的方式：<br>最简单的处理方式：绕过问题，回避出问题的地方<br>技巧点的处理方式：通过一些hack的手段间接的去修复问题<br>牛逼的处理方式： 直接针对问题，找到出问题的根源去解决 </p>
-<p>平常是可以通过对于解决问题的方法来看出技术实力的。</p>
+        <span itemprop="articleBody"><h2 id="sourceMap的偶遇">sourceMap的偶遇</h2><p>接触到sourceMap，其实是在调研ES6时发现的。  </p>
+<p>在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  </p>
+<ol>
+<li>上线时的打包构建问题</li>
+<li>开发环境编译问题，目前chrome都不兼容es6</li>
+<li>解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  </li>
+<li>其他没有考虑到的问题等等</li>
+</ol>
+<p>其中sourceMap就是在调研第三个问题时，发现的。<br>想想如果在debug时浏览器显示的是编译后的代码，这个对于调试其实是致命的打击。  </p>
+<p>而通过目前的调研，发现sourceMap就是这个问题的解决方案。 </p>
+<h2 id="sourceMap是什么">sourceMap是什么</h2><p>请大家直接看阮一峰的文章<br><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html" target="_blank" rel="external">JavaScript Source Map 详解</a>  </p>
+<p>原理我简单的理解就是通过map文件产出一个映射关系，将编译后的代码映射到编译前的，然后debug时，浏览器解析的是编译后的，但是呈现给我们的是映射前的开发代码。</p>
+<h2 id="sourceMap曾经被忽视">sourceMap曾经被忽视</h2><p>在网上找的一些介绍Source Map的文章，发现Source Map主要是解决一些代码压缩混淆后不好调试的问题。 </p>
+<p>举个例子，jquery-min调试时非常不方便，但是加上Source Map，可以直接在浏览器中调试jquery压缩前的。  </p>
+<p>但是真正在开发环境，可能将jquery-min换成jquery，大家觉得会更加方便，无需那么麻烦的做处理，所以这也是可能没有流行起来的原因。  </p>
+<h2 id="sourceMap为什么又会被重视">sourceMap为什么又会被重视</h2><p>直接拿我遇到的问题说明，ES6语法浏览器执行不了怎么办?</p>
+<p>使用babel，ok，babel可以编译成js给浏览器执行。这个时候，编译后的代码必然会和我们开发时的不一样。  </p>
+<p>这时如果我们希望还和以前使用js一样去调试，怎办吧？</p>
+<p>只能利用Source Map这种，产生一种映射关系，去将开发中的代码映射到debug工具中。  </p>
+<p>除了es6，另外一个被看好的typescript（angulejs2使用typescript实现），它也同样存在这个问题（目前没有调研它的调试方式）。  </p>
+<p>可以预见，这种加入一种编译方式去写js可能是未来的一种趋势。<br>小小跑题一下，为什么个人觉得是一种趋势，编译做的越牛逼，开发的代码就会越简单，能让开发人员抓住与业务，兼容，适配，自适应的坑都交接编译去解决，大大的提高了工程效率。  </p>
+<h2 id="sourceMap使用参考">sourceMap使用参考</h2><p>大家看看下面这个链接（需要翻墙）：  </p>
+<p><a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/</a></p>
+<p>里面还有例子是将java编译成js，然后在chrome中使用sourceMap直接debug java的代码。  </p>
+<h2 id="我对sourceMap的了解">我对sourceMap的了解</h2><p>由于最近比较忙，这篇文章只是初步探索，了解的非常非常浅，没有什么干货，后面有一定成果后还会继续更新sourceMap其他方面。</p>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
       
@@ -224,13 +255,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/21/敏捷开发工具推荐/" rel="prev">敏捷开发工具推荐</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/10/你会用setTimeout吗/" rel="next">你会用setTimeout吗</a>
+              <a href="/2015/11/21/敏捷开发工具推荐/" rel="next">敏捷开发工具推荐</a>
             
           </div>
         </div>
@@ -334,7 +363,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术深度和广度"><span class="nav-number">1.</span> <span class="nav-text">技术深度和广度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决问题的方法/态度"><span class="nav-number">2.</span> <span class="nav-text">解决问题的方法/态度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">3.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap的偶遇"><span class="nav-number">1.</span> <span class="nav-text">sourceMap的偶遇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap是什么"><span class="nav-number">2.</span> <span class="nav-text">sourceMap是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap曾经被忽视"><span class="nav-number">3.</span> <span class="nav-text">sourceMap曾经被忽视</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap为什么又会被重视"><span class="nav-number">4.</span> <span class="nav-text">sourceMap为什么又会被重视</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap使用参考"><span class="nav-number">5.</span> <span class="nav-text">sourceMap使用参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我对sourceMap的了解"><span class="nav-number">6.</span> <span class="nav-text">我对sourceMap的了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
