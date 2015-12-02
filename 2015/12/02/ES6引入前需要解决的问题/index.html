@@ -39,30 +39,27 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="最近项目中的一个模块正式引入的ES6
+<meta name="description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
 为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
 ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
-理由二：提高开发">
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES6引入前需要解决的问题">
 <meta property="og:url" content="http://tangguangyao.github.io/2015/12/02/ES6引入前需要解决的问题/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="最近项目中的一个模块正式引入的ES6
+<meta property="og:description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
 为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
 ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
-理由二：提高开发">
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/es6.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-12-02T12:45:55.000Z">
+<meta property="og:updated_time" content="2015-12-02T13:08:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6引入前需要解决的问题">
-<meta name="twitter:description" content="最近项目中的一个模块正式引入的ES6
+<meta name="twitter:description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
 为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
 ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
-理由二：提高开发">
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -208,16 +205,18 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
 
       
         <span itemprop="articleBody"><p><img src="/img/res/es6.png" alt="ES6引入前需要解决的问题"></p>
-<p>最近项目中的一个模块正式引入的ES6</p>
+<p>最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程</p>
 <h2 id="为什么要引入ES6">为什么要引入ES6</h2><p>最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。</p>
 <p>ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  </p>
 <p>理由一：<br>符合未来趋势，angular2就是使用TypeScript实现；<br>react native 也是可以直接使用es6的语法；</p>
 <p>理由二：<br>提高开发效率（待考证）；</p>
-<p>理由三：<br>减少代码量、提高可读性等</p>
+<p>理由三：<br>减少代码量、提高可读性等  </p>
+<p>但我觉得不仅仅如此，应该会有更多优势。所以需要亲自验证。</p>
 <h2 id="引入前考虑最多的事情">引入前考虑最多的事情</h2><p>从个人的角度，趋势这个东西说不准，减少代码量、提高可读性等这些其实都可以通过规范来完成。  </p>
 <p>我个人最看重的是效率这块，是否能够真正的提高团队开发效率。  </p>
 <p>另外在一片文章中看到说facebook.com 都使用了ES6 + babel complile，我心里也安稳了一些。  </p>
 <p>考虑的第二点就是是否会给整个系统引入技术债务，由于这个是新技术的引入，和之前框架没有任何重叠，而且引入也是选择性的（提供一种可用的环境）。如果未来有较大的升级，我们可以修改compile-to-JS做适配和转换。</p>
+<p>最后一个问题是我们项目使用的不是grunt这种，有直接的解决方案，引入可能会有风险。不过庆幸的是，我们发现我们使用的edp已经支持了。其实我们开始已经想好了如果不支持，自己会扩展一些插件去支持。</p>
 <h2 id="技术方案">技术方案</h2><p>ES6 + babel</p>
 <h2 id="需要解决的问题">需要解决的问题</h2><ol>
 <li>开发环境下的浏览器不支持ES6？</li>
@@ -228,11 +227,15 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
 <li>开发效率是否会有提高？</li>
 <li>编译器高亮支持？</li>
 </ol>
-<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话<br><code>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</code><br>来自《火星救援》  </p>
+<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话  </p>
+<blockquote>
+<p>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</p>
+</blockquote>
+<p>来自《火星救援》  </p>
 <p><strong>开发环境下的浏览器不支持ES6？</strong><br>这个容易，使用babel。</p>
 <p><strong>使用babel转换的代码，调试不方便？</strong><br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.<span class="function"><span class="title">replace</span><span class="params">(/\.(\w+)</span></span>$/, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
-<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件  </p>
+<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件,这里必须给一个和处理的文件名不一样的</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel.<span class="function"><span class="title">transform</span><span class="params">(code, options)</span></span></span><br></pre></td></tr></table></figure>
 <p><strong>线上环境的代码打包编译怎么处理？</strong><br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
 <p><strong>ES6的新特性哪些适合使用？</strong><br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a>  </p>
@@ -241,9 +244,10 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
 </blockquote>
 <p>文章推荐的新特性，仅使用三星的。  </p>
 <p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
-<p><strong>ES6的新特性是否通过babel转换后还有兼容问题？</strong><br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome  </p>
+<p><strong>ES6的新特性是否通过babel转换后还有兼容问题？</strong><br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome，我们最终会使用三星特性加上兼容性ok的。</p>
 <p><strong>开发效率是否会有提高？</strong><br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
 <p><strong>编译器高亮支持？</strong><br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
+<p>其实问题就这么多，比想象中简单许多，未来可能还有坑，但是至少我们开始尝试了。</p>
 <h2 id="红利">红利</h2><ol>
 <li>语法有问题时，编译报错——语法检查</li>
 <li>面向未来——未来很多源码都是预编译类型</li>
