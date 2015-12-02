@@ -219,36 +219,21 @@
 <li>编译器高亮支持？</li>
 </ol>
 <h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话<br><code>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</code><br>来自《火星救援》  </p>
-<p>开发环境下的浏览器不支持ES6？<br>这个容易，使用babel。</p>
-<p>使用babel转换的代码，调试不方便？<br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.replace(<span class="regexp">/\.(\w+)$/</span>, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>开发环境下的浏览器不支持ES6？</strong><br>这个容易，使用babel。</p>
+<p><strong>使用babel转换的代码，调试不方便？</strong><br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.<span class="function"><span class="title">replace</span><span class="params">(/\.(\w+)</span></span>$/, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
 <p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件  </p>
-<p>线上环境的代码打包编译怎么处理？<br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
-<p>ES6的新特性哪些适合使用？<br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a><br><code>arrows    ★★★  
-classes    ★★★  
-enhanced object literals    ★★★  
-template strings    ★★★  
-destructuring    ★★  
-default + rest + spread    ★★★  
-let + const    ★★★  
-iterators + for..of    ★★  
-generators    ★  
-unicode    ☆  
-modules    ★★  
-module loaders    ☆  
-map + set + weakmap + weakset    ★★  
-proxies    ☆  
-symbols    ★  
-subclassable built-ins    ☆  
-promises    ★★★  
-math + number + string + array + object APIs    ★★★  
-binary and octal literals    ★  
-reflect api    ☆  
-tail calls    ★★</code><br>文章推荐的新特性，仅使用三星的。  </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel.<span class="function"><span class="title">transform</span><span class="params">(code, options)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>线上环境的代码打包编译怎么处理？</strong><br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
+<p><strong>ES6的新特性哪些适合使用？</strong><br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a>  </p>
+<blockquote>
+<p>arrows    ★★★<br>classes    ★★★<br>enhanced object literals    ★★★<br>template strings    ★★★<br>destructuring    ★★<br>default + rest + spread    ★★★<br>let + const    ★★★<br>iterators + for..of    ★★<br>generators    ★<br>unicode    ☆<br>modules    ★★<br>module loaders    ☆<br>map + set + weakmap + weakset    ★★<br>proxies    ☆<br>symbols    ★<br>subclassable built-ins    ☆<br>promises    ★★★<br>math + number + string + array + object APIs   ★★★<br>binary and octal literals    ★<br>reflect api    ☆<br>tail calls    ★★  </p>
+</blockquote>
+<p>文章推荐的新特性，仅使用三星的。  </p>
 <p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
-<p>ES6的新特性是否通过babel转换后还有兼容问题？<br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome  </p>
-<p>开发效率是否会有提高？<br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
-<p>编译器高亮支持？<br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
+<p><strong>ES6的新特性是否通过babel转换后还有兼容问题？</strong><br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome  </p>
+<p><strong>开发效率是否会有提高？</strong><br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
+<p><strong>编译器高亮支持？</strong><br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
 <h2 id="红利">红利</h2><ol>
 <li>语法有问题时，编译报错——语法检查</li>
 <li>面向未来——未来很多源码都是预编译类型</li>
