@@ -165,6 +165,127 @@
           
           
             
+              <a class="post-title-link" href="/2015/12/02/ES6引入前需要解决的问题/" itemprop="url">
+                ES6引入前需要解决的问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-02T19:35:03+08:00" content="2015-12-02">
+            2015-12-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><img src="/img/res/es6.png" alt="ES6引入前需要解决的问题"></p>
+<p>最近项目中的一个模块正式引入的ES6</p>
+<h2 id="为什么要引入ES6">为什么要引入ES6</h2><p>最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。</p>
+<p>ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  </p>
+<p>理由一：<br>符合未来趋势，angular2就是使用TypeScript实现；<br>react native 也是可以直接使用es6的语法；</p>
+<p>理由二：<br>提高开发效率（待考证）；</p>
+<p>理由三：<br>减少代码量、提高可读性等</p>
+<h2 id="引入前考虑最多的事情">引入前考虑最多的事情</h2><p>从个人的角度，趋势这个东西说不准，减少代码量、提高可读性等这些其实都可以通过规范来完成。  </p>
+<p>我个人最看重的是效率这块，是否能够真正的提高团队开发效率。  </p>
+<p>另外在一片文章中看到说facebook.com 都使用了ES6 + babel complile，我心里也安稳了一些。  </p>
+<p>考虑的第二点就是是否会给整个系统引入技术债务，由于这个是新技术的引入，和之前框架没有任何重叠，而且引入也是选择性的（提供一种可用的环境）。如果未来有较大的升级，我们可以修改compile-to-JS做适配和转换。</p>
+<h2 id="技术方案">技术方案</h2><p>ES6 + babel</p>
+<h2 id="需要解决的问题">需要解决的问题</h2><ol>
+<li>开发环境下的浏览器不支持ES6？</li>
+<li>使用babel转换的代码，调试不方便？</li>
+<li>线上环境的代码打包编译怎么处理？</li>
+<li>ES6的新特性哪些适合使用？</li>
+<li>ES6的新特性是否通过babel转换后还有兼容问题？</li>
+<li>开发效率是否会有提高？</li>
+<li>编译器高亮支持？</li>
+</ol>
+<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话<br><code>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</code><br>来自《火星救援》  </p>
+<p>开发环境下的浏览器不支持ES6？<br>这个容易，使用babel。</p>
+<p>使用babel转换的代码，调试不方便？<br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.replace(<span class="regexp">/\.(\w+)$/</span>, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
+<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件  </p>
+<p>线上环境的代码打包编译怎么处理？<br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
+<p>ES6的新特性哪些适合使用？<br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a><br><code>arrows    ★★★  
+classes    ★★★  
+enhanced object literals    ★★★  
+template strings    ★★★  
+destructuring    ★★  
+default + rest + spread    ★★★  
+let + const    ★★★  
+iterators + for..of    ★★  
+generators    ★  
+unicode    ☆  
+modules    ★★  
+module loaders    ☆  
+map + set + weakmap + weakset    ★★  
+proxies    ☆  
+symbols    ★  
+subclassable built-ins    ☆  
+promises    ★★★  
+math + number + string + array + object APIs    ★★★  
+binary and octal literals    ★  
+reflect api    ☆  
+tail calls    ★★</code><br>文章推荐的新特性，仅使用三星的。  </p>
+<p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
+<p>ES6的新特性是否通过babel转换后还有兼容问题？<br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome  </p>
+<p>开发效率是否会有提高？<br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
+<p>编译器高亮支持？<br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
+<h2 id="红利">红利</h2><ol>
+<li>语法有问题时，编译报错——语法检查</li>
+<li>面向未来——未来很多源码都是预编译类型</li>
+<li>开阔前端思路</li>
+<li>能读懂以后牛逼框架的源码， angular2 使用typescript</li>
+</ol>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/11/28/sourceMap初探索/" itemprop="url">
                 sourceMap初探索
               </a>
@@ -993,85 +1114,6 @@ $(<span class="string">'#test'</span>).click(<span class="function"><span class=
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/20/如何避免工程效率陷阱/" itemprop="url">
-                如何避免工程效率陷阱
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-20T21:16:25+08:00" content="2015-10-20">
-            2015-10-20
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="题记">题记</h2><p>牛逼的工程化架构可以通过简单重复的劳动来生产出复杂的产品</p>
-<h2 id="关于工程效率">关于工程效率</h2><p>最近几年关于前端工程化的东西特别多<br><code>grunt</code> <code>yeoman</code> <code>gulp</code> 等等<br>百度自己的就有 <code>edp</code> <code>fis</code> 等等很多<br>利用这个东西，我们可以很快的在本地搭建开发环境，可以自动化打包编译，利用脚手架快速构建项目等</p>
-<p>不管怎么样，这个些东西核心都是提高我们的开发效率  </p>
-<h2 id="团队内的工程效率">团队内的工程效率</h2><p>抛开上面这些底层工具，在我们团队中，随着技术的成熟，也必然会产出一些提高团队开发效率的工具。<br>相对应的，团队内也会有几个技术资深的人在开发和维护这些工具  </p>
-<p>首先我们需要肯定工程是很好的，不管是从团队的角度还是前端的发展看。<br>对于团队，高效的工程化框架，可以把复杂的逻辑清晰的划分开来，让每位开发人员专注于业务点，学习成本降低  </p>
-<p>从react native介绍中，facebook就号称要让工程师入职第一天就能开发代码，能丢出这么牛逼的话绝对是有一个很牛逼的工程架构做支撑的  </p>
-<p>拿我们自己的table控件举例：<br>业务人员无需了解控件的内部逻辑，只需要根据使用文档配置好对应的参数即可，通过配置，控件自己实现了多选，单选，表头固定等等复杂功能<br>就算是做一些控件升级或者底层的替换，也做好了对于原有的api兼容。  </p>
-<p>类似这种控件/框架很多，也很好用，对于开发人员太友好了，开发起来太开心了  </p>
-<p>但是，脱离这套框架怎么办。。。</p>
-<h2 id="被工程化的特点">被工程化的特点</h2><ul>
-<li>对应现有的业务，换了框架不知道怎么入手</li>
-<li>不是工作业务内的一些技术点，需要比较高的学习成本  </li>
-<li>对应新技术比较迷茫，不知道如何结合或者融入工作中</li>
-</ul>
-<h2 id="如何脱离被工程化">如何脱离被工程化</h2><p>我觉得首先要有意识，不仅能够通过工程化架构生产出东西，也要计划好一层层梳理工程化架构的实现<br>参考<a href="http://mp.weixin.qq.com/s?__biz=MzA5NTEyNjUwOA==&amp;mid=400076080&amp;idx=1&amp;sn=2f4d14e2e9369b5ce20363de639942a9#rd" target="_blank" rel="external">如何在大公司中成长</a>文中第二阶段。<br>在熟练使用框架以后，遇到问题是一定要自己去尝试解决问题，直接debug到框架的源码中，看看框架的运行流程，设计思路。<br>业务开发之余的时间也要从最常用的框架开始了解，多阅读源码等  </p>
-<p>最最重要的一点，意识，意识，意识，不要安于现状，被现有的工程死死框住</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1110,7 +1152,7 @@ $(<span class="string">'#test'</span>).click(<span class="function"><span class=
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

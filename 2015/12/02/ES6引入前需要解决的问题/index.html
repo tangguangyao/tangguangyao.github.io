@@ -39,42 +39,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
-在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
-
-上线时的打包构建问题
-开发环境编译问题，目前chrome都不兼容es6
-解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
-其他没有考虑到的问题等等
-
-其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
+<meta name="description" content="最近项目中的一个模块正式引入的ES6
+为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
+ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
+理由二：提高开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sourceMap初探索">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/11/28/sourceMap初探索/index.html">
+<meta property="og:title" content="ES6引入前需要解决的问题">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/12/02/ES6引入前需要解决的问题/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
-在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
-
-上线时的打包构建问题
-开发环境编译问题，目前chrome都不兼容es6
-解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
-其他没有考虑到的问题等等
-
-其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/sourceMap.png">
+<meta property="og:description" content="最近项目中的一个模块正式引入的ES6
+为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
+ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
+理由二：提高开发">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/es6.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-11-28T12:57:47.000Z">
+<meta property="og:updated_time" content="2015-12-02T12:35:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sourceMap初探索">
-<meta name="twitter:description" content="sourceMap的偶遇接触到sourceMap，其实是在调研ES6时发现的。  
-在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  
-
-上线时的打包构建问题
-开发环境编译问题，目前chrome都不兼容es6
-解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  
-其他没有考虑到的问题等等
-
-其中sourceMap就是在调研第三个问题时，发现的。想想如果在">
+<meta name="twitter:title" content="ES6引入前需要解决的问题">
+<meta name="twitter:description" content="最近项目中的一个模块正式引入的ES6
+为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
+ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
+理由一：符合未来趋势，angular2就是使用TypeScript实现；react native 也是可以直接使用es6的语法；
+理由二：提高开发">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -86,7 +74,7 @@
 
 
 
-  <title> sourceMap初探索 | Yao's 前端修炼之路 </title>
+  <title> ES6引入前需要解决的问题 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -190,7 +178,7 @@
           
           
             
-              sourceMap初探索
+              ES6引入前需要解决的问题
             
           
         </h1>
@@ -199,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-28T19:40:55+08:00" content="2015-11-28">
-            2015-11-28
+          <time itemprop="dateCreated" datetime="2015-12-02T19:35:03+08:00" content="2015-12-02">
+            2015-12-02
           </time>
         </span>
 
@@ -219,32 +207,64 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="/img/res/sourceMap.png" alt="sourceMap初探索"></p>
-<h2 id="sourceMap的偶遇">sourceMap的偶遇</h2><p>接触到sourceMap，其实是在调研ES6时发现的。  </p>
-<p>在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  </p>
-<ol>
-<li>上线时的打包构建问题</li>
-<li>开发环境编译问题，目前chrome都不兼容es6</li>
-<li>解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  </li>
-<li>其他没有考虑到的问题等等</li>
+        <span itemprop="articleBody"><p><img src="/img/res/es6.png" alt="ES6引入前需要解决的问题"></p>
+<p>最近项目中的一个模块正式引入的ES6</p>
+<h2 id="为什么要引入ES6">为什么要引入ES6</h2><p>最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。</p>
+<p>ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  </p>
+<p>理由一：<br>符合未来趋势，angular2就是使用TypeScript实现；<br>react native 也是可以直接使用es6的语法；</p>
+<p>理由二：<br>提高开发效率（待考证）；</p>
+<p>理由三：<br>减少代码量、提高可读性等</p>
+<h2 id="引入前考虑最多的事情">引入前考虑最多的事情</h2><p>从个人的角度，趋势这个东西说不准，减少代码量、提高可读性等这些其实都可以通过规范来完成。  </p>
+<p>我个人最看重的是效率这块，是否能够真正的提高团队开发效率。  </p>
+<p>另外在一片文章中看到说facebook.com 都使用了ES6 + babel complile，我心里也安稳了一些。  </p>
+<p>考虑的第二点就是是否会给整个系统引入技术债务，由于这个是新技术的引入，和之前框架没有任何重叠，而且引入也是选择性的（提供一种可用的环境）。如果未来有较大的升级，我们可以修改compile-to-JS做适配和转换。</p>
+<h2 id="技术方案">技术方案</h2><p>ES6 + babel</p>
+<h2 id="需要解决的问题">需要解决的问题</h2><ol>
+<li>开发环境下的浏览器不支持ES6？</li>
+<li>使用babel转换的代码，调试不方便？</li>
+<li>线上环境的代码打包编译怎么处理？</li>
+<li>ES6的新特性哪些适合使用？</li>
+<li>ES6的新特性是否通过babel转换后还有兼容问题？</li>
+<li>开发效率是否会有提高？</li>
+<li>编译器高亮支持？</li>
 </ol>
-<p>其中sourceMap就是在调研第三个问题时，发现的。<br>想想如果在debug时浏览器显示的是编译后的代码，这个对于调试其实是致命的打击。  </p>
-<p>而通过目前的调研，发现sourceMap就是这个问题的解决方案。 </p>
-<h2 id="sourceMap是什么">sourceMap是什么</h2><p>请大家直接看阮一峰的文章<br><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html" target="_blank" rel="external">JavaScript Source Map 详解</a>  </p>
-<p>原理我简单的理解就是通过map文件产出一个映射关系，将编译后的代码映射到编译前的，然后debug时，浏览器解析的是编译后的，但是呈现给我们的是映射前的开发代码。</p>
-<h2 id="sourceMap曾经被忽视">sourceMap曾经被忽视</h2><p>在网上找的一些介绍Source Map的文章，发现Source Map主要是解决一些代码压缩混淆后不好调试的问题。 </p>
-<p>举个例子，jquery-min调试时非常不方便，但是加上Source Map，可以直接在浏览器中调试jquery压缩前的。  </p>
-<p>但是真正在开发环境，可能将jquery-min换成jquery，大家觉得会更加方便，无需那么麻烦处理，所以这也是可能没有流行起来的原因。  </p>
-<h2 id="sourceMap为什么又会被重视">sourceMap为什么又会被重视</h2><p>直接拿我遇到的问题说明，ES6语法浏览器执行不了怎么办?</p>
-<p>使用babel，ok，babel可以编译成js给浏览器执行。这个时候，编译后的代码必然会和我们开发时的不一样。  </p>
-<p>这时如果我们希望还和以前使用js一样去调试，怎么办？</p>
-<p>只能利用Source Map这种，产生一种映射关系，去将开发中的代码映射到debug工具中。  </p>
-<p>除了es6，另外一个被看好的typescript（angulejs2使用typescript实现），它也同样存在这个问题（目前没有调研它的调试方式）。  </p>
-<p>可以预见，这种加入一种编译方式去写js可能是未来的一种趋势。<br>小小跑题一下，为什么个人觉得是一种趋势，编译做的越牛逼，开发的代码就会越简单，能让开发人员抓住与业务，兼容，适配，自适应的坑都交接编译去解决，大大的提高了工程效率。  </p>
-<h2 id="sourceMap使用参考">sourceMap使用参考</h2><p>大家看看下面这个链接（需要翻墙）：  </p>
-<p><a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/</a></p>
-<p>里面还有例子是将java编译成js，然后在chrome中使用sourceMap直接debug java的代码。  </p>
-<h2 id="我对sourceMap的了解">我对sourceMap的了解</h2><p>由于最近比较忙，这篇文章只是初步探索，了解的非常非常浅，没有什么干货，后面有一定成果后还会继续更新sourceMap其他方面。</p>
+<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话<br><code>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</code><br>来自《火星救援》  </p>
+<p>开发环境下的浏览器不支持ES6？<br>这个容易，使用babel。</p>
+<p>使用babel转换的代码，调试不方便？<br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.replace(<span class="regexp">/\.(\w+)$/</span>, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
+<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件  </p>
+<p>线上环境的代码打包编译怎么处理？<br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
+<p>ES6的新特性哪些适合使用？<br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a><br><code>arrows    ★★★  
+classes    ★★★  
+enhanced object literals    ★★★  
+template strings    ★★★  
+destructuring    ★★  
+default + rest + spread    ★★★  
+let + const    ★★★  
+iterators + for..of    ★★  
+generators    ★  
+unicode    ☆  
+modules    ★★  
+module loaders    ☆  
+map + set + weakmap + weakset    ★★  
+proxies    ☆  
+symbols    ★  
+subclassable built-ins    ☆  
+promises    ★★★  
+math + number + string + array + object APIs    ★★★  
+binary and octal literals    ★  
+reflect api    ☆  
+tail calls    ★★</code><br>文章推荐的新特性，仅使用三星的。  </p>
+<p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
+<p>ES6的新特性是否通过babel转换后还有兼容问题？<br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome  </p>
+<p>开发效率是否会有提高？<br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
+<p>编译器高亮支持？<br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
+<h2 id="红利">红利</h2><ol>
+<li>语法有问题时，编译报错——语法检查</li>
+<li>面向未来——未来很多源码都是预编译类型</li>
+<li>开阔前端思路</li>
+<li>能读懂以后牛逼框架的源码， angular2 使用typescript</li>
+</ol>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
       
@@ -257,13 +277,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/02/ES6引入前需要解决的问题/" rel="prev">ES6引入前需要解决的问题</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/21/敏捷开发工具推荐/" rel="next">敏捷开发工具推荐</a>
+              <a href="/2015/11/28/sourceMap初探索/" rel="next">sourceMap初探索</a>
             
           </div>
         </div>
@@ -367,7 +385,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap的偶遇"><span class="nav-number">1.</span> <span class="nav-text">sourceMap的偶遇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap是什么"><span class="nav-number">2.</span> <span class="nav-text">sourceMap是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap曾经被忽视"><span class="nav-number">3.</span> <span class="nav-text">sourceMap曾经被忽视</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap为什么又会被重视"><span class="nav-number">4.</span> <span class="nav-text">sourceMap为什么又会被重视</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap使用参考"><span class="nav-number">5.</span> <span class="nav-text">sourceMap使用参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我对sourceMap的了解"><span class="nav-number">6.</span> <span class="nav-text">我对sourceMap的了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要引入ES6"><span class="nav-number">1.</span> <span class="nav-text">为什么要引入ES6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入前考虑最多的事情"><span class="nav-number">2.</span> <span class="nav-text">引入前考虑最多的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术方案"><span class="nav-number">3.</span> <span class="nav-text">技术方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要解决的问题"><span class="nav-number">4.</span> <span class="nav-text">需要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下面挨个解决问题"><span class="nav-number">5.</span> <span class="nav-text">下面挨个解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红利"><span class="nav-number">6.</span> <span class="nav-text">红利</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
