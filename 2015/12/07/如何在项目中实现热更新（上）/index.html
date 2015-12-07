@@ -39,30 +39,27 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+<meta name="description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现内容也是我了解了他的具体实现思路后，整理出来的。
 工具源码EHU(esl-hot-update)
 热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
-如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
-解决">
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在项目中修改代码后实现热更新（上）">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/12/07/如何在项目中修改代码后实现热更新（上）/index.html">
+<meta property="og:title" content="如何在项目中实现热更新（上）">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/12/07/如何在项目中实现热更新（上）/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+<meta property="og:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现内容也是我了解了他的具体实现思路后，整理出来的。
 工具源码EHU(esl-hot-update)
 热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
-如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
-解决">
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/update.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-12-07T15:10:29.000Z">
+<meta property="og:updated_time" content="2015-12-07T15:17:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在项目中修改代码后实现热更新（上）">
-<meta name="twitter:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+<meta name="twitter:title" content="如何在项目中实现热更新（上）">
+<meta name="twitter:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现内容也是我了解了他的具体实现思路后，整理出来的。
 工具源码EHU(esl-hot-update)
 热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
-如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
-解决">
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -74,7 +71,7 @@
 
 
 
-  <title> 如何在项目中修改代码后实现热更新（上） | Yao's 前端修炼之路 </title>
+  <title> 如何在项目中实现热更新（上） | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -178,7 +175,7 @@
           
           
             
-              如何在项目中修改代码后实现热更新（上）
+              如何在项目中实现热更新（上）
             
           
         </h1>
@@ -208,22 +205,22 @@
 
       
         <span itemprop="articleBody"><p><img src="/img/res/update.jpg" alt="如何在项目中修改代码后实现热更新"></p>
-<p>这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。</p>
+<p>这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现内容也是我了解了他的具体实现思路后，整理出来的。</p>
 <p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
 <h2 id="热更新是什么">热更新是什么</h2><p>热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。</p>
 <p>如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。</p>
 <h2 id="解决的问题">解决的问题</h2><p>对于大型的系统级别项目会有下面几个特点</p>
 <ol>
-<li>模块化（AMD）模式的广泛使用后，开发散文件特别多，很容易上百，一不小心还能上千。</li>
+<li>模块化（AMD）模式的广泛使用后，开发环境散文件特别多，很容易上百，一不小心还能上千</li>
 <li>初始化的内容特别多，各种底层库，ui库等等</li>
 </ol>
-<p>这两个特点直接导致每次调试后，刷新会很慢。如果初始化的js达到上千的级别，每一次重新刷新都是5s，10s，甚20s的等待。</p>
+<p>这两个特点直接导致每次调试后，刷新会很慢。如果初始化的js达到上千的数量级，每一次重新刷新都是5s，10s，甚至20s的等待。</p>
 <p>而热更新的目的就是为了在一定程度上减少这5s，10s，甚20s的浪费。</p>
 <h2 id="遇到的问题">遇到的问题</h2><ol>
 <li>我们使用的是百度自己的开发环境工具edp，首先他不支持热更新</li>
 <li>我们使用的AMD实践也是百度自己的esl，而且即使是requirejs也暂时没有找到对应的热更新策略，假如requirejs有对应的，我们也无法直接使用</li>
 </ol>
-<p>所以最终的结论是我们自己去实现一个基于我们自己业务的。这样我们考虑的面不用太广，并且解决方案的更有正对性，即面向我们现有的业务框架。</p>
+<p>所以最终的结论是我们自己去实现一个基于我们自己业务的。这样我们考虑的面不用太广，并且解决方案的更有针对性，即面向我们现有的业务框架。最重要的是可以尝试修改底层框架做配合。</p>
 <p>等待路踩通了，我们再去考虑普适性。</p>
 <h2 id="解决的思路">解决的思路</h2><p>从ehu/package.json 这个文件中，我们就可以看出一些具体的思路  </p>
 <ol>
