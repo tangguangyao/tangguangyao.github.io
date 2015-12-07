@@ -39,26 +39,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
-其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
-但是本文的背景是在一些大型的前端项目中
-技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
+<meta name="description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+工具源码EHU(esl-hot-update)
+热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
+解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于前端的技术债务">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/11/04/关于前端的技术债务/index.html">
+<meta property="og:title" content="如何在项目中修改代码后实现热更新（上）">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/12/07/如何在项目中修改代码后实现热更新（上）/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
-其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
-但是本文的背景是在一些大型的前端项目中
-技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
+<meta property="og:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+工具源码EHU(esl-hot-update)
+热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
+解决">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/update.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-11-05T12:42:02.000Z">
+<meta property="og:updated_time" content="2015-12-07T15:10:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于前端的技术债务">
-<meta name="twitter:description" content="最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  
-其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   
-但是本文的背景是在一些大型的前端项目中
-技术债务的产生随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更">
+<meta name="twitter:title" content="如何在项目中修改代码后实现热更新（上）">
+<meta name="twitter:description" content="这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。
+工具源码EHU(esl-hot-update)
+热更新是什么热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。
+如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。
+解决">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +74,7 @@
 
 
 
-  <title> 关于前端的技术债务 | Yao's 前端修炼之路 </title>
+  <title> 如何在项目中修改代码后实现热更新（上） | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +178,7 @@
           
           
             
-              关于前端的技术债务
+              如何在项目中修改代码后实现热更新（上）
             
           
         </h1>
@@ -183,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-04T20:39:39+08:00" content="2015-11-04">
-            2015-11-04
+          <time itemprop="dateCreated" datetime="2015-12-07T22:01:33+08:00" content="2015-12-07">
+            2015-12-07
           </time>
         </span>
 
@@ -203,43 +207,40 @@
       
 
       
-        <span itemprop="articleBody"><p>最近一段时间，经常看到技术债务相关文章，最近也是参与了技术债务的清理。所以从参与者的角度介绍下遇到债务问题和对于技术债务的理解  </p>
-<p>其实在于前端领域，技术债务的相对较少，因为前端有一个特点就是随着功能和设计的升级，相对容易重构。   </p>
-<p>但是本文的背景是在一些大型的前端项目中</p>
-<h2 id="技术债务的产生">技术债务的产生</h2><p>随着前端复杂度的增加，技术债务就开始慢慢的在浮现出来。特别是系统级别的单页面应用，功能不断的叠加，技术不断的更新，架构不断的升级，技术债务就暴露出来了。  </p>
-<blockquote>
-<p>举一个例子（如有雷同，表示慰问）：<br>最开始尝试mvc时，使用了backbone开发单页面，然后一年后，发现angularjs特别火，而且调研发现这种mvvm模式更加提高效率，这时项目中一些新的模块开始都用上了angularjs，然后随着时间的推移，发现angularjs存在性能瓶颈，这时发现reactjs的虚拟dom和单向数据流很好，然后继续在新模块中引入。然后某一天，回头一看。。。WTF。。。发现架构混乱，维护困难，新业务开展困难等等。。。   </p>
-</blockquote>
-<p>如上面的例子，架构的升级，新技术的引入，特别容易引发技术债务的出现。<br>正如我之前的文章<a href="http://tangguangyao.github.io/2015/10/18/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%A7%E5%85%AC%E5%8F%B8%E4%B8%AD%E6%88%90%E9%95%BF/">《如何在大公司成长》</a>提到的，在成熟的系统中引入新技术其实是一个挑战非常大的事情，因为首先你必须控制好技术债务。<br>因为在厉害的架构师也无法设计一个面向未来可以一直不变的框架，再流行的模式也会不断演变。如果解决不好新旧的过度就很容易出现上面的情况。  </p>
-<p>可以直白的说，在越复杂的系统上面开发，就是带着越重的脚镣在跳舞。</p>
-<blockquote>
-<p>再举一个例子，也是引发技术债务的一种情况：<br>由于进度的原因，不得不使用一些hack的方式（而不是从根源解决)去完成任务，然后在没有来得及删掉这种hack方式前，有其他人在你的基础上继续迭代和模仿，最后变得想去掉这种hack方式都去不掉。  </p>
-</blockquote>
-<h2 id="技术债务的定义">技术债务的定义</h2><p>什么样的问题称之为技术债务，我和网上观点有些不同。对于一些编程习惯，编码方式，有异味的代码等等，我认为这些应该属于代码素养的范畴，这些可以不断改善，而且完全可以小范围的重构解决，不会形成叠加效应。<br>我理解的技术债务是它的存在影响了整个系统的效率和阻碍了系统的发展，随着系统复杂度的增加，问题会不断的被放大。<br>下面一一说明，并且配合举例</p>
-<h2 id="技术债务的影响">技术债务的影响</h2><p><strong>影响日常的开发效率</strong><br>我认为这个应该属于最严重的影响，由于债务的原因，严重拖慢了开发效率，导致开发人员开法困难。  </p>
-<blockquote>
-<p>举例：<br>两个模块共用一个修改组件，由于两个模块底层依赖不一样，导致需要重复开发两次。而且每一次需求升级，都是两次的重复开发。这种情况的结果直接导致人力成倍翻倍。</p>
-</blockquote>
-<p><strong>提高了开发人员的学习成本</strong><br>这也是对于工程效率的影响，由于技术债务的积累，导致开发人员需要花更多的时间去理解开发任务，需要更多的时间学习理解。  </p>
-<blockquote>
-<p>举例<br>由于历史原因，同样一个组件/模块有两种实现方式，新同学在选择时第一感觉就是迷茫，乱，烦躁，不知所措，还需要花人力去了解哪个更加合适，哪个会有什么样的坑等等，如果选择错误了，还需要花无谓的时间重做。  </p>
-</blockquote>
-<p><strong>持续的影响网站性能</strong><br>债务的积累必定是一些遗留问题，特点就是随着时间，会越来越多，越来越复杂，越来越不敢砍掉。直接导致的问题就是，遗留代码太多，这些代码都是对线程的无谓消耗。最后的结果就是网站越来越慢  </p>
-<blockquote>
-<p>举例<br>控件最初使用的是1.0版本，换2.0时，由于旧的业务没有随着升级，就导致系统里面ui库多版本，这样，ui初始化就需要初始化两份，而且合并打包的时候，代码也会多出很多。</p>
-</blockquote>
-<p><strong>容易触发bug</strong><br>旧代码的错误使用，或者使用不当，经常会导致一些莫名其妙的bug，而且极其难定位。  </p>
-<blockquote>
-<p>举例<br>在开发中不小心使用了旧代码的一些功能，而其他人员在清理或者修改重构时没有考虑，直接就会间接的产生bug。也是因为这种原因，旧代码也越来越不敢清理</p>
-</blockquote>
-<p><strong>成为了业务规划的瓶颈</strong><br>由于一些架构因素，导致某些业务功能无法实现，或者实现起来的成本特别高。  </p>
-<blockquote>
-<p>举例<br>两个模块由于底层的技术架构不同，如果pm希望模块间有一些数据的互通，或者功能的互相调用，这种需求就是受到技术的限制而实现不了（当然可以通过一些hack或者非常规方式实现，但是每一次hack都是一次新债务的产生）</p>
-</blockquote>
-<h2 id="如何避免技术债务">如何避免技术债务</h2><p>技术债务能避免吗？<br>我觉得不可能，因为随着复杂度的增长，债务也在慢慢增长，只是快和慢的问题，也许你今天写的一个完美的功能，一年以后，对于新的架构就是一个债务，因为技术在不断再更新换代，没有任何一种模式是银弹。<br>如果非要有一种办法避免，我能想到的就拒绝新技术引入，一种模式坚持到底，但这肯定是不实际。  </p>
-<p>所以个人觉得对于技术债务<br>我们首先我们需要认识到债务的存在，最好有一个债务管理机制。例如有一个债务范围的控制，当影响面达到一定程度，就必须去清理。<br>其次认识到清理债务对当下的收益可能不明显，但是收益在未来会不断放大，所以对于债务的清理，我们必须要去面对，而不是逃避。<br>最后，还需要在平时的开发中，有技术债务的意识，例如，临时方案真的是临时的吗？开发出来的代码可维护吗？</p>
+        <span itemprop="articleBody"><p><img src="/img/res/update.jpg" alt="如何在项目中修改代码后实现热更新"></p>
+<p>这个是组内一位同学在平时开发中，发现调试不便，为团队开发的热更新工具。很厉害，文章中的技术实现方面的内容也是我听了他的分享后，整理出来的。</p>
+<p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
+<h2 id="热更新是什么">热更新是什么</h2><p>热更新就是当你在开发环境修改代码后，不用刷新整个页面即可看到修改后的效果。</p>
+<p>如果你的项目中使用了webpack的话，你会很幸运，借助webpack-dev-server插件可以实现项目的热更新。</p>
+<h2 id="解决的问题">解决的问题</h2><p>对于大型的系统级别项目会有下面几个特点</p>
+<ol>
+<li>模块化（AMD）模式的广泛使用后，开发散文件特别多，很容易上百，一不小心还能上千。</li>
+<li>初始化的内容特别多，各种底层库，ui库等等</li>
+</ol>
+<p>这两个特点直接导致每次调试后，刷新会很慢。如果初始化的js达到上千的级别，每一次重新刷新都是5s，10s，甚20s的等待。</p>
+<p>而热更新的目的就是为了在一定程度上减少这5s，10s，甚20s的浪费。</p>
+<h2 id="遇到的问题">遇到的问题</h2><ol>
+<li>我们使用的是百度自己的开发环境工具edp，首先他不支持热更新</li>
+<li>我们使用的AMD实践也是百度自己的esl，而且即使是requirejs也暂时没有找到对应的热更新策略，假如requirejs有对应的，我们也无法直接使用</li>
+</ol>
+<p>所以最终的结论是我们自己去实现一个基于我们自己业务的。这样我们考虑的面不用太广，并且解决方案的更有正对性，即面向我们现有的业务框架。</p>
+<p>等待路踩通了，我们再去考虑普适性。</p>
+<h2 id="解决的思路">解决的思路</h2><p>从ehu/package.json 这个文件中，我们就可以看出一些具体的思路  </p>
+<ol>
+<li>需要一个watch功能，即能够监听到文件的修改</li>
+<li>socket.io通知浏览器处理文件的改变</li>
+<li>修改esl这个文件，达到能够实时更新的效果</li>
+</ol>
+<p>当时最简单的考虑，就是文件改变了后，能够通知浏览器，浏览器去重新load这个文件并且执行一次。这个时候再重新去打开这个模块或者功能后，会发现新load的代码在执行后会覆盖上一次的。</p>
+<p>所以当时的我的第一直觉是，esl重复require时，如果后面一次会覆盖前面的，那么可以通过简单的覆盖思路去尝试，结果发现覆盖不了。经过验证，发现是esl内部维护了一个map，即require过的模块会存起来。我们如果希望更新这个模块，只能将map中的对应模块名删除。（后面会详细讲述esl的改造）</p>
+<h2 id="对于工具的要求">对于工具的要求</h2><p>对应这个工具，我当时也提出了几个要求</p>
+<ol>
+<li>esl必然是需要修改的，但是如何对开发人员透明？首先是不能让大家都做这种修改。</li>
+<li>页面中也必须加入socket.io支持，那么我们如何在不影响其他人员开发的情况下加入？</li>
+<li>我们做的属于beta版本，如何选择性的使用？ehu工具和以前的开发模式随意切换？</li>
+<li>安装方便，能否只是作为一个工具，即插即用，不需要繁琐的配置？</li>
+</ol>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-<h2 id="下篇文章预告">下篇文章预告</h2><p>聊聊code review</p>
 </span>
       
     </div>
@@ -251,13 +252,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/08/为什么要坚持code review/" rel="prev">为什么要坚持code review</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/30/如何构建前端代码/" rel="next">如何构建前端代码</a>
+              <a href="/2015/12/02/ES6引入前需要解决的问题/" rel="next">ES6引入前需要解决的问题</a>
             
           </div>
         </div>
@@ -361,7 +360,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的产生"><span class="nav-number">1.</span> <span class="nav-text">技术债务的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的定义"><span class="nav-number">2.</span> <span class="nav-text">技术债务的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术债务的影响"><span class="nav-number">3.</span> <span class="nav-text">技术债务的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何避免技术债务"><span class="nav-number">4.</span> <span class="nav-text">如何避免技术债务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下篇文章预告"><span class="nav-number">6.</span> <span class="nav-text">下篇文章预告</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#热更新是什么"><span class="nav-number">1.</span> <span class="nav-text">热更新是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决的问题"><span class="nav-number">2.</span> <span class="nav-text">解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决的思路"><span class="nav-number">4.</span> <span class="nav-text">解决的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于工具的要求"><span class="nav-number">5.</span> <span class="nav-text">对于工具的要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">6.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
