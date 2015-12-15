@@ -39,27 +39,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
-为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
-ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
+<meta name="description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
+工具源码EHU(esl-hot-update)
+依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+通信逻辑
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES6引入前需要解决的问题">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/12/02/ES6引入前需要解决的问题/index.html">
+<meta property="og:title" content="如何在项目中实现热更新（下）">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/12/15/如何在项目中实现热更新（下）/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
-为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
-ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/es6.png">
+<meta property="og:description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
+工具源码EHU(esl-hot-update)
+依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+通信逻辑
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/update02.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-12-02T13:08:10.000Z">
+<meta property="og:updated_time" content="2015-12-15T14:24:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES6引入前需要解决的问题">
-<meta name="twitter:description" content="最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程
-为什么要引入ES6最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。
-ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  
-理由一：符合未来趋势，angular2就是使用TypeScript实现；react n">
+<meta name="twitter:title" content="如何在项目中实现热更新（下）">
+<meta name="twitter:description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
+工具源码EHU(esl-hot-update)
+依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+通信逻辑
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -71,7 +74,7 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
 
 
 
-  <title> ES6引入前需要解决的问题 | Yao's 前端修炼之路 </title>
+  <title> 如何在项目中实现热更新（下） | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -175,7 +178,7 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
           
           
             
-              ES6引入前需要解决的问题
+              如何在项目中实现热更新（下）
             
           
         </h1>
@@ -184,8 +187,8 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-02T19:35:03+08:00" content="2015-12-02">
-            2015-12-02
+          <time itemprop="dateCreated" datetime="2015-12-15T14:20:59+08:00" content="2015-12-15">
+            2015-12-15
           </time>
         </span>
 
@@ -204,56 +207,34 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
       
 
       
-        <span itemprop="articleBody"><p><img src="/img/res/es6.png" alt="ES6引入前需要解决的问题"></p>
-<p>最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程</p>
-<h2 id="为什么要引入ES6">为什么要引入ES6</h2><p>最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。</p>
-<p>ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  </p>
-<p>理由一：<br>符合未来趋势，angular2就是使用TypeScript实现；<br>react native 也是可以直接使用es6的语法；</p>
-<p>理由二：<br>提高开发效率（待考证）；</p>
-<p>理由三：<br>减少代码量、提高可读性等  </p>
-<p>但我觉得不仅仅如此，应该会有更多优势。所以需要亲自验证。</p>
-<h2 id="引入前考虑最多的事情">引入前考虑最多的事情</h2><p>从个人的角度，趋势这个东西说不准，减少代码量、提高可读性等这些其实都可以通过规范来完成。  </p>
-<p>我个人最看重的是效率这块，是否能够真正的提高团队开发效率。  </p>
-<p>另外在一片文章中看到说facebook.com 都使用了ES6 + babel complile，我心里也安稳了一些。  </p>
-<p>考虑的第二点就是是否会给整个系统引入技术债务，由于这个是新技术的引入，和之前框架没有任何重叠，而且引入也是选择性的（提供一种可用的环境）。如果未来有较大的升级，我们可以修改compile-to-JS做适配和转换。</p>
-<p>最后一个问题是我们项目使用的不是grunt这种，有直接的解决方案，引入可能会有风险。不过庆幸的是，我们发现我们使用的edp已经支持了。其实我们开始已经想好了如果不支持，自己会扩展一些插件去支持。</p>
-<h2 id="技术方案">技术方案</h2><p>ES6 + babel</p>
-<h2 id="需要解决的问题">需要解决的问题</h2><ol>
-<li>开发环境下的浏览器不支持ES6？</li>
-<li>使用babel转换的代码，调试不方便？</li>
-<li>线上环境的代码打包编译怎么处理？</li>
-<li>ES6的新特性哪些适合使用？</li>
-<li>ES6的新特性是否通过babel转换后还有兼容问题？</li>
-<li>开发效率是否会有提高？</li>
-<li>编译器高亮支持？</li>
-</ol>
-<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话  </p>
-<blockquote>
-<p>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</p>
-</blockquote>
-<p>来自《火星救援》  </p>
-<p><strong>开发环境下的浏览器不支持ES6？</strong><br>这个容易，使用babel。</p>
-<p><strong>使用babel转换的代码，调试不方便？</strong><br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.<span class="function"><span class="title">replace</span><span class="params">(/\.(\w+)</span></span>$/, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
-<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件,这里必须给一个和处理的文件名不一样的</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel.<span class="function"><span class="title">transform</span><span class="params">(code, options)</span></span></span><br></pre></td></tr></table></figure>
-<p><strong>线上环境的代码打包编译怎么处理？</strong><br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
-<p><strong>ES6的新特性哪些适合使用？</strong><br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a>  </p>
-<blockquote>
-<p>arrows    ★★★<br>classes    ★★★<br>enhanced object literals    ★★★<br>template strings    ★★★<br>destructuring    ★★<br>default + rest + spread    ★★★<br>let + const    ★★★<br>iterators + for..of    ★★<br>generators    ★<br>unicode    ☆<br>modules    ★★<br>module loaders    ☆<br>map + set + weakmap + weakset    ★★<br>proxies    ☆<br>symbols    ★<br>subclassable built-ins    ☆<br>promises    ★★★<br>math + number + string + array + object APIs   ★★★<br>binary and octal literals    ★<br>reflect api    ☆<br>tail calls    ★★  </p>
-</blockquote>
-<p>文章推荐的新特性，仅使用三星的。  </p>
-<p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
-<p><strong>ES6的新特性是否通过babel转换后还有兼容问题？</strong><br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome，我们最终会使用三星特性加上兼容性ok的。</p>
-<p><strong>开发效率是否会有提高？</strong><br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
-<p><strong>编译器高亮支持？</strong><br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
-<p>其实问题就这么多，比想象中简单许多，未来可能还有坑，但是至少我们开始尝试了。</p>
-<h2 id="红利">红利</h2><ol>
-<li>语法有问题时，编译报错——语法检查</li>
-<li>面向未来——未来很多源码都是预编译类型</li>
-<li>开阔前端思路</li>
-<li>能读懂以后牛逼框架的源码， angular2 使用typescript</li>
-</ol>
+        <span itemprop="articleBody"><p><img src="/img/res/update02.jpg" alt="如何在项目中修改代码后实现热更新"></p>
+<p>本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。</p>
+<p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
+<h2 id="依赖">依赖</h2><p><code>socket.io</code>——浏览器端仅仅依赖socket这个去和服务端通信  </p>
+<p>通信逻辑</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">socket.on(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    log(getLogMsgPrefix(), <span class="string">'HotUpdate已启动！'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 检测到文件改动</span></span><br><span class="line">socket.on(<span class="string">'hotUpdate'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(file)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// log(getLogMsgPrefix(), '检测到文件改动', file);</span></span><br><span class="line">    <span class="comment">// ....处理文件修改后对应热更新逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="对css/less更新的处理">对css/less更新的处理</h2><p>这个原理比较简单，页面监听到样式的修改，重新加载一次样式即可，简单的覆盖。  </p>
+<p>但是存在一个潜在问题，因为样式是简单的覆盖，所以，如果修改是删除了样式，是无法生效的。</p>
+<p>举例：<br>修改前：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#E8E8E8</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br></pre></td></tr></table></figure>
+<p>修改后：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span></span></span>;</span><br></pre></td></tr></table></figure>
+<p>删除的<code>border</code>和<code>margin-top</code>其实是没有生效的  </p>
+<p>这个也是后期需要解决的一个问题。</p>
+<h2 id="对模板更新的处理">对模板更新的处理</h2><p>目前项目中使用的是tpl的模板引擎。  </p>
+<p>现在就遇到一个问题，在热更新时，模板引擎其实是重复加载模板的，那么就涉及到重复加载是否后面的会覆盖前面问题。  </p>
+<p>查看加载模板的源码后，发现根据配置有三个选择，<code>覆盖</code>，<code>忽略</code>和<code>报错</code>， 我们业务中使用的配置是遇到重复后会报错处理，所以我们需要在不修改业务默认属性的情况下，添加一些逻辑。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [esl-hot-update] 重新加载需要覆盖</span></span><br><span class="line"><span class="built_in">window</span>.EHU_HOT_UPDATE_OPTIONS</span><br><span class="line">&amp;&amp; <span class="built_in">window</span>.EHU_HOT_UPDATE_OPTIONS.etpl.isOverride</span><br><span class="line">&amp;&amp; (namingConflict = <span class="string">'override'</span>);</span><br><span class="line"><span class="keyword">switch</span> (namingConflict) &#123;</span><br><span class="line">    <span class="comment">/* jshint ignore:start */</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'override'</span>:</span><br><span class="line">        engine.targets[name] = target;</span><br><span class="line">        context.targets.push(name);</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'ignore'</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">/* jshint ignore:end */</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Target exists: '</span> + name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>window.EHU_HOT_UPDATE_OPTIONS.etpl.isOverride</code>这个是修改后自己实现的控制配置修改的逻辑。  </p>
+<p>然后这个文件加入到服务端的路由中，请求时替换。</p>
+<h2 id="对js更新的处理">对js更新的处理</h2><p>这里逻辑比较复杂，因为需要修改底层的AMD模块加载的逻辑。  </p>
+<p>js没有模板那么简单，不是直接覆盖，因为在AMD模式中，每一个文件，都是被上一个文件调用执行的结果。  </p>
+<p>所以我们处理的逻辑是不仅需要重新加载修改的文件，并且递归所有直接或者间接调用他的文件，全部重新加载。  </p>
+<p>所以从上面的特点可以看出，这个工具目前阶段主要适用于业务模块的开发，因为业务的依赖不会特别深，对于dep中的核心文件修改，就不是很合适，一旦文件比较底层，热跟新是重新加载的模块也会非常多。</p>
+<p>另外也有很多其他的坑，还在不断优化中。  </p>
+<h2 id="总结">总结</h2><p>这次实践其实就是业务中遇到的问题（系统太庞大，调试太麻烦），如何解决问题，如何把解决的思路变成一个解决方案，分享给团队。  </p>
+<p>因为自己解决了，和形成一个解决方案还是有非常大的差别的，例如我们在形成方案的过程中，就尝试了很多新东西，踩了很多坑。  </p>
+<p>目前还有个坑就是chrome浏览器，调试的Source资源时，如果一个资源重复加载，内存中会更新，但是对应的资源没有更新，导致断点时，映射不对（断点失效），目前暂时的解决方案是，每次请求时添加时间戳，让Source映射的资源强制更新。这个可以正常断点，但是断点没有记忆功能（坑啊，因为文件变了）。</p>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
       
@@ -266,13 +247,11 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/07/如何在项目中实现热更新（上）/" rel="prev">如何在项目中实现热更新（上）</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/28/sourceMap初探索/" rel="next">sourceMap初探索</a>
+              <a href="/2015/12/09/如何在项目中实现热更新（中）/" rel="next">如何在项目中实现热更新（中）</a>
             
           </div>
         </div>
@@ -376,7 +355,7 @@ ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一�
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要引入ES6"><span class="nav-number">1.</span> <span class="nav-text">为什么要引入ES6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入前考虑最多的事情"><span class="nav-number">2.</span> <span class="nav-text">引入前考虑最多的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术方案"><span class="nav-number">3.</span> <span class="nav-text">技术方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要解决的问题"><span class="nav-number">4.</span> <span class="nav-text">需要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下面挨个解决问题"><span class="nav-number">5.</span> <span class="nav-text">下面挨个解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红利"><span class="nav-number">6.</span> <span class="nav-text">红利</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对css/less更新的处理"><span class="nav-number">2.</span> <span class="nav-text">对css/less更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模板更新的处理"><span class="nav-number">3.</span> <span class="nav-text">对模板更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对js更新的处理"><span class="nav-number">4.</span> <span class="nav-text">对js更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">6.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
