@@ -1,0 +1,642 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="前端修炼之路" />
+
+
+
+  <meta name="keywords" content="前端,javascript" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="如何在项目中实现热更新中提到的一个坑child_process的exec使用问题，下面文章会详细介绍下，debug到node源码中的详细介绍，不容错过。
+child_process介绍Nodejs是单线程单进程的，但是有了child_process模块，可以在程序中直接创建子进程，并使用主进程和子进程之间实现通信。  
+对于child_process的使用，大家可以找找其他文章，介绍还是比较多的，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用node子进程spawn,exec踩过的坑">
+<meta property="og:url" content="http://tangguangyao.github.io/2015/12/16/使用node子进程spawn-exec踩过的坑/index.html">
+<meta property="og:site_name" content="Yao's 前端修炼之路">
+<meta property="og:description" content="如何在项目中实现热更新中提到的一个坑child_process的exec使用问题，下面文章会详细介绍下，debug到node源码中的详细介绍，不容错过。
+child_process介绍Nodejs是单线程单进程的，但是有了child_process模块，可以在程序中直接创建子进程，并使用主进程和子进程之间实现通信。  
+对于child_process的使用，大家可以找找其他文章，介绍还是比较多的，">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/child_process.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
+<meta property="og:updated_time" content="2015-12-16T09:11:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用node子进程spawn,exec踩过的坑">
+<meta name="twitter:description" content="如何在项目中实现热更新中提到的一个坑child_process的exec使用问题，下面文章会详细介绍下，debug到node源码中的详细介绍，不容错过。
+child_process介绍Nodejs是单线程单进程的，但是有了child_process模块，可以在程序中直接创建子进程，并使用主进程和子进程之间实现通信。  
+对于child_process的使用，大家可以找找其他文章，介绍还是比较多的，">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> 使用node子进程spawn,exec踩过的坑 | Yao's 前端修炼之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e35a2df9e882a5f8ed351d0f022fa689";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Yao's 前端修炼之路</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用node子进程spawn,exec踩过的坑
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-16T15:20:16+08:00" content="2015-12-16">
+            2015-12-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="/img/res/child_process.png" alt="使用node子进程spawn,exec踩过的坑"></p>
+<p><em>如何在项目中实现热更新</em>中提到的一个坑child_process的exec使用问题，下面文章会详细介绍下，debug到node源码中的详细介绍，不容错过。</p>
+<h2 id="child_process介绍">child_process介绍</h2><p>Nodejs是单线程单进程的，但是有了child_process模块，可以在程序中直接创建子进程，并使用主进程和子进程之间实现通信。  </p>
+<p>对于child_process的使用，大家可以找找其他文章，介绍还是比较多的，本文主要讲一下踩过的坑。</p>
+<h2 id="踩过的坑">踩过的坑</h2><p>在使用<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a>这个工具时（对于工具的介绍，参考前面的文章<em>如何在项目中实现热更新</em>），发现用子进程启动项目，经常性的挂掉。然后也不知道为什么，甚至怀疑子进程的效率比较低。  </p>
+<p>最后为了进一步验证，在同样的环境下，一个直接启动服务，一个是使用<code>require(&#39;child_process&#39;).exec(&#39;...&#39;)</code> 方式启动。  </p>
+<p>最后发现使用子进程打开还真的就是使用到一定程度就挂掉。虽然此时也没有什么解决方案，但是至少能把问题定位在子进程上了，而不是其他工具代码导致程序挂掉。  </p>
+<h2 id="定位问题">定位问题</h2><p>定位了问题后，网上查找child_process相关资料，发现<a href="http://deadhorse.me/nodejs/2011/12/18/nodejs%E4%B8%ADchild_process%E6%A8%A1%E5%9D%97%E7%9A%84exec%E6%96%B9%E6%B3%95%E5%92%8Cspawn%E6%96%B9%E6%B3%95.html" target="_blank" rel="external">exec与spawn方法的区别与陷阱</a> 这篇文章提到几点：  </p>
+<ol>
+<li>exec与spawn是有区别的</li>
+<li>exec是对spawn的一个封装</li>
+<li>最重要的exec比spawn多了一些默认的option </li>
+</ol>
+<p>基于以上几点有些头绪了，但是还是没有明确的解决方案。  </p>
+<p>最后一个办法，直接断点到nodejs的child_process.js模块中尝试看看问题出在哪里。  </p>
+<h2 id="exec和spawn的源码区分">exec和spawn的源码区分</h2><p>断点进去看后，豁然开朗，<code>exec</code>是对<code>execFile</code>的封装，<code>execFile</code>又是对<code>spawn</code>的封装。  </p>
+<p>每一层封装都是加强一些易用性以及功能。  </p>
+<p>直接看源码：  </p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">exports.exec = </span><br><span class="line">	<span class="function"><span class="keyword">function</span><span class="params">(command <span class="comment">/*, options, callback*/</span>)</span> </span>&#123;</span><br><span class="line">  		<span class="keyword">var</span> opts = normalizeExecArgs.apply(<span class="literal">null</span>, arguments);</span><br><span class="line">  		<span class="keyword">return</span> exports.execFile(opts.file,</span><br><span class="line">                          		opts.args,</span><br><span class="line">                          		opts.options,</span><br><span class="line">                          		opts.<span class="keyword">callback</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>exec</code>对于<code>execFile</code>的封装是进行参数处理  </p>
+<p>处理的函数：</p>
+<p><code>normalizeExecArgs</code>  </p>
+<p>关键逻辑</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.platform === <span class="string">'win32'</span>) &#123;</span><br><span class="line">    <span class="keyword">file</span> = process.env.comspec || <span class="string">'cmd.exe'</span>;</span><br><span class="line">    args = [<span class="string">'/s'</span>, <span class="string">'/c'</span>, <span class="string">'"'</span> + command + <span class="string">'"'</span>];</span><br><span class="line">    <span class="comment">// Make a shallow copy before patching so we don't clobber the user's</span></span><br><span class="line">    <span class="comment">// options object.</span></span><br><span class="line">    <span class="keyword">options</span> = util._extend(&#123;&#125;, <span class="keyword">options</span>);</span><br><span class="line">    <span class="keyword">options</span>.windowsVerbatimArguments = <span class="keyword">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">file</span> = <span class="string">'/bin/sh'</span>;</span><br><span class="line">    args = [<span class="string">'-c'</span>, command];</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>将简单的command命名做一个，win和linux的平台处理。  </p>
+<p>此时<code>execFile</code>接受到的就是一个区分平台的<code>command</code>参数。  </p>
+<p>然后重点来了，继续debug，<code>execFile</code>中：  </p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> options = &#123;</span><br><span class="line">    encoding: <span class="string">'utf8'</span>,</span><br><span class="line">    timeout: <span class="number">0</span>,</span><br><span class="line">    maxBuffer: <span class="number">200</span> * <span class="number">1024</span>,</span><br><span class="line">    killSignal: <span class="string">'SIGTERM'</span>,</span><br><span class="line">    cwd: <span class="literal">null</span>,</span><br><span class="line">    env: <span class="literal">null</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有这么一段，设置了默认的参数。然后后面又是一些参数处理，最后调用<code>spawn</code>方法启动子进程。   </p>
+<p>上面的简单流程就是启动一个子进程。到这里都没有什么问题。  </p>
+<p>继续看，重点又来了：  </p>
+<p>用过子进程应该知道这个<code>child.stderr</code></p>
+<p>下面的代码就解答了为什么子进程会挂掉。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">child.stderr.addListener(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">    stderrLen += chunk.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stderrLen &gt; options.maxBuffer) &#123;</span><br><span class="line">      ex = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'stderr maxBuffer exceeded.'</span>);</span><br><span class="line">      kill();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!encoding)</span><br><span class="line">        _stderr.push(chunk);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        _stderr += chunk;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>逻辑就是，记录子进程的log大小，一旦超过<code>maxBuffer</code>就<code>kill</code>掉子进程。  </p>
+<p>原来真相在这里。我们在使用<code>exec</code>时，不知道设置<code>maxBuffer</code>，默认的<code>maxBuffer</code>是200K,当我们子进程日志达到200K时，自动<code>kill()</code>掉了。</p>
+<h2 id="exec和spawn的使用区分">exec和spawn的使用区分</h2><p> 不过exec确实比spawn在使用上面要号很多</p>
+<p> 例如我们执行一个命令</p>
+<p> 使用exec</p>
+<p> <code>require(&#39;child_process&#39;).exec(&#39;edp webserver start&#39;);</code></p>
+<p> 使用spawn</p>
+<p> linux下这么搞</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> child = <span class="built_in">require</span>(<span class="string">'child_process'</span>).spawn(</span><br><span class="line">    <span class="string">'/bin/sh'</span>, </span><br><span class="line">    [<span class="string">'-c'</span>,<span class="string">'edp webserver start'</span>],</span><br><span class="line">    &#123;</span><br><span class="line">        cwd: <span class="literal">null</span>,</span><br><span class="line">        env: <span class="literal">null</span>,</span><br><span class="line">        windowsVerbatimArguments: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p> win下</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> child = <span class="built_in">require</span>(<span class="string">'child_process'</span>).spawn(</span><br><span class="line">    <span class="string">'cmd.exe'</span>,</span><br><span class="line">    [<span class="string">'/s'</span>, <span class="string">'/c'</span>, <span class="string">'edp webserver start'</span>],</span><br><span class="line">    &#123;</span><br><span class="line">        cwd: <span class="literal">null</span>,</span><br><span class="line">        env: <span class="literal">null</span>,</span><br><span class="line">        windowsVerbatimArguments: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>可见spawn还是比较麻烦的。</p>
+<h2 id="解决方案">解决方案</h2><p>知道上面原因了，解决方案就有几个了:  </p>
+<ol>
+<li>子进程的系统，不在输出日志</li>
+<li>maxBuffer这个传一个足够大的参数</li>
+<li>直接使用spawn，放弃使用exec</li>
+</ol>
+<p>我觉得最优的方案是直接使用<code>spawn</code>，解除<code>maxBuffer</code>的限制。但是实际处理中，发现直接考出<code>normalizeExecArgs</code>这个方法去处理平台问题，在win下还是有些不好用，mac下没有问题。所以暂时将<code>maxBuffer</code>设置了一个极大值，保证大家的正常使用。然后后续在优化成<code>spawn</code>方法。  </p>
+<h2 id="吐槽">吐槽</h2><p>其实没有怎么理解，execFile对于spawn封装加maxBuffer的这个逻辑，二期感觉就算加了，是否也可以给一个方式，去掉maxBuffer的判断。  </p>
+<p>难道是子进程的log量会影响性能？</p>
+<h2 id="感想">感想</h2><p>其实在解决这个问题时，发现这个差异/坑还比较意外，因为自身对于node其实还不是很熟，这个子进程的使用其实也是在ehu中第一次遇到。  </p>
+<p>感受比较多的就是有时候正对问题去学习/研究，其实效率特别高。</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/15/如何在项目中实现热更新（下）/" rel="next">如何在项目中实现热更新（下）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/weixin.jpg" alt="Yao Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Yao Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">前端修炼之路</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#child_process介绍"><span class="nav-number">1.</span> <span class="nav-text">child_process介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#踩过的坑"><span class="nav-number">2.</span> <span class="nav-text">踩过的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位问题"><span class="nav-number">3.</span> <span class="nav-text">定位问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exec和spawn的源码区分"><span class="nav-number">4.</span> <span class="nav-text">exec和spawn的源码区分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exec和spawn的使用区分"><span class="nav-number">5.</span> <span class="nav-text">exec和spawn的使用区分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">6.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#吐槽"><span class="nav-number">7.</span> <span class="nav-text">吐槽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感想"><span class="nav-number">8.</span> <span class="nav-text">感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">9.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yao Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

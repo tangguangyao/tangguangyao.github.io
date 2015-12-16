@@ -41,28 +41,28 @@
 
 <meta name="description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
 工具源码EHU(esl-hot-update)
-依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+浏览器端依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
 通信逻辑
-123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在项目中实现热更新（下）">
 <meta property="og:url" content="http://tangguangyao.github.io/2015/12/15/如何在项目中实现热更新（下）/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
 <meta property="og:description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
 工具源码EHU(esl-hot-update)
-依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+浏览器端依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
 通信逻辑
-123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/update03.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-12-15T14:34:43.000Z">
+<meta property="og:updated_time" content="2015-12-15T14:59:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在项目中实现热更新（下）">
 <meta name="twitter:description" content="本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。
 工具源码EHU(esl-hot-update)
-依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
+浏览器端依赖socket.io——浏览器端仅仅依赖socket这个去和服务端通信  
 通信逻辑
-123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate已启动！">
+123456789// 建立连接socket.on(&apos;hello&apos;, function () &amp;#123;    log(getLogMsgPrefix(), &apos;HotUpdate">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -210,7 +210,7 @@
         <span itemprop="articleBody"><p><img src="/img/res/update03.jpg" alt="如何在项目中修改代码后实现热更新"></p>
 <p>本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。</p>
 <p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
-<h2 id="依赖">依赖</h2><p><code>socket.io</code>——浏览器端仅仅依赖socket这个去和服务端通信  </p>
+<h2 id="浏览器端依赖">浏览器端依赖</h2><p><code>socket.io</code>——浏览器端仅仅依赖socket这个去和服务端通信  </p>
 <p>通信逻辑</p>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">socket.on(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    log(getLogMsgPrefix(), <span class="string">'HotUpdate已启动！'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 检测到文件改动</span></span><br><span class="line">socket.on(<span class="string">'hotUpdate'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(file)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// log(getLogMsgPrefix(), '检测到文件改动', file);</span></span><br><span class="line">    <span class="comment">// ....处理文件修改后对应热更新逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="对css/less更新的处理">对css/less更新的处理</h2><p>这个原理比较简单，页面监听到样式的修改，重新加载一次样式即可，简单的覆盖。  </p>
@@ -246,6 +246,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/16/使用node子进程spawn-exec踩过的坑/" rel="prev">使用node子进程spawn,exec踩过的坑</a>
             
           </div>
 
@@ -313,7 +315,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -355,7 +357,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对css/less更新的处理"><span class="nav-number">2.</span> <span class="nav-text">对css/less更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模板更新的处理"><span class="nav-number">3.</span> <span class="nav-text">对模板更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对js更新的处理"><span class="nav-number">4.</span> <span class="nav-text">对js更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">6.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器端依赖"><span class="nav-number">1.</span> <span class="nav-text">浏览器端依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对css/less更新的处理"><span class="nav-number">2.</span> <span class="nav-text">对css/less更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模板更新的处理"><span class="nav-number">3.</span> <span class="nav-text">对模板更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对js更新的处理"><span class="nav-number">4.</span> <span class="nav-text">对js更新的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">6.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
