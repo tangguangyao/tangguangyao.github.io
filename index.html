@@ -165,6 +165,101 @@
           
           
             
+              <a class="post-title-link" href="/2016/01/14/AMD的一道面试题/" itemprop="url">
+                AMD的一道面试题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-01-14T10:59:49+08:00" content="2016-01-14">
+            2016-01-14
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><img src="/img/res/amd.jpg" alt="AMD的一道面试题"></p>
+<p>模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  </p>
+<p>之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：<br>对于一个AMD的模式下</p>
+<p>文件<code>d.js</code>如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>a.js</code>,<code>b.js</code>,<code>c.js</code> 文件分别是什么时候加载的，如何加载的？</p>
+<p>题目不难</p>
+<p>答案是<code>a.js</code> 和 <code>c.js</code> 是在加载完<code>d.js</code>后就加载。<br><code>b.js</code>是在执行到这一行时异步加载的。</p>
+<p>具体分析：</p>
+<p>我没有看过<code>require.js</code>的源码，我们使用的是<code>esl.js</code>（也是一个AMD的模块加载器）,但是他们的实现原理应该差不多。</p>
+<p>我从<code>esl.js</code>的角度解读一下：</p>
+<h3 id="同步加载，异步加载">同步加载，异步加载</h3><p>首先大家需要知道AMD里面一个同步加载和异步加载的概念。</p>
+<p>从概念上面理解，同步就是当我执行到<code>require(&#39;a&#39;);</code>时，我需要同步的执行<code>a.js</code>里面的内容，也就是需要在执行到这句话时<code>a.js</code>必须已经加载好了，这样才能到达同步。</p>
+<p>而对于 <code>require([&#39;b&#39;], function (b) {});</code>,我执行到这一步时，是异步的发出请求，然后异步等待<code>b.js</code>的返回+执行。</p>
+<h3 id="同步加载的实现原理">同步加载的实现原理</h3><p>我们从概念上面理解的同步加载的原理，现在看看<code>esl.js</code>的实践。<br>这里面需要处理两个核心步骤  </p>
+<ol>
+<li>执行到<code>require(&#39;a&#39;);</code>时，<code>a.js</code>必须已经加载好了；</li>
+<li><code>a.js</code>文件里面的所有<code>require(&#39;*&#39;)</code>，也都必须加载好了，保证在执行<code>a.js</code>时，所有<code>a.js</code>依赖的同步文件都能同步执行；</li>
+</ol>
+<p>对于第一步的实现，大概原理是这样的，在加载好了<code>d.js</code>后，会正则匹配一次文件里面的同步依赖<code>require(&#39;*&#39;);</code>，例如匹配出了 <code>a.js</code>和<code>c.js</code>，然后继续加载<code>a.js</code>和<code>c.js</code>。  </p>
+<p>对于第二部，其实就是一个递归处理，直到没有下一步的依赖为止。</p>
+<h3 id="同步加载另外一种处理方法">同步加载另外一种处理方法</h3><p>上面有一部正则逻辑，可见如果使用这种方式，在执行代码前，js需要全部正则一次所有模块化代码的。这样性能是不是有一个无谓的耗损。  </p>
+<p>那么我们一般怎么处理了？  </p>
+<p>大家一般都了解过打包编译，例如在使用<code>Requirejs</code>时，线上环境的代码会经过<code>r.js</code>处理一次。  </p>
+<p>那么<code>d.js</code>文件应该会处理如下 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">define(</span><br><span class="line">	<span class="string">'path/b'</span>,</span><br><span class="line">	[<span class="string">'require'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>define方法会增加第一个和第二个参数  </p>
+<p>第一个参数是按照路径生成一个具名id<br>第二个参数是此文件所依赖的同步文件</p>
+<p>这时当模块在解析这个<code>b,js</code>文件时，发现如果存在第二个参数，就会直接解析所需依赖部分，而省去了正则这一步。  </p>
+<p>我们正则这一步转换到了打包编译中去分析，这样就省掉了浏览器加载时去正则所有AMD文件这一步。  </p>
+<p>那么为什么我们不在开发环境中直接使用<code>[&#39;require&#39;, &#39;a&#39;, &#39;b&#39;]</code>方式，我理解目的是为了提高开发便捷性，我们不需要再增加一个<code>require(&#39;*&#39;)</code>都在中括号内配置一次，同样删除时也不用去删掉配置。  </p>
+<p>因为这一步完全可以在编译时处理。  </p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/01/05/前端发展论战/" itemprop="url">
                 前端发展论战
               </a>
@@ -1012,128 +1107,11 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/11/10/你会用setTimeout吗/" itemprop="url">
-                你会用setTimeout吗
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-11-10T20:23:31+08:00" content="2015-11-10">
-            2015-11-10
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="教科书里面的setTimeout">教科书里面的setTimeout</h2><p><strong>定义很简单</strong><br>setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。  </p>
-<p><strong>广泛应用场景</strong><br>定时器，轮播图，动画效果，自动滚动等等</p>
-<p>上面一些应该是setTimeout在大家心中的样子，因为我们平常使用也不是很多。</p>
-<p>但是setTimeout真的有那么简单吗？  </p>
-<p><strong>测试题</strong></p>
-<p>一个题目，如果你在一段代码中发现下面内容  </p>
-<pre><code><span class="keyword">var</span> startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();
-setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>() - startTime);
-}, <span class="number">100</span>)
-</code></pre><p>请问最后打印的是多少?<br>我觉得正确答案是，取决于后面同步执行的js需要占用多少时间。<br><code>MAX(同步执行的时间, 100)</code>。  </p>
-<p>再加一个题目,只有下面代码  </p>
-<pre><code>setTimeout<span class="comment">(function ()</span> {
-    fu<span class="label">nc1</span><span class="comment">()</span>;
-}, <span class="number">0</span>)
-fu<span class="label">nc2</span><span class="comment">()</span>;
-</code></pre><p>func1和func2谁会先执行？ </p>
-<p>这个答案应该比较简单，func2先执行，func1后面执行。</p>
-<p>再来一题</p>
-<pre><code>setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
-    func1（）
-}, <span class="number">0</span>)
-</code></pre><p>和  </p>
-<pre><code> setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
-    func1（）
-})
-</code></pre><p>有什么差别？  </p>
-<blockquote>
-<p>0秒延迟，此回调将会放到一个能立即执行的时段进行触发。javascript代码大体上是自顶向下的，但中间穿插着有关DOM渲染，事件回应等异步代码，他们将组成一个队列，零秒延迟将会实现插队操作。<br>不写第二个参数，浏览器自动配置时间，在IE，FireFox中，第一次配可能给个很大的数字，100ms上下，往后会缩小到最小时间间隔，Safari，chrome，opera则多为10ms上下。  </p>
-</blockquote>
-<p>上面答案来自《javascript框架设计》</p>
-<p>好了，看了上面几个题目是不是感觉setTimeout不是想象中那样了。</p>
-<h2 id="setTimeout和单线程">setTimeout和单线程</h2><p>下面是我自己的一些理解<br>首先需要注意javascript是单线程的，特点就是容易出现阻塞。如果一段程序处理时间很长，很容易导致整个页面hold住。什么交互都处理不了怎么办？  </p>
-<p>简化复杂度？复杂逻辑后端处理？html5的多线程？  </p>
-<p>上面都是ok的做法，但是setTimeout也是处理这种问题的一把好手。  </p>
-<p>setTimeout一个很关键的用法就是分片，如果一段程序过大，我们可以拆分成若干细小的块。<br>例如上面的情况，我们将那一段复杂的逻辑拆分处理，分片塞入队列。这样即使在复杂程序没有处理完时，我们操作页面，也是能得到即使响应的。其实就是将交互插入到了复杂程序中执行。  </p>
-<p>换一种思路，上面就是利用setTimeout实现一种伪多线程的概念。  </p>
-<p>有个函数库<code>Concurrent.Thread.js</code> 就是实现js的多线程的。</p>
-<p>一个简单使用的例子，引入<code>Concurrent.Thread.js</code>后</p>
-<pre><code>Concurrent.Thread.<span class="keyword">create</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{
-    for (var i = 0;i&lt;1000000;i++) {
-        console.log(i);
-    }</span>;</span>
-});
-$(<span class="string">'#test'</span>).click(<span class="function"><span class="keyword">function</span>  <span class="params">()</span> <span class="comment">{
-    alert(1);
-}</span>);</span>
-</code></pre><p>虽然有个巨大的循环，但是这时不妨碍你去触发alert();</p>
-<p>是不是很厉害~</p>
-<p>还有一种场景，当我们需要渲染一个很复杂的DOM时，例如table组件，复杂的构图等等，假如整个过程需要3s,我们是等待完全处理完成在呈现，还是使用一个setTimeout分片,将内容一片一片的断续呈现。  </p>
-<p>其实setTimeout给了我们很多优化交互的空间。</p>
-<h2 id="如何使用">如何使用</h2><p>setTimeout这么厉害，那么我们是需要在在项目中大量使用吗？<br>我这边的观点是非常不建议，在我们业务中，基本上是禁止在业务逻辑中使用setTimeout的，因为我所看到的很多使用方式都是一些问题不好解决，setTimeout作为一个hack的方式。<br>例如，当一个实例还没有初始化的前，我们就使用这个实例，错误的解决办法是使用实例时加个setTimeout，确保实例先初始化。<br>为什么错误？这里其实就是使用hack的手段<br>第一是埋下了坑，打乱模块的生命周期<br>第二是出现问题时，setTimeout其实是很难调试的。</p>
-<p>我认为正确的使用方式是，看看生命周期（可参考《<a href="http://tangguangyao.github.io/2015/10/27/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">关于软件的生命周期</a> 》），把实例化提到使用前执行。 </p>
-<p>综上，setTimeout其实想用好还是很困难的， 他更多的出现是在框架和类库中，例如一些实现Promis的框架，就用上了setTimeout去实现异步。<br>所以假如你想去阅读一些源码，想去造一些轮子，setTimeout还是必不可少的工具。</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </nav>
 
  </div>
@@ -1167,7 +1145,7 @@ $(<span class="string">'#test'</span>).click(<span class="function"><span class=
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
