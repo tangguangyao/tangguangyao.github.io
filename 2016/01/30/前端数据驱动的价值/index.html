@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="js," />
+  <meta name="keywords" content="前端,javascript" />
 
 
 
@@ -39,41 +39,33 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
+<meta name="description" content="数据驱动应该是从flux/redux + react这种模式开始流行的。 
+他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 
+以往处理模式一个稍微复杂点的例子：  
 
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chrome的debug工具Profiles使用方法">
-<meta property="og:url" content="http://tangguangyao.github.io/2015/10/17/chrome的debug工具Profiles使用方法/index.html">
+<meta property="og:title" content="前端数据驱动的价值">
+<meta property="og:url" content="http://tangguangyao.github.io/2016/01/30/前端数据驱动的价值/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
+<meta property="og:description" content="数据驱动应该是从flux/redux + react这种模式开始流行的。 
+他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 
+以往处理模式一个稍微复杂点的例子：  
 
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles2.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/3/profiles3.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2015-10-18T03:16:28.000Z">
+假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/5/module.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/5/model02.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/5/model03.png">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/5/model01.jpg">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/5/model.png">
+<meta property="og:updated_time" content="2016-02-01T03:41:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chrome的debug工具Profiles使用方法">
-<meta name="twitter:description" content="简介本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。
-Profiles是什么Profiles在哪里如下图没错，就在我们最长使用的导航里面，大家基本没有用到过吧。
-Profiles具体可以干什么定位性能问题，借助它我们可以  
+<meta name="twitter:title" content="前端数据驱动的价值">
+<meta name="twitter:description" content="数据驱动应该是从flux/redux + react这种模式开始流行的。 
+他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 
+以往处理模式一个稍微复杂点的例子：  
 
-可以借助Profiles定位出比较耗时的函数
-查找页面卡顿的原因
-
-使用方法一我们想查看点击一个按钮后，到展示页面的性能，我们可以">
+假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -85,7 +77,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
 
 
 
-  <title> chrome的debug工具Profiles使用方法 | Yao's 前端修炼之路 </title>
+  <title> 前端数据驱动的价值 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -189,7 +181,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
           
           
             
-              chrome的debug工具Profiles使用方法
+              前端数据驱动的价值
             
           
         </h1>
@@ -198,8 +190,8 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-17T14:35:03+08:00" content="2015-10-17">
-            2015-10-17
+          <time itemprop="dateCreated" datetime="2016-01-30T22:29:06+08:00" content="2016-01-30">
+            2016-01-30
           </time>
         </span>
 
@@ -218,56 +210,71 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
       
 
       
-        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文介绍下chrome的debug工具Profiles，很多人应该没用过，甚至不知道。</p>
-<h2 id="Profiles是什么">Profiles是什么</h2><p>Profiles在哪里<br>如下图<br><img src="/img/res/3/profiles.png" alt="前端修炼"><br>没错，就在我们最长使用的导航里面，大家基本没有用到过吧。</p>
-<h2 id="Profiles具体可以干什么">Profiles具体可以干什么</h2><p><strong>定位性能问题，借助它我们可以</strong>  </p>
-<ul>
-<li>可以借助Profiles定位出比较耗时的函数</li>
-<li>查找页面卡顿的原因</li>
-</ul>
-<h2 id="使用方法一">使用方法一</h2><p>我们想查看点击一个按钮后，到展示页面的性能，我们可以  </p>
+        <span itemprop="articleBody"><p>数据驱动应该是从<code>flux/redux</code> + <code>react</code>这种模式开始流行的。 </p>
+<p>他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 </p>
+<h2 id="以往处理模式">以往处理模式</h2><p>一个稍微复杂点的例子：  </p>
+<p><img src="/img/res/5/module.png" alt="模块"></p>
+<p>假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的子模块。  </p>
+<p>如果需求简单还比较好解决，每个模块中自己解决自己的逻辑，解耦的非常清晰。父子之间的关系也非常明确。 </p>
 <ol>
-<li>打开工具，如下图，点击<em>start</em> ，然后点击按钮<br><img src="/img/res/3/profiles2.png" alt="前端修炼">  </li>
-<li>完整内容展示后，点击<em>stop</em>（注意，中间不要有其他操作，避免干扰)，然后就会生成一个性能分析的数据</li>
+<li>例如销毁<code>C模块</code>，会自动销毁它的子模块<code>C1</code>和<code>C101</code>。  </li>
+<li>模块间的关系也很清晰，<code>B1</code>不会和<code>B2</code>有直接关系，他们之间需要通过<code>B模块</code>去传递。同理，<code>B模块</code>和<code>A模块</code>也没有直接关系，他们都需要通过外层<code>页面</code>去处理关系。</li>
 </ol>
-<p><strong>实战</strong><br>我们使用一段简单的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure></p>
-<p>下图是生成的报告<br><img src="/img/res/3/profiles3.png" alt="前端修炼">  </p>
-<h2 id="使用方法二">使用方法二</h2><p>使用  </p>
-<p><strong>console.profile(name)</strong>和<strong>console.profileEnd(name)</strong></p>
-<p>参数数是一个字符串，记录这次性能监控的名字</p>
-<p>例如上面代码可以修改为  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.profile(<span class="string">'test'</span>)</span><br><span class="line"><span class="keyword">var</span> test1 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">5000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt; <span class="number">1000000</span>;i ++) &#123;</span><br><span class="line">        p = p + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(p)</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br><span class="line">test2();</span><br><span class="line"><span class="built_in">console</span>.profileEnd(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
-<p>这样就能可以不适用人肉点击start和stop去记录。<br>这个命名为test的Profiles就是记录console.profile(‘test’)时间点到console.profileEnd(‘test’)时间点间的性能。</p>
-<h2 id="举一个实践中用到的例子">举一个实践中用到的例子</h2><p>这个例子我也拿过来做过面试题，作为开放式题目：  </p>
-<blockquote>
-<p>我们在发出ajax时，打一个点作为开始，我们监听到ajax回来打第二个点作为结束，这两个点的时间是1000ms，但是我们通过network查看网络耗时，是300ms，请问中间700ms去哪里了？  </p>
-</blockquote>
-<p>其实这个问题我想了解两层，第一是js是单线程，阻塞；<br>第二个是如何定位问题，那么如果能借助这个工具分析，我就觉得很厉害了  </p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+<p>但是假如有这么一个需求，<code>A2</code>的显示和<code>B2</code>（用户交互）以及<code>C101</code>（用户交互）相关怎么办。</p>
+<p>按照这种模式，它的解决方案是：  </p>
+<p><code>B2</code>如果发生改变，通知<code>B模块</code>，<code>B模块</code>在通知<code>页面</code>，<code>页面</code>调用<code>A模块</code>和<code>C模块</code>，<code>C模块</code>调用<code>C1</code>，<code>C1</code>调用<code>C101</code>获取<code>C101</code>的数据处理，<code>页面</code>调用<code>A模块</code>，<code>A模块</code>再调用<code>A2</code>，改变它的展示。 </p>
+<p>是不是看着很绕，从图上看是这么个关系：</p>
+<p><img src="/img/res/5/model02.png" alt="模块"></p>
+<p>图中仅仅显示了其中一个负责交互，加入我们在多两到三个模块间关联的逻辑：  </p>
+<ol>
+<li><code>B1</code>和<code>B2</code>模块影响<code>A2</code>模块(图中黄线)</li>
+<li><code>C1</code>影响<code>B1</code>模块(图中白线)</li>
+</ol>
+<p>如下图：   </p>
+<p><img src="/img/res/5/model03.png" alt="模块"></p>
+<p>3个复杂一点的交互，整个模块间的通信已经变成蜘蛛网了，重要的是，每一条关系线都需要开发者维护的，不见影响开发效率，而且不好维护，容易引发bug，假如后期加新需求或者调整需求，开发成本都是比较高的。</p>
+<p>可见，对于复杂的交互，或者模块间关系复杂时，这种依赖父子关系的通信，是一个很大的障碍。  </p>
+<p>但是我们怎么办，拒绝模块化开发吗？那样页面设计起来耦合度更大，更加不可维护。</p>
+<p>首先一点，模块化开发是一个不可逆的趋势，然而在这种趋势下，解决模块化通信是一个非常重要的点。  </p>
+<h2 id="模块间通信的考虑">模块间通信的考虑</h2><p>在那个时候，我考虑最多的就是如何去解决模块之间的通信，如何让模块之间交互更加轻松，模块之间更加独立。</p>
+<h3 id="方案一：">方案一：</h3><p>当时考虑的一个方案是使用一个全局的event，全局的on和fire。这样模块之间就不用依赖父子关系了。模块和模块间是可以之间交互的。</p>
+<p>但是这样会有一些弊端：</p>
+<ol>
+<li>事件名称如何定义，保证不重名  </li>
+<li>事件是否会重复的on</li>
+<li>模块和模块之间会因为事件产生一些耦合</li>
+<li>当交互特别复杂时，也会比较麻烦，还是上面的例子，<code>B2</code>通知<code>C2</code>改变后，<code>C2</code>还需要通知<code>C101</code>获取一次数据，来确认改变</li>
+</ol>
+<p>整体来看：  </p>
+<p>优势： 拜托了模块间父子层级关系，可以跨模块通信  </p>
+<p>劣势： 任然需要维护复杂的模块间关系，可以减少一些，但是对于负责交互，任然会比较乱 </p>
+<h3 id="方案二:">方案二:</h3><p>全局贡献一个model和component模式。这种其实已经非常趋向与数据驱动了。每个模块都是贡献全局的model，然后每个component都可以被全局获取到到，里面的功能熟悉可以直接被使用。  </p>
+<p>其实这种模式已经比较理想，页面上面的任何component都可以被直接调用到并且使用。</p>
+<p>缺点就是：还是需要在模块间维护好和其他模块间的交互逻辑。 </p>
+<h2 id="数据驱动">数据驱动</h2><p>先看一个图，我感觉可以很好的体现数据驱动  </p>
+<p><img src="/img/res/5/model01.jpg" alt="提线木偶"></p>
+<p>提线木偶：他的特点就是每个动作都是，头，手臂，脚，金箍棒都是由操作的人手决定的，头和手臂直接没有任何关系。  </p>
+<p>数据驱动也可以这么理解，页面上面所以的展示都是由数据决定的，和页面其他地方没有任何关系。</p>
+<p>再来看看上面那个例子如果加上数据驱动的设计思想。   </p>
+<p><img src="/img/res/5/model.png" alt="数据驱动"></p>
+<p>页面之间每个模块，不用关心父子模块之间的关系，每个独立的模块都是由一个全局的model决定。</p>
+<p>回到上面那个麻烦的场景。当<code>B2</code>改变时，它会修改model中对于的数据，然后model里面处理。</p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/js/" rel="tag">#js</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/18/如何在大公司中成长/" rel="prev">如何在大公司中成长</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/15/javascript书籍推荐/" rel="next">javascript书籍推荐</a>
+              <a href="/2016/01/20/当扔给你一个bug时，你会怎么办/" rel="next">当扔给你一个bug时，你会怎么办</a>
             
           </div>
         </div>
@@ -371,7 +378,7 @@ Profiles具体可以干什么定位性能问题，借助它我们可以
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles是什么"><span class="nav-number">2.</span> <span class="nav-text">Profiles是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles具体可以干什么"><span class="nav-number">3.</span> <span class="nav-text">Profiles具体可以干什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法一"><span class="nav-number">4.</span> <span class="nav-text">使用方法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法二"><span class="nav-number">5.</span> <span class="nav-text">使用方法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举一个实践中用到的例子"><span class="nav-number">6.</span> <span class="nav-text">举一个实践中用到的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">7.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以往处理模式"><span class="nav-number">1.</span> <span class="nav-text">以往处理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块间通信的考虑"><span class="nav-number">2.</span> <span class="nav-text">模块间通信的考虑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一："><span class="nav-number">2.1.</span> <span class="nav-text">方案一：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二:"><span class="nav-number">2.2.</span> <span class="nav-text">方案二:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动"><span class="nav-number">3.</span> <span class="nav-text">数据驱动</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

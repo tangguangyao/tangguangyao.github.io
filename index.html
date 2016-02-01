@@ -165,6 +165,117 @@
           
           
             
+              <a class="post-title-link" href="/2016/01/30/前端数据驱动的价值/" itemprop="url">
+                前端数据驱动的价值
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-01-30T22:29:06+08:00" content="2016-01-30">
+            2016-01-30
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>数据驱动应该是从<code>flux/redux</code> + <code>react</code>这种模式开始流行的。 </p>
+<p>他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 </p>
+<h2 id="以往处理模式">以往处理模式</h2><p>一个稍微复杂点的例子：  </p>
+<p><img src="/img/res/5/module.png" alt="模块"></p>
+<p>假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的子模块。  </p>
+<p>如果需求简单还比较好解决，每个模块中自己解决自己的逻辑，解耦的非常清晰。父子之间的关系也非常明确。 </p>
+<ol>
+<li>例如销毁<code>C模块</code>，会自动销毁它的子模块<code>C1</code>和<code>C101</code>。  </li>
+<li>模块间的关系也很清晰，<code>B1</code>不会和<code>B2</code>有直接关系，他们之间需要通过<code>B模块</code>去传递。同理，<code>B模块</code>和<code>A模块</code>也没有直接关系，他们都需要通过外层<code>页面</code>去处理关系。</li>
+</ol>
+<p>但是假如有这么一个需求，<code>A2</code>的显示和<code>B2</code>（用户交互）以及<code>C101</code>（用户交互）相关怎么办。</p>
+<p>按照这种模式，它的解决方案是：  </p>
+<p><code>B2</code>如果发生改变，通知<code>B模块</code>，<code>B模块</code>在通知<code>页面</code>，<code>页面</code>调用<code>A模块</code>和<code>C模块</code>，<code>C模块</code>调用<code>C1</code>，<code>C1</code>调用<code>C101</code>获取<code>C101</code>的数据处理，<code>页面</code>调用<code>A模块</code>，<code>A模块</code>再调用<code>A2</code>，改变它的展示。 </p>
+<p>是不是看着很绕，从图上看是这么个关系：</p>
+<p><img src="/img/res/5/model02.png" alt="模块"></p>
+<p>图中仅仅显示了其中一个负责交互，加入我们在多两到三个模块间关联的逻辑：  </p>
+<ol>
+<li><code>B1</code>和<code>B2</code>模块影响<code>A2</code>模块(图中黄线)</li>
+<li><code>C1</code>影响<code>B1</code>模块(图中白线)</li>
+</ol>
+<p>如下图：   </p>
+<p><img src="/img/res/5/model03.png" alt="模块"></p>
+<p>3个复杂一点的交互，整个模块间的通信已经变成蜘蛛网了，重要的是，每一条关系线都需要开发者维护的，不见影响开发效率，而且不好维护，容易引发bug，假如后期加新需求或者调整需求，开发成本都是比较高的。</p>
+<p>可见，对于复杂的交互，或者模块间关系复杂时，这种依赖父子关系的通信，是一个很大的障碍。  </p>
+<p>但是我们怎么办，拒绝模块化开发吗？那样页面设计起来耦合度更大，更加不可维护。</p>
+<p>首先一点，模块化开发是一个不可逆的趋势，然而在这种趋势下，解决模块化通信是一个非常重要的点。  </p>
+<h2 id="模块间通信的考虑">模块间通信的考虑</h2><p>在那个时候，我考虑最多的就是如何去解决模块之间的通信，如何让模块之间交互更加轻松，模块之间更加独立。</p>
+<h3 id="方案一：">方案一：</h3><p>当时考虑的一个方案是使用一个全局的event，全局的on和fire。这样模块之间就不用依赖父子关系了。模块和模块间是可以之间交互的。</p>
+<p>但是这样会有一些弊端：</p>
+<ol>
+<li>事件名称如何定义，保证不重名  </li>
+<li>事件是否会重复的on</li>
+<li>模块和模块之间会因为事件产生一些耦合</li>
+<li>当交互特别复杂时，也会比较麻烦，还是上面的例子，<code>B2</code>通知<code>C2</code>改变后，<code>C2</code>还需要通知<code>C101</code>获取一次数据，来确认改变</li>
+</ol>
+<p>整体来看：  </p>
+<p>优势： 拜托了模块间父子层级关系，可以跨模块通信  </p>
+<p>劣势： 任然需要维护复杂的模块间关系，可以减少一些，但是对于负责交互，任然会比较乱 </p>
+<h3 id="方案二:">方案二:</h3><p>全局贡献一个model和component模式。这种其实已经非常趋向与数据驱动了。每个模块都是贡献全局的model，然后每个component都可以被全局获取到到，里面的功能熟悉可以直接被使用。  </p>
+<p>其实这种模式已经比较理想，页面上面的任何component都可以被直接调用到并且使用。</p>
+<p>缺点就是：还是需要在模块间维护好和其他模块间的交互逻辑。 </p>
+<h2 id="数据驱动">数据驱动</h2><p>先看一个图，我感觉可以很好的体现数据驱动  </p>
+<p><img src="/img/res/5/model01.jpg" alt="提线木偶"></p>
+<p>提线木偶：他的特点就是每个动作都是，头，手臂，脚，金箍棒都是由操作的人手决定的，头和手臂直接没有任何关系。  </p>
+<p>数据驱动也可以这么理解，页面上面所以的展示都是由数据决定的，和页面其他地方没有任何关系。</p>
+<p>再来看看上面那个例子如果加上数据驱动的设计思想。   </p>
+<p><img src="/img/res/5/model.png" alt="数据驱动"></p>
+<p>页面之间每个模块，不用关心父子模块之间的关系，每个独立的模块都是由一个全局的model决定。</p>
+<p>回到上面那个麻烦的场景。当<code>B2</code>改变时，它会修改model中对于的数据，然后model里面处理。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/01/20/当扔给你一个bug时，你会怎么办/" itemprop="url">
                 当扔给你一个bug时，你会怎么办
               </a>
@@ -1035,86 +1146,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/11/21/敏捷开发工具推荐/" itemprop="url">
-                敏捷开发工具推荐
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-11-21T15:27:33+08:00" content="2015-11-21">
-            2015-11-21
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>推荐工具地址<br><a href="http://cafe.baidu.com/" target="_blank" rel="external">http://cafe.baidu.com/</a>  </p>
-<p>这个工具百度很多团队都在使用，现在开发了一版对外的，我觉得很赞。   </p>
-<p>我觉得工具的核心功能就是很好的解决项目延期的问题。</p>
-<p>我个人对于这个工具的理解。</p>
-<h2 id="任务拆解">任务拆解</h2><p>针对大型项目，任务拆解是非常重要的一块，如果没有合适的拆解，很多问题都会积压到项目deadline才集中暴露，如果暴露的问题太多或者问题难度太大，都会直接导致整个项目的延期。  </p>
-<p><strong>如何拆解项目：</strong><br>我们的经验是分为story和task，两个层级。  </p>
-<p><strong>针对story的定义</strong><br>就是项目中每一个具体的产品上可感知的功能点，所以story由pm拆分比较合适  </p>
-<p>对应story的大小<br>从项目上看，是可以独立验证的一个功能，例如一个图片上传组件，一个筛选区域的完整筛选功能。<br>从时间上面看，最好不要超过10天。  </p>
-<p><strong>针对task的定义</strong><br>就是每个story中具体的开发任务，这个是由开发人员自己拆分<br>story的拆分个人经验最好是从时间上面去拆分，每个任务最好都是1，2天的工作量，最多不要超过3天。  </p>
-<p>拆分任务的另外一个红利就是，对于任务拆分的越细，对于需求的理解就越透，很多问题你会发现在拆分时就能暴露出来。<br>当你将一个20天，30天的任务能细化到每一天做什么时，你会发现，你项目的整体设计就已经出来了。  </p>
-<p>拆分还有一个红利，当你将任务拆分的特别细致时，越不容易被质疑。这个和确定预算的道理差不多。</p>
-<h2 id="每天任务状态跟踪">每天任务状态跟踪</h2><p>下面是工具里面的任务跟踪状态图  </p>
-<p><img src="/img/res/4/track.png" alt="前端修炼"></p>
-<p>对于团队之间的合作，每天的任务跟踪可能不用特别细致，跟踪story整体状态即可。<br>但是对于团队内部，任务进度是务必跟踪到task的，这样能让每一个风险点最快的暴露。<br>每天都及时确认下当前task的状态，没有问题，大家正常进度开发，出现问题及时解决问题。</p>
-<h2 id="问题及时暴露">问题及时暴露</h2><p>对于每个项目，特别是时间周期比较长的项目，避免不了会有一些坑，以及一些当初没有预料到的风险。  </p>
-<p>我们决定不了会遇到什么样的风险，但是我们可以决定一个处理风险的方式。<br>是风险全部挤压到项目后期集中爆发还是将风险分散于开发的日常任务中？</p>
-<h2 id="多人合作">多人合作</h2><p>这个工具可以多人合作，不能能够了解到自己的状态，还能同步了解合作方的状态。</p>
-<h2 id="疑问">疑问</h2><p>拆分其实就需要花费一定的工作量，那么前期花这么多时间是否值得？<br>如果平常项目经常遇到delay，或者平常项目经常出现到了项目末期都是出于一种赶工的状态。<br>我觉得可以考虑引入这种模式。  </p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1153,7 +1184,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
