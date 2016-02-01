@@ -198,7 +198,7 @@
       
         
           <span itemprop="articleBody"><p>数据驱动应该是从<code>flux/redux</code> + <code>react</code>这种模式开始流行的。 </p>
-<p>他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc，mvvm去比较，我个人觉得没有特别的可比性。 </p>
+<p>他的背后不仅仅是数据驱动这么简单，在复杂的系统中，我觉得它解决了一个很关键的问题就是模块间的交互/通信。有很多文章拿他和mvc/mvvm去比较，我个人觉得没有特别的可比性，因为解决的问题不同。 </p>
 <h2 id="以往处理模式">以往处理模式</h2><p>一个稍微复杂点的例子：  </p>
 <p><img src="/img/res/5/module.png" alt="模块"></p>
 <p>假如有这么一个页面，我们按照以往模式开发，首先模块化开发，拆分成A，B，C 三个模块，然后每个模块有自己的子模块。  </p>
@@ -209,22 +209,22 @@
 </ol>
 <p>但是假如有这么一个需求，<code>A2</code>的显示和<code>B2</code>（用户交互）以及<code>C101</code>（用户交互）相关怎么办。</p>
 <p>按照这种模式，它的解决方案是：  </p>
-<p><code>B2</code>如果发生改变，通知<code>B模块</code>，<code>B模块</code>在通知<code>页面</code>，<code>页面</code>调用<code>A模块</code>和<code>C模块</code>，<code>C模块</code>调用<code>C1</code>，<code>C1</code>调用<code>C101</code>获取<code>C101</code>的数据处理，<code>页面</code>调用<code>A模块</code>，<code>A模块</code>再调用<code>A2</code>，改变它的展示。 </p>
+<p><code>B2</code>如果发生改变，通知<code>B模块</code>，<code>B模块</code>在通知<code>页面</code>，<code>页面</code>调用<code>A模块</code>和<code>C模块</code>，<code>C模块</code>调用<code>C1</code>，<code>C1</code>调用<code>C101</code>获取<code>C101</code>的数据处理，<code>页面</code>调用<code>A模块</code>，<code>A模块</code>再调用<code>A2</code>，再结合一下从<code>C101</code>获取的数据，改变它的展示。 </p>
 <p>是不是看着很绕，从图上看是这么个关系：</p>
 <p><img src="/img/res/5/model02.png" alt="模块"></p>
-<p>图中仅仅显示了其中一个负责交互，加入我们在多两到三个模块间关联的逻辑：  </p>
+<p>图中仅仅显示了其中一个复杂交互，假如我们再多两个模块间关联的逻辑：  </p>
 <ol>
 <li><code>B1</code>和<code>B2</code>模块影响<code>A2</code>模块(图中黄线)</li>
 <li><code>C1</code>影响<code>B1</code>模块(图中白线)</li>
 </ol>
 <p>如下图：   </p>
 <p><img src="/img/res/5/model03.png" alt="模块"></p>
-<p>3个复杂一点的交互，整个模块间的通信已经变成蜘蛛网了，重要的是，每一条关系线都需要开发者维护的，不见影响开发效率，而且不好维护，容易引发bug，假如后期加新需求或者调整需求，开发成本都是比较高的。</p>
+<p>3个复杂一点的交互，整个模块间的通信已经变成蜘蛛网了，重要的是，每一条关系线都需要开发者维护的，不仅影响开发效率，而且不好维护，容易引发bug，假如后期加新需求或者调整需求，开发成本都是比较高的。</p>
 <p>可见，对于复杂的交互，或者模块间关系复杂时，这种依赖父子关系的通信，是一个很大的障碍。  </p>
 <p>但是我们怎么办，拒绝模块化开发吗？那样页面设计起来耦合度更大，更加不可维护。</p>
 <p>首先一点，模块化开发是一个不可逆的趋势，然而在这种趋势下，解决模块化通信是一个非常重要的点。  </p>
-<h2 id="模块间通信的考虑">模块间通信的考虑</h2><p>在那个时候，我考虑最多的就是如何去解决模块之间的通信，如何让模块之间交互更加轻松，模块之间更加独立。</p>
-<h3 id="方案一：">方案一：</h3><p>当时考虑的一个方案是使用一个全局的event，全局的on和fire。这样模块之间就不用依赖父子关系了。模块和模块间是可以之间交互的。</p>
+<h2 id="模块间通信其他方案">模块间通信其他方案</h2><p>在那个时候，我考虑最多的就是如何去解决模块之间的通信，如何让模块之间交互更加轻松，模块之间更加独立。</p>
+<h3 id="方案一：">方案一：</h3><p>当时考虑的一个方案是使用一个全局的event（全局的on和fire）。这样模块之间就不用依赖父子关系了。模块和模块间是可以之间交互的。</p>
 <p>但是这样会有一些弊端：</p>
 <ol>
 <li>事件名称如何定义，保证不重名  </li>
@@ -233,11 +233,11 @@
 <li>当交互特别复杂时，也会比较麻烦，还是上面的例子，<code>B2</code>通知<code>C2</code>改变后，<code>C2</code>还需要通知<code>C101</code>获取一次数据，来确认改变</li>
 </ol>
 <p>整体来看：  </p>
-<p>优势： 拜托了模块间父子层级关系，可以跨模块通信  </p>
-<p>劣势： 任然需要维护复杂的模块间关系，可以减少一些，但是对于负责交互，任然会比较乱 </p>
-<h3 id="方案二:">方案二:</h3><p>全局贡献一个model和component模式。这种其实已经非常趋向与数据驱动了。每个模块都是贡献全局的model，然后每个component都可以被全局获取到到，里面的功能熟悉可以直接被使用。  </p>
+<p>优势： 摆脱了模块间父子层级关系，可以简单的跨模块通信  </p>
+<p>劣势： 依然需要维护复杂的模块间关系，只是可以绕过父子依赖 </p>
+<h3 id="方案二:">方案二:</h3><p>全局共享一个model + component模式。这种其实已经非常趋向与数据驱动了。每个模块都是共享全局的model，然后每个component都可以被全局获取到到，里面的功能属性可以直接被使用。  </p>
 <p>其实这种模式已经比较理想，页面上面的任何component都可以被直接调用到并且使用。</p>
-<p>缺点就是：还是需要在模块间维护好和其他模块间的交互逻辑。 </p>
+<p>个人觉得缺点就是：<br>多了一个全局可调用component的功能。如果砍掉他可以实现完成数据驱动，如果模块调用时，使用多了直接获取component的功能，还是需要在模块间维护好和其他模块间的交互逻辑。 </p>
 <h2 id="数据驱动">数据驱动</h2><p>先看一个图，我感觉可以很好的体现数据驱动  </p>
 <p><img src="/img/res/5/model01.jpg" alt="提线木偶"></p>
 <p>提线木偶：他的特点就是每个动作都是，头，手臂，脚，金箍棒都是由操作的人手决定的，头和手臂直接没有任何关系。  </p>
@@ -248,18 +248,24 @@
 <p>回到上面那个麻烦的场景。当<code>B2</code>改变时，它会修改model中对应的数据（效验C101数据，结合B2的改变，修改A2的数据），然后A2的业务模块跟进A2的数据改变。  </p>
 <p>这种设计的核心是每一个模块的改变，全部都交给model处理。  </p>
 <p>然后model里面会和个个模块一一对应，每个模块无需关注其他模块的变化，只需要关注model里面对应自己数据的变化即可。所以模块间关系链条会显得非常简单。  </p>
-<p>当然，这种模式也无法去省略复杂的业务逻辑，只是业务逻辑全部都会聚集在model中。可以理解为页面上所有的操作都是对数据的操作。  </p>
+<p>重点在于，当交互逻辑不断增加时，这个关系链条依然不会增加，因为模块只和model里面对于的数据相关联。</p>
+<p>当然，这种模式也无法去省略复杂的业务逻辑，只是业务逻辑全部都会聚集在model中。可以理解为页面上所有的操作都是对数据的操作。然后每个模块只需要监听关注的数据改变即可，这个监听关系就是图中唯一的一条关系线。 </p>
 <p>换一个理解，我们将直接的模块和模块直接的耦合关系全部转移到了数据中去体现。而数据的维护是远远比模块直接更好维护的。  </p>
 <h2 id="Model如何对应View">Model如何对应View</h2><p>还是上面页面为例子：  </p>
 <p>model  </p>
 <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">var page = &#123;</span><br><span class="line">	a: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			a1: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			a2: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;,</span><br><span class="line">	b: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			b1: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			b2: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;,</span><br><span class="line">	c: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			c1: &#123;</span><br><span class="line">				isShow: true,</span><br><span class="line">				children: [&#123;</span><br><span class="line">					c101: &#123;</span><br><span class="line">						isShow: true</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>isShow 表示展示的意思。这个状态对应文章第一个图片。  </p>
-<p>当数据改变时：  </p>
-<p>例如model发生变化：  </p>
+<p><img src="/img/res/5/module.png" alt="模块"></p>
+<p>当数据改变时，例如model发生变化如下：  </p>
 <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">var page = &#123;</span><br><span class="line">	a: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			a1: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			a2: &#123;</span><br><span class="line">				isShow: false</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;,</span><br><span class="line">	b: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			b1: &#123;</span><br><span class="line">				isShow: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			b2: &#123;</span><br><span class="line">				isShow: false</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;,</span><br><span class="line">	c: &#123;</span><br><span class="line">		isShow: true,</span><br><span class="line">		children: [&#123;</span><br><span class="line">			c1: &#123;</span><br><span class="line">				isShow: false,</span><br><span class="line">				children: [&#123;</span><br><span class="line">					c101: &#123;</span><br><span class="line">						isShow: true</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对应下面这样： </p>
 <p><img src="/img/res/5/model04.png" alt="数据驱动"></p>
-<p>换一个理解就是每一种数据状态对应一种页面的展示状态。页面想展示成什么样子，需要数据处理成什么样子。数据是这个页面的核心。</p>
+<p>换一个理解就是每一种数据状态对应一种页面的展示状态。页面想展示成什么样子，需要数据处理成什么样子。数据是这个页面的核心。  </p>
+<h2 id="数据驱动开发关注点">数据驱动开发关注点</h2><p>第一点数据结构的处理，因为数据决定了整个页面的展示，数据结构开始的设计非常关键，数据结构的可扩展性决定了页面的可扩展性，如果开始数据模式不好，后期维护也会非常难受。  </p>
+<p>第二点是处理好模块和数据中对应的关系。  </p>
+<p>可以看到数据驱动的难点和关键点就是数据结构的设计。而这个也是很考验开发者能力的。数据结构的好坏直接决定了后期业务开发的质量。</p>
+<h2 id="数据驱动和mvc/mvvm的关系">数据驱动和mvc/mvvm的关系</h2><p>文章开头说了，从我的角度理解数据驱动这种模式和mvc并没有什么竞争关系，在具体的实践中，每一个模块可以是一个mvc或者mvvm，模块的内部处理交给模块自己，可以是mvc,或者单例也可以。数据驱动主要是处理模块之间的一种逻辑。  </p>
+<p>那么为什么数据驱动和react这种结合的更加好了？因为react更进一步是讲模块内部也实现一个数据驱动，模块内部的数据改变了，模块的状态会跟着改变。  </p>
 </span>
         
       
