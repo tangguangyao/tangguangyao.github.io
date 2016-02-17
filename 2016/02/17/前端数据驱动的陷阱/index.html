@@ -1,0 +1,648 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="前端修炼之路" />
+
+
+
+  <meta name="keywords" content="前端,javascript" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="年前一篇文章《前端数据驱动的价值》聊了一下数据驱动的一些看法。  
+其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  
+精选评论引用nightire在segmentfault对于《前端数据驱动的价值》的评论：我觉得非常好所有完整复制过来
+
+数据驱动肯定不是从 flux/redux +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端数据驱动的陷阱">
+<meta property="og:url" content="http://tangguangyao.github.io/2016/02/17/前端数据驱动的陷阱/index.html">
+<meta property="og:site_name" content="Yao's 前端修炼之路">
+<meta property="og:description" content="年前一篇文章《前端数据驱动的价值》聊了一下数据驱动的一些看法。  
+其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  
+精选评论引用nightire在segmentfault对于《前端数据驱动的价值》的评论：我觉得非常好所有完整复制过来
+
+数据驱动肯定不是从 flux/redux +">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/trap.jpg">
+<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
+<meta property="og:updated_time" content="2016-02-17T09:04:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端数据驱动的陷阱">
+<meta name="twitter:description" content="年前一篇文章《前端数据驱动的价值》聊了一下数据驱动的一些看法。  
+其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  
+精选评论引用nightire在segmentfault对于《前端数据驱动的价值》的评论：我觉得非常好所有完整复制过来
+
+数据驱动肯定不是从 flux/redux +">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> 前端数据驱动的陷阱 | Yao's 前端修炼之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e35a2df9e882a5f8ed351d0f022fa689";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Yao's 前端修炼之路</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              前端数据驱动的陷阱
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-02-17T13:44:37+08:00" content="2016-02-17">
+            2016-02-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="/img/res/trap.jpg" alt="前端数据驱动的陷阱"></p>
+<p>年前一篇文章<a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>聊了一下数据驱动的一些看法。  </p>
+<p>其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  </p>
+<h2 id="精选评论">精选评论</h2><p>引用<code>nightire</code>在<code>segmentfault</code>对于《前端数据驱动的价值》的评论：<br>我觉得非常好所有完整复制过来</p>
+<blockquote>
+<p>数据驱动肯定不是从 flux/redux + react 才开始的<br>上者特别强调单向数据流，所以才给人造成“由它开始”的错觉</p>
+<p>单向数据流有一个前置依赖，那就是 Single Data Source，也就是你的“提线木偶”所描述的那样</p>
+<p>然而在你的文章里却把它写成了 Data Driven 的前置依赖</p>
+<p>问题来了：只有单向数据流才算数据驱动吗？</p>
+<p>肯定不是的，其实老牌的 Angular／Ember／……等等都是一样的，无非就是对待 Data 的方式各有不同罢了；刨除这些细微差别，它们都是从 “DOM 驱动” 转向 “数据驱动” 的代表作品</p>
+<p>只是它们并没有把这个的概念提炼的深入人心，如此说来，React 一家是功不可没的，不可变数据 ＋ 单向数据流让数据驱动真正成为了“理念”，而不只是“概念”</p>
+<p>然而，单向数据流也不是十全十美的，对于 UI 编程来说，有些地方的确是双向绑定来得更“漂亮”一些，比如：表单</p>
+<p>所以 React 也适时的加入了双向绑定；不过这并不妨碍数据驱动这一理念得以贯彻</p>
+<p>Single Data Source 也不是万能灵药，如果 A B C 三个模块都是各自独立开发的，之后因为需求而要合并在一起，怎么办？在它们之上再来一个 SDS？那这样还算不算是 SDS 呢？（或者反过来，不是 SDS 的话难道就不行吗？）</p>
+<p>这个问题其实也还在发展中，这会儿我也给不出答案，只是客观描述一番罢了。</p>
+</blockquote>
+<h2 id="数据驱动的陷阱">数据驱动的陷阱</h2><p>对于一个真正完美的数据驱动，就如同《前端数据驱动的价值》中的例子，所有业务全部由一个<code>store</code>驱动，维护好<code>store</code>就是维护好了整个系统。  </p>
+<p>但是对于这个一笔带过的维护<code>store</code>其实技术含量非常高。  </p>
+<p>下面分业务场景和情况描述</p>
+<h3 id="新项目">新项目</h3><p>这种情况是比较幸运的，开始的模型中设计好业务数据结构，设计好未来可扩展点。</p>
+<p>当然，即使是新产品，也会遇到麻烦点，因为每一个参与开发的人，必须要全局的理解整个数据结构。  </p>
+<p>看看数据难搞的地方，举个例子：  </p>
+<p>模式A:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	userInfo: &#123;</span><br><span class="line">		name: <span class="string">'test'</span>,</span><br><span class="line">		age: <span class="string">'20'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	planNum: <span class="number">2</span>,</span><br><span class="line">	plans: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">2.00</span>,</span><br><span class="line">			unitNum: <span class="number">1</span>,</span><br><span class="line">			unit: &#123;</span><br><span class="line">				<span class="string">'unit1'</span>: &#123;</span><br><span class="line">					name: <span class="string">'unit1'</span>,</span><br><span class="line">					price: <span class="number">1.22</span>,</span><br><span class="line">					keywordNum: <span class="number">2</span>,</span><br><span class="line">					keyword: &#123;</span><br><span class="line">						<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">							name: <span class="string">'word1'</span>,</span><br><span class="line">							price: <span class="number">22.00</span></span><br><span class="line">						&#125;,</span><br><span class="line">						<span class="string">'keyword2'</span>: &#123;</span><br><span class="line">							name: <span class="string">'word2'</span>,</span><br><span class="line">							price: <span class="number">21.00</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'plan2'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan2'</span>,</span><br><span class="line">			price: <span class="number">3.00</span>,</span><br><span class="line">			unitNum: <span class="number">0</span>,</span><br><span class="line">			unit: &#123;&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面是一种最简单的数据结构，清晰的展现了<code>plan</code>、<code>unit</code>、<code>keyword</code>直接的关系，简单直白。  </p>
+<p>但是如果当层级关系越来越深，这个里面增删改查信息就是一个麻烦点，可以说上面结构的可扩展性不强。  </p>
+<p>那么换下面一种结构是否更加合适：  </p>
+<p>模式B:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	userInfo: &#123;</span><br><span class="line">		name: <span class="string">'test'</span>,</span><br><span class="line">		age: <span class="string">'20'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	planNum: <span class="number">2</span>,</span><br><span class="line">	plans: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">2.00</span>,</span><br><span class="line">			unitNum: <span class="number">1</span>,</span><br><span class="line">			unit: [unit1]</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'plan2'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan2'</span>,</span><br><span class="line">			price: <span class="number">3.00</span>,</span><br><span class="line">			unitNum: <span class="number">0</span>,</span><br><span class="line">			unit: []</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	units: &#123;</span><br><span class="line">		<span class="string">'unit1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			name: <span class="string">'unit1'</span>,</span><br><span class="line">			price: <span class="number">1.22</span>,</span><br><span class="line">			keywordNum: <span class="number">2</span>,</span><br><span class="line">			keyword: [keyword1]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	keywords: &#123;</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word2'</span>,</span><br><span class="line">			price: <span class="number">21.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>个人感觉这种模式更加适合，便于查找和更新，那么问题来了，先抛开那种数据结构更合适问题，假如开发初期<code>模式A</code>是ok的，随着业务的复杂，发现<code>模式A</code>越来越难维护，经过重新设计，发现转换到<code>模式B</code>更加合适，能明显提高开发和维护效率，那么怎么办？  </p>
+<p>个人还没有实践过，但是经验上看感觉是会导致大面积重构。及时重构完成，假如后期发现更好的数据模式呢？  </p>
+<p>所以可以看出初期的数据结构决定了未来架构，看上去像不像后端开发，数据库的设计很重要。  </p>
+<p>既然越来越像后端设计模式，那么是否会模仿当时的前后端分离策略，底层数据结构和业务展现通过api实现呢？个人感觉这样有点简单问题复杂化。那么是否可以加一个中间数据转换层去处理数据呢？这样在底层数据结构变换时，也能避免之间影响业务模块，中间层做一个适当的解耦。</p>
+<p><strong>结论一：初期的数据结构设计会是未来的不定时炸弹，迟早会面对，需要有相应策略</strong></p>
+<h3 id="模块合并">模块合并</h3><p>现在来考虑评论中的一个问题：  </p>
+<blockquote>
+<p>Single Data Source 也不是万能灵药，如果 A B C 三个模块都是各自独立开发的，之后因为需求而要合并在一起，怎么办？在它们之上再来一个 SDS？那这样还算不算是 SDS 呢？（或者反过来，不是 SDS 的话难道就不行吗？）</p>
+</blockquote>
+<p>负责的系统中必然会遇到这种问题，直接举例：  </p>
+<p>模块C，主要负责修改level:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleA: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		level: <span class="number">2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>模块D，主要负责修改auth:  </p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleB: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		auth: <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在是逻辑是假如两个独立开发好的模块需要合并到一起，他们都有各自模块的数据结构，假如模块C处了修改level，还修改了plan1的name会怎么样？为了保证数据统一，是否需要去找到模块D中的plan1信息，并且修改。加入他们都合并到上面一个例子模块A中怎么办，是否还需要继续同步修改。如果漏掉一个同步，页面上面，以及后面的处理都会引发各种bug。  </p>
+<p>当然，如果不用数据驱动，可能这种模块合并也是需要从展示层级各处修改的，也会特别麻烦。只是相比较而言，数据驱动的这种合并同步并没有给我们带来很清晰的处理方式。  </p>
+<p><strong>结论二：数据驱动下，数据的重复和同步是一个坑，要尽量避免</strong></p>
+<h3 id="不适合的场景">不适合的场景</h3><blockquote>
+<p>然而，单向数据流也不是十全十美的，对于 UI 编程来说，有些地方的确是双向绑定来得更“漂亮”一些，比如：表单  </p>
+</blockquote>
+<p>评论里面提到的这部分应该是单向数据流的一个痛点，如果模块里面严格执行单向数据流，对于这种表单验证来说，是非常痛苦的。  </p>
+<p>例如：  </p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = &#123;</span><br><span class="line">	<span class="keyword">value</span>: <span class="number">2.00</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应一个输入框，输入框只能限制输入1-100的2位小数。整个验证过程单向数据驱动就会特别麻烦。  </p>
+<p><strong>结论三:对于某些具体的模块，单向数据流不是万灵药，整体架构单向数据驱动，具体模块可以根据场景选择最合适的</strong></p>
+<h2 id="总结">总结</h2><p>个人感觉数据驱动对于开发人员的要求其实有一些增加，开发是需要更多的全局观，对于业务需要更加的了解。这个感觉其实算是缺点，因为从工程化的角度，这种模式提高了开发成本，提高了一些开发人员的学习成本。  </p>
+<p>那么优点呢，应该是系统的稳定性，可维护性，健壮性会更好。</p>
+<p>总之没有银弹，每种模式都有适合的场景。以上就是对于数据驱动的一点点看法。仅供参考。</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/30/前端数据驱动的价值/" rel="next">前端数据驱动的价值</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/weixin.jpg" alt="Yao Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Yao Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">前端修炼之路</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#精选评论"><span class="nav-number">1.</span> <span class="nav-text">精选评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动的陷阱"><span class="nav-number">2.</span> <span class="nav-text">数据驱动的陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新项目"><span class="nav-number">2.1.</span> <span class="nav-text">新项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块合并"><span class="nav-number">2.2.</span> <span class="nav-text">模块合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不适合的场景"><span class="nav-number">2.3.</span> <span class="nav-text">不适合的场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">4.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yao Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

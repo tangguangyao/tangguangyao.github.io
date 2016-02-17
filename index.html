@@ -165,6 +165,126 @@
           
           
             
+              <a class="post-title-link" href="/2016/02/17/前端数据驱动的陷阱/" itemprop="url">
+                前端数据驱动的陷阱
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-02-17T13:44:37+08:00" content="2016-02-17">
+            2016-02-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><img src="/img/res/trap.jpg" alt="前端数据驱动的陷阱"></p>
+<p>年前一篇文章<a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>聊了一下数据驱动的一些看法。  </p>
+<p>其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  </p>
+<h2 id="精选评论">精选评论</h2><p>引用<code>nightire</code>在<code>segmentfault</code>对于《前端数据驱动的价值》的评论：<br>我觉得非常好所有完整复制过来</p>
+<blockquote>
+<p>数据驱动肯定不是从 flux/redux + react 才开始的<br>上者特别强调单向数据流，所以才给人造成“由它开始”的错觉</p>
+<p>单向数据流有一个前置依赖，那就是 Single Data Source，也就是你的“提线木偶”所描述的那样</p>
+<p>然而在你的文章里却把它写成了 Data Driven 的前置依赖</p>
+<p>问题来了：只有单向数据流才算数据驱动吗？</p>
+<p>肯定不是的，其实老牌的 Angular／Ember／……等等都是一样的，无非就是对待 Data 的方式各有不同罢了；刨除这些细微差别，它们都是从 “DOM 驱动” 转向 “数据驱动” 的代表作品</p>
+<p>只是它们并没有把这个的概念提炼的深入人心，如此说来，React 一家是功不可没的，不可变数据 ＋ 单向数据流让数据驱动真正成为了“理念”，而不只是“概念”</p>
+<p>然而，单向数据流也不是十全十美的，对于 UI 编程来说，有些地方的确是双向绑定来得更“漂亮”一些，比如：表单</p>
+<p>所以 React 也适时的加入了双向绑定；不过这并不妨碍数据驱动这一理念得以贯彻</p>
+<p>Single Data Source 也不是万能灵药，如果 A B C 三个模块都是各自独立开发的，之后因为需求而要合并在一起，怎么办？在它们之上再来一个 SDS？那这样还算不算是 SDS 呢？（或者反过来，不是 SDS 的话难道就不行吗？）</p>
+<p>这个问题其实也还在发展中，这会儿我也给不出答案，只是客观描述一番罢了。</p>
+</blockquote>
+<h2 id="数据驱动的陷阱">数据驱动的陷阱</h2><p>对于一个真正完美的数据驱动，就如同《前端数据驱动的价值》中的例子，所有业务全部由一个<code>store</code>驱动，维护好<code>store</code>就是维护好了整个系统。  </p>
+<p>但是对于这个一笔带过的维护<code>store</code>其实技术含量非常高。  </p>
+<p>下面分业务场景和情况描述</p>
+<h3 id="新项目">新项目</h3><p>这种情况是比较幸运的，开始的模型中设计好业务数据结构，设计好未来可扩展点。</p>
+<p>当然，即使是新产品，也会遇到麻烦点，因为每一个参与开发的人，必须要全局的理解整个数据结构。  </p>
+<p>看看数据难搞的地方，举个例子：  </p>
+<p>模式A:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	userInfo: &#123;</span><br><span class="line">		name: <span class="string">'test'</span>,</span><br><span class="line">		age: <span class="string">'20'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	planNum: <span class="number">2</span>,</span><br><span class="line">	plans: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">2.00</span>,</span><br><span class="line">			unitNum: <span class="number">1</span>,</span><br><span class="line">			unit: &#123;</span><br><span class="line">				<span class="string">'unit1'</span>: &#123;</span><br><span class="line">					name: <span class="string">'unit1'</span>,</span><br><span class="line">					price: <span class="number">1.22</span>,</span><br><span class="line">					keywordNum: <span class="number">2</span>,</span><br><span class="line">					keyword: &#123;</span><br><span class="line">						<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">							name: <span class="string">'word1'</span>,</span><br><span class="line">							price: <span class="number">22.00</span></span><br><span class="line">						&#125;,</span><br><span class="line">						<span class="string">'keyword2'</span>: &#123;</span><br><span class="line">							name: <span class="string">'word2'</span>,</span><br><span class="line">							price: <span class="number">21.00</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'plan2'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan2'</span>,</span><br><span class="line">			price: <span class="number">3.00</span>,</span><br><span class="line">			unitNum: <span class="number">0</span>,</span><br><span class="line">			unit: &#123;&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面是一种最简单的数据结构，清晰的展现了<code>plan</code>、<code>unit</code>、<code>keyword</code>直接的关系，简单直白。  </p>
+<p>但是如果当层级关系越来越深，这个里面增删改查信息就是一个麻烦点，可以说上面结构的可扩展性不强。  </p>
+<p>那么换下面一种结构是否更加合适：  </p>
+<p>模式B:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	userInfo: &#123;</span><br><span class="line">		name: <span class="string">'test'</span>,</span><br><span class="line">		age: <span class="string">'20'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	planNum: <span class="number">2</span>,</span><br><span class="line">	plans: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">2.00</span>,</span><br><span class="line">			unitNum: <span class="number">1</span>,</span><br><span class="line">			unit: [unit1]</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'plan2'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan2'</span>,</span><br><span class="line">			price: <span class="number">3.00</span>,</span><br><span class="line">			unitNum: <span class="number">0</span>,</span><br><span class="line">			unit: []</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	units: &#123;</span><br><span class="line">		<span class="string">'unit1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			name: <span class="string">'unit1'</span>,</span><br><span class="line">			price: <span class="number">1.22</span>,</span><br><span class="line">			keywordNum: <span class="number">2</span>,</span><br><span class="line">			keyword: [keyword1]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	keywords: &#123;</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word2'</span>,</span><br><span class="line">			price: <span class="number">21.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>个人感觉这种模式更加适合，便于查找和更新，那么问题来了，先抛开那种数据结构更合适问题，假如开发初期<code>模式A</code>是ok的，随着业务的复杂，发现<code>模式A</code>越来越难维护，经过重新设计，发现转换到<code>模式B</code>更加合适，能明显提高开发和维护效率，那么怎么办？  </p>
+<p>个人还没有实践过，但是经验上看感觉是会导致大面积重构。及时重构完成，假如后期发现更好的数据模式呢？  </p>
+<p>所以可以看出初期的数据结构决定了未来架构，看上去像不像后端开发，数据库的设计很重要。  </p>
+<p>既然越来越像后端设计模式，那么是否会模仿当时的前后端分离策略，底层数据结构和业务展现通过api实现呢？个人感觉这样有点简单问题复杂化。那么是否可以加一个中间数据转换层去处理数据呢？这样在底层数据结构变换时，也能避免之间影响业务模块，中间层做一个适当的解耦。</p>
+<p><strong>结论一：初期的数据结构设计会是未来的不定时炸弹，迟早会面对，需要有相应策略</strong></p>
+<h3 id="模块合并">模块合并</h3><p>现在来考虑评论中的一个问题：  </p>
+<blockquote>
+<p>Single Data Source 也不是万能灵药，如果 A B C 三个模块都是各自独立开发的，之后因为需求而要合并在一起，怎么办？在它们之上再来一个 SDS？那这样还算不算是 SDS 呢？（或者反过来，不是 SDS 的话难道就不行吗？）</p>
+</blockquote>
+<p>负责的系统中必然会遇到这种问题，直接举例：  </p>
+<p>模块C，主要负责修改level:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleA: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		level: <span class="number">2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>模块D，主要负责修改auth:  </p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleB: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		auth: <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在是逻辑是假如两个独立开发好的模块需要合并到一起，他们都有各自模块的数据结构，假如模块C处了修改level，还修改了plan1的name会怎么样？为了保证数据统一，是否需要去找到模块D中的plan1信息，并且修改。加入他们都合并到上面一个例子模块A中怎么办，是否还需要继续同步修改。如果漏掉一个同步，页面上面，以及后面的处理都会引发各种bug。  </p>
+<p>当然，如果不用数据驱动，可能这种模块合并也是需要从展示层级各处修改的，也会特别麻烦。只是相比较而言，数据驱动的这种合并同步并没有给我们带来很清晰的处理方式。  </p>
+<p><strong>结论二：数据驱动下，数据的重复和同步是一个坑，要尽量避免</strong></p>
+<h3 id="不适合的场景">不适合的场景</h3><blockquote>
+<p>然而，单向数据流也不是十全十美的，对于 UI 编程来说，有些地方的确是双向绑定来得更“漂亮”一些，比如：表单  </p>
+</blockquote>
+<p>评论里面提到的这部分应该是单向数据流的一个痛点，如果模块里面严格执行单向数据流，对于这种表单验证来说，是非常痛苦的。  </p>
+<p>例如：  </p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = &#123;</span><br><span class="line">	<span class="keyword">value</span>: <span class="number">2.00</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应一个输入框，输入框只能限制输入1-100的2位小数。整个验证过程单向数据驱动就会特别麻烦。  </p>
+<p><strong>结论三:对于某些具体的模块，单向数据流不是万灵药，整体架构单向数据驱动，具体模块可以根据场景选择最合适的</strong></p>
+<h2 id="总结">总结</h2><p>个人感觉数据驱动对于开发人员的要求其实有一些增加，开发是需要更多的全局观，对于业务需要更加的了解。这个感觉其实算是缺点，因为从工程化的角度，这种模式提高了开发成本，提高了一些开发人员的学习成本。  </p>
+<p>那么优点呢，应该是系统的稳定性，可维护性，健壮性会更好。</p>
+<p>总之没有银弹，每种模式都有适合的场景。以上就是对于数据驱动的一点点看法。仅供参考。</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/01/30/前端数据驱动的价值/" itemprop="url">
                 前端数据驱动的价值
               </a>
@@ -1078,95 +1198,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/11/28/sourceMap初探索/" itemprop="url">
-                sourceMap初探索
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-11-28T19:40:55+08:00" content="2015-11-28">
-            2015-11-28
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/sourceMap.png" alt="sourceMap初探索"></p>
-<h2 id="sourceMap的偶遇">sourceMap的偶遇</h2><p>接触到sourceMap，其实是在调研ES6时发现的。  </p>
-<p>在调研ES6引入生产环境的可能性，初步觉得引入项目时需要解决的几个问题：  </p>
-<ol>
-<li>上线时的打包构建问题</li>
-<li>开发环境编译问题，目前chrome都不兼容es6</li>
-<li>解决了开发环境编译后，调试问题——开发的代码和浏览器跑的代码不一样  </li>
-<li>其他没有考虑到的问题等等</li>
-</ol>
-<p>其中sourceMap就是在调研第三个问题时，发现的。<br>想想如果在debug时浏览器显示的是编译后的代码，这个对于调试其实是致命的打击。  </p>
-<p>而通过目前的调研，发现sourceMap就是这个问题的解决方案。 </p>
-<h2 id="sourceMap是什么">sourceMap是什么</h2><p>请大家直接看阮一峰的文章<br><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html" target="_blank" rel="external">JavaScript Source Map 详解</a>  </p>
-<p>原理我简单的理解就是通过map文件产出一个映射关系，将编译后的代码映射到编译前的，然后debug时，浏览器解析的是编译后的，但是呈现给我们的是映射前的开发代码。</p>
-<h2 id="sourceMap曾经被忽视">sourceMap曾经被忽视</h2><p>在网上找的一些介绍Source Map的文章，发现Source Map主要是解决一些代码压缩混淆后不好调试的问题。 </p>
-<p>举个例子，jquery-min调试时非常不方便，但是加上Source Map，可以直接在浏览器中调试jquery压缩前的。  </p>
-<p>但是真正在开发环境，可能将jquery-min换成jquery，大家觉得会更加方便，无需那么麻烦处理，所以这也是可能没有流行起来的原因。  </p>
-<h2 id="sourceMap为什么又会被重视">sourceMap为什么又会被重视</h2><p>直接拿我遇到的问题说明，ES6语法浏览器执行不了怎么办?</p>
-<p>使用babel，ok，babel可以编译成js给浏览器执行。这个时候，编译后的代码必然会和我们开发时的不一样。  </p>
-<p>这时如果我们希望还和以前使用js一样去调试，怎么办？</p>
-<p>只能利用Source Map这种，产生一种映射关系，去将开发中的代码映射到debug工具中。  </p>
-<p>除了es6，另外一个被看好的typescript（angulejs2使用typescript实现），它也同样存在这个问题（目前没有调研它的调试方式）。  </p>
-<p>可以预见，这种加入一种编译方式去写js可能是未来的一种趋势。<br>小小跑题一下，为什么个人觉得是一种趋势，编译做的越牛逼，开发的代码就会越简单，能让开发人员抓住与业务，兼容，适配，自适应的坑都交接编译去解决，大大的提高了工程效率。  </p>
-<h2 id="sourceMap使用参考">sourceMap使用参考</h2><p>大家看看下面这个链接（需要翻墙）：  </p>
-<p><a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/</a></p>
-<p>里面还有例子是将java编译成js，然后在chrome中使用sourceMap直接debug java的代码。  </p>
-<h2 id="我对sourceMap的了解">我对sourceMap的了解</h2><p>由于最近比较忙，这篇文章只是初步探索，了解的非常非常浅，没有什么干货，后面有一定成果后还会继续更新sourceMap其他方面。</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1205,7 +1236,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
