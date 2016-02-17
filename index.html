@@ -200,7 +200,7 @@
           <span itemprop="articleBody"><p><img src="/img/res/trap.jpg" alt="前端数据驱动的陷阱"></p>
 <p>年前一篇文章<a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>聊了一下数据驱动的一些看法。  </p>
 <p>其中数据驱动的核心在于整个系统中对于数据的架构，设计，维护。对于数据的处理直接决定了系统的稳定性，可维护性，可扩展性。但是这里的数据维护也是相当复杂和难搞的一块。  </p>
-<h2 id="精选评论">精选评论</h2><p>引用<code>nightire</code>在<code>segmentfault</code>对于《前端数据驱动的价值》的评论：<br>我觉得非常好所有完整复制过来</p>
+<h2 id="精选评论">精选评论</h2><p>引用<code>nightire</code>在<code>segmentfault</code>对于《前端数据驱动的价值》的评论：<br>我觉得非常好所以完整复制过来</p>
 <blockquote>
 <p>数据驱动肯定不是从 flux/redux + react 才开始的<br>上者特别强调单向数据流，所以才给人造成“由它开始”的错觉</p>
 <p>单向数据流有一个前置依赖，那就是 Single Data Source，也就是你的“提线木偶”所描述的那样</p>
@@ -226,22 +226,22 @@
 <p>那么换下面一种结构是否更加合适：  </p>
 <p>模式B:</p>
 <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	userInfo: &#123;</span><br><span class="line">		name: <span class="string">'test'</span>,</span><br><span class="line">		age: <span class="string">'20'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	planNum: <span class="number">2</span>,</span><br><span class="line">	plans: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">2.00</span>,</span><br><span class="line">			unitNum: <span class="number">1</span>,</span><br><span class="line">			unit: [unit1]</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'plan2'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan2'</span>,</span><br><span class="line">			price: <span class="number">3.00</span>,</span><br><span class="line">			unitNum: <span class="number">0</span>,</span><br><span class="line">			unit: []</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	units: &#123;</span><br><span class="line">		<span class="string">'unit1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			name: <span class="string">'unit1'</span>,</span><br><span class="line">			price: <span class="number">1.22</span>,</span><br><span class="line">			keywordNum: <span class="number">2</span>,</span><br><span class="line">			keyword: [keyword1]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	keywords: &#123;</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="string">'keyword1'</span>: &#123;</span><br><span class="line">			plan: <span class="string">'plan1'</span>,</span><br><span class="line">			unit: <span class="string">'unit1'</span>,</span><br><span class="line">			name: <span class="string">'word2'</span>,</span><br><span class="line">			price: <span class="number">21.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>个人感觉这种模式更加适合，便于查找和更新，那么问题来了，先抛开那种数据结构更合适问题，假如开发初期<code>模式A</code>是ok的，随着业务的复杂，发现<code>模式A</code>越来越难维护，经过重新设计，发现转换到<code>模式B</code>更加合适，能明显提高开发和维护效率，那么怎么办？  </p>
-<p>个人还没有实践过，但是经验上看感觉是会导致大面积重构。及时重构完成，假如后期发现更好的数据模式呢？  </p>
+<p>个人感觉这种模式更加适合，便于查找和更新，那么问题来了，先抛开哪种数据结构更合适问题，假如开发初期<code>模式A</code>是ok的，随着业务的复杂，发现<code>模式A</code>越来越难维护，经过重新设计，发现转换到<code>模式B</code>更加合适，能明显提高开发和维护效率，那么怎么办？  </p>
+<p>个人还没有实践过，但是经验上看感觉是会导致大面积重构。即使重构完成，假如后期发现更好的数据模式呢？  </p>
 <p>所以可以看出初期的数据结构决定了未来架构，看上去像不像后端开发，数据库的设计很重要。  </p>
-<p>既然越来越像后端设计模式，那么是否会模仿当时的前后端分离策略，底层数据结构和业务展现通过api实现呢？个人感觉这样有点简单问题复杂化。那么是否可以加一个中间数据转换层去处理数据呢？这样在底层数据结构变换时，也能避免之间影响业务模块，中间层做一个适当的解耦。</p>
+<p>既然越来越像后端设计模式，那么是否会模仿当时的前后端分离策略，底层数据结构和业务展现通过api实现呢？个人感觉这样有点问题过于复杂化。那么是否可以加一个中间数据转换层去处理数据呢？这样在底层数据结构变换时，也能避免直接影响业务模块，中间层做一个适当的解耦，展示内容和数据结构没有什么关联，关联的仅仅是数据信息。</p>
 <p><strong>结论一：初期的数据结构设计会是未来的不定时炸弹，迟早会面对，需要有相应策略</strong></p>
-<h3 id="模块合并">模块合并</h3><p>现在来考虑评论中的一个问题：  </p>
+<h3 id="模块合并">模块合并</h3><p>再来考虑评论中的一个问题：  </p>
 <blockquote>
 <p>Single Data Source 也不是万能灵药，如果 A B C 三个模块都是各自独立开发的，之后因为需求而要合并在一起，怎么办？在它们之上再来一个 SDS？那这样还算不算是 SDS 呢？（或者反过来，不是 SDS 的话难道就不行吗？）</p>
 </blockquote>
-<p>负责的系统中必然会遇到这种问题，直接举例：  </p>
+<p>复杂的系统中确实会遇到这种问题，直接举例：  </p>
 <p>模块C，主要负责修改level:</p>
 <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleA: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		level: <span class="number">2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>模块D，主要负责修改auth:  </p>
 <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var store = &#123;</span><br><span class="line">	moduleB: &#123;</span><br><span class="line">		<span class="string">'plan1'</span>: &#123;</span><br><span class="line">			name: <span class="string">'plan1'</span>,</span><br><span class="line">			price: <span class="number">22.00</span></span><br><span class="line">		&#125;,</span><br><span class="line">		auth: <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在是逻辑是假如两个独立开发好的模块需要合并到一起，他们都有各自模块的数据结构，假如模块C处了修改level，还修改了plan1的name会怎么样？为了保证数据统一，是否需要去找到模块D中的plan1信息，并且修改。加入他们都合并到上面一个例子模块A中怎么办，是否还需要继续同步修改。如果漏掉一个同步，页面上面，以及后面的处理都会引发各种bug。  </p>
-<p>当然，如果不用数据驱动，可能这种模块合并也是需要从展示层级各处修改的，也会特别麻烦。只是相比较而言，数据驱动的这种合并同步并没有给我们带来很清晰的处理方式。  </p>
+<p>现在的逻辑是假如两个独立开发好的模块需要合并到一起，他们都有各自模块的内部数据结构，假如模块C除了修改level，还修改了plan1的name会怎么样？为了保证数据统一，需要去找到模块D中的plan1信息，并且修改。假如他们都合并到上面一个例子模块A中怎么办，是否还需要继续同步修改。如果漏掉一个同步，展示上，以及后面的处理都会引发各种bug。  </p>
+<p>当然，如果不用数据驱动，可能这种模块合并也是需要从展示层级各处同步修改信息的，也会特别麻烦。只是相比较而言，数据驱动的这种合并同步并没有给我们带来很清晰简单的处理方式。  </p>
 <p><strong>结论二：数据驱动下，数据的重复和同步是一个坑，要尽量避免</strong></p>
 <h3 id="不适合的场景">不适合的场景</h3><blockquote>
 <p>然而，单向数据流也不是十全十美的，对于 UI 编程来说，有些地方的确是双向绑定来得更“漂亮”一些，比如：表单  </p>
@@ -250,8 +250,9 @@
 <p>例如：  </p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = &#123;</span><br><span class="line">	<span class="keyword">value</span>: <span class="number">2.00</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对应一个输入框，输入框只能限制输入1-100的2位小数。整个验证过程单向数据驱动就会特别麻烦。  </p>
+<p>一个简单的例子，在使用react实现表单验证就比较麻烦。</p>
 <p><strong>结论三:对于某些具体的模块，单向数据流不是万灵药，整体架构单向数据驱动，具体模块可以根据场景选择最合适的</strong></p>
-<h2 id="总结">总结</h2><p>个人感觉数据驱动对于开发人员的要求其实有一些增加，开发是需要更多的全局观，对于业务需要更加的了解。这个感觉其实算是缺点，因为从工程化的角度，这种模式提高了开发成本，提高了一些开发人员的学习成本。  </p>
+<h2 id="总结">总结</h2><p>个人感觉数据驱动对于开发人员的要求其实有一些增加，开发是需要更多的全局观，对于业务需要更加的了解。这个其实算是缺点，因为从工程化的角度，这种模式提高了开发成本，提高了开发人员的学习成本。  </p>
 <p>那么优点呢，应该是系统的稳定性，可维护性，健壮性会更好。</p>
 <p>总之没有银弹，每种模式都有适合的场景。以上就是对于数据驱动的一点点看法。仅供参考。</p>
 <h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
