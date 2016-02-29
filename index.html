@@ -165,6 +165,112 @@
           
           
             
+              <a class="post-title-link" href="/2016/02/28/react融合进系统的体验/" itemprop="url">
+                react融合进系统的体验
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-02-28T22:22:59+08:00" content="2016-02-28">
+            2016-02-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><img src="/img/res/react.jpg" alt="react融合进系统的体验"></p>
+<h2 id="引入的背景">引入的背景</h2><p>在一个庞大的商业系统中引入react这种数据驱动的模式。<br>希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。</p>
+<h2 id="同事实践的心得">同事实践的心得</h2><p>心得一</p>
+<blockquote>
+<p>从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开发很不一样，偏激一点的说，相比以前用$搬弄DOM节点，我觉得这样的前端开发更“严肃”了。我希望能够推动团队迎接，适应，实现这个变化，这对于一个技术人员，而不仅仅是前端技术人员都是有益的。</p>
+</blockquote>
+<p>心得二</p>
+<blockquote>
+<p>1．React单向数据流原则是核心中的核心，即整个系统中只存在自上至下的数据流，反向数据流通过绑定自动完成，不存在兄弟间横向数据流。</p>
+<p>2．控制数据流属于最强的开发规范，必定会给开发业务的同学带来巨大的思维挑战，从系统整体质量和维护性来看，必须牺牲业务开发的编程自由度。目前就是自由度太高，导致出现五花八门的业务实现，代码根本没法看。</p>
+</blockquote>
+<p>心得三</p>
+<blockquote>
+<p>其实之前我们也是数据驱动视图的，生命周期时用初始化数据渲染了视图，自然这时有了一层数据到视图的映射逻辑关系。数据改变之后绑定视图映射关系会写在model onchange handler中。</p>
+<p>这样会有一些问题：</p>
+<p>1.数据到设图的映射逻辑关系可能写了两遍，而且会发散在template, action, view等各个地方</p>
+<p>2.初始化时数据和视图的关系是同步的，但是初始化之后这两者就可能就不一致，很可能handler没写用jquery直接操作DOM了。</p>
+<p>初级阶段觉得React的好处是，把映射关系收敛到render方法中，有一层封装让我们直接操作DOM变得更难。数据如果在任何时候都能表达视图，是有很多事情可以想象的。</p>
+</blockquote>
+<p>心得四</p>
+<blockquote>
+<p>我们需要在React方面思考的技术问题，有下面这些点：</p>
+<p>UI组件应当有稳定一致的开发规范。</p>
+<p>UI组件应当有充分的UT 。（并尝试是否可以为业务组件加UT）</p>
+<p>UI组件乃至业务组件内的数据结构是否应该有一个统一的模式（如immutable或者更轻量的模式），使得对于数据结构的任意位置的修改，都可以有事件冒出做一些统一的处理。</p>
+<p>多个兄弟的组件之间的通信有什么范式？</p>
+<p>父子组件之间双向通信有什么范式？</p>
+<p>目前实现了ER-React，即一个React模块对外表现为一个ER模块。未来在此基础上，将一个ER-React模块的父模块实现为React后，是要脱掉ER-React的ER，变为React-React呢？还是实现为React-ER-React呢？</p>
+<p>按照React的开发模式，随着我们自下而上的重构业务，很自然的，下面的组件的“Model”部分会逐渐“上浮“与上层的组件的Model合并成为一个更大的Model。如此往复，我们自然会形成“整个应用只有一个大Model”的局面。我们需要在这一切发生之前想明白这个“大Model”内部要如何组织，会以何种形式存在，并以何种形式和各个组件交互。</p>
+<p>类似，从View的角度看，我们最终会形成“整个应用就是一个大的React组件”。对于每一个业务动作，整个应用都会重新render。这个render的性能迟早我们需要关心。如何控制这个render的性能使之不会影响用户体验？</p>
+</blockquote>
+<h2 id="react引入的意义">react引入的意义</h2><h3 id="活力">活力</h3><p>引入后我觉得最重要的成就就是让一个系统拥有升级换代的活力。就像注入新鲜血液一样，系统能够跟上时代的变化。  </p>
+<p>对于一个庞大的商业系统而言，系统底层的稳定性是一个很重要的点。不过如果能在在系统上面做一些侵入性的改造，让一个稳定的系统充满活力还是很有意义的。  </p>
+<p>首先对于业务开发人员，很明显，他们在原有系统上面开发了这么久以后，对于新技术的引入是非常欢迎的，他们是非常乐意去学习新技术的。  </p>
+<h3 id="提高开发效率">提高开发效率</h3><p>这个是写给老板们看的，花这么大力气去引入一个新技术对于公司的收益就是提高开发人员的效率。  </p>
+<p>当然这个提高的效率的前提是对于开发人员有更高的要求的。</p>
+<h3 id="提高系统的健壮性">提高系统的健壮性</h3><p>react的模式是可以在某种程度上面融入UT的。<br>以及一个很好的数据驱动模式维护性和扩展性是比现有系统强的。</p>
+<h3 id="回放用户行为">回放用户行为</h3><p>数据驱动好处就是可以通过数据记录用户的页面状态，用数据就能恢复页面快照，需要分析用户行为，只需要收集到系统的数据变化流即可。</p>
+<h2 id="react引入的挑战">react引入的挑战</h2><ol>
+<li>数据驱动最合适的是从根部重构。但是目前我们只能从叶子模块一点点往根部重构。其实是一个反向过程。  </li>
+<li>数据驱动模式对于开发人员要求比较高，能不能设计一种模式降低要求，避免出现不同水平的开发者开发出层次不齐的业务模块。</li>
+<li>引入新的模式一个缺点就是以前模式成为了技术债务。因为一个系统存在多种模式，意味着新人学习成本会增加很多。多种模式的共存，如果维护不好，也会出现一种很混乱的现象。</li>
+</ol>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/02/17/前端数据驱动的陷阱/" itemprop="url">
                 前端数据驱动的陷阱
               </a>
@@ -1086,119 +1192,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/12/02/ES6引入前需要解决的问题/" itemprop="url">
-                ES6引入前需要解决的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-12-02T19:35:03+08:00" content="2015-12-02">
-            2015-12-02
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/es6.png" alt="ES6引入前需要解决的问题"></p>
-<p>最近项目中的一个模块正式引入的ES6，由于是引入新技术，也遇到了一些问题，下面分享下整个引入流程</p>
-<h2 id="为什么要引入ES6">为什么要引入ES6</h2><p>最近在看一些前端解决方案的文章，ES6越来越多的出现在前端方案中。</p>
-<p>ES6由于浏览器不支持，在使用上也是和CoffeeScript和TypeScript一样，都需要compile-to-JS。  </p>
-<p>理由一：<br>符合未来趋势，angular2就是使用TypeScript实现；<br>react native 也是可以直接使用es6的语法；</p>
-<p>理由二：<br>提高开发效率（待考证）；</p>
-<p>理由三：<br>减少代码量、提高可读性等  </p>
-<p>但我觉得不仅仅如此，应该会有更多优势。所以需要亲自验证。</p>
-<h2 id="引入前考虑最多的事情">引入前考虑最多的事情</h2><p>从个人的角度，趋势这个东西说不准，减少代码量、提高可读性等这些其实都可以通过规范来完成。  </p>
-<p>我个人最看重的是效率这块，是否能够真正的提高团队开发效率。  </p>
-<p>另外在一片文章中看到说facebook.com 都使用了ES6 + babel complile，我心里也安稳了一些。  </p>
-<p>考虑的第二点就是是否会给整个系统引入技术债务，由于这个是新技术的引入，和之前框架没有任何重叠，而且引入也是选择性的（提供一种可用的环境）。如果未来有较大的升级，我们可以修改compile-to-JS做适配和转换。</p>
-<p>最后一个问题是我们项目使用的不是grunt这种，有直接的解决方案，引入可能会有风险。不过庆幸的是，我们发现我们使用的edp已经支持了。其实我们开始已经想好了如果不支持，自己会扩展一些插件去支持。</p>
-<h2 id="技术方案">技术方案</h2><p>ES6 + babel</p>
-<h2 id="需要解决的问题">需要解决的问题</h2><ol>
-<li>开发环境下的浏览器不支持ES6？</li>
-<li>使用babel转换的代码，调试不方便？</li>
-<li>线上环境的代码打包编译怎么处理？</li>
-<li>ES6的新特性哪些适合使用？</li>
-<li>ES6的新特性是否通过babel转换后还有兼容问题？</li>
-<li>开发效率是否会有提高？</li>
-<li>编译器高亮支持？</li>
-</ol>
-<h2 id="下面挨个解决问题">下面挨个解决问题</h2><p>想到一句话  </p>
-<blockquote>
-<p>你可以坐以待毙，也可以立刻动手解决问题，解决一个再解决一个，解决了所有问题，你就活下来可以回家了</p>
-</blockquote>
-<p>来自《火星救援》  </p>
-<p><strong>开发环境下的浏览器不支持ES6？</strong><br>这个容易，使用babel。</p>
-<p><strong>使用babel转换的代码，调试不方便？</strong><br>确定了sourceMap的方式解决，但是开始没有认真看babel文档，绕了个圈子，最后发现babel有个属性</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceMaps：both</span><br><span class="line">filename： pathname.<span class="function"><span class="title">replace</span><span class="params">(/\.(\w+)</span></span>$/, <span class="string">'.raw.$1'</span>)</span><br></pre></td></tr></table></figure>
-<p>传入这个参数sourceMaps传入表示启用；<br>filename是编译前对应的文件,这里必须给一个和处理的文件名不一样的</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel.<span class="function"><span class="title">transform</span><span class="params">(code, options)</span></span></span><br></pre></td></tr></table></figure>
-<p><strong>线上环境的代码打包编译怎么处理？</strong><br>在构建的流程中，加入一个babel-processor的流程即可，加入的时机需要是在模块压缩合并前，其实就是越早越好。  </p>
-<p><strong>ES6的新特性哪些适合使用？</strong><br>我们参考<br><a href="http://efe.baidu.com/blog/es6-develop-overview/" target="_blank" rel="external">使用ES6进行开发的思考</a>  </p>
-<blockquote>
-<p>arrows    ★★★<br>classes    ★★★<br>enhanced object literals    ★★★<br>template strings    ★★★<br>destructuring    ★★<br>default + rest + spread    ★★★<br>let + const    ★★★<br>iterators + for..of    ★★<br>generators    ★<br>unicode    ☆<br>modules    ★★<br>module loaders    ☆<br>map + set + weakmap + weakset    ★★<br>proxies    ☆<br>symbols    ★<br>subclassable built-ins    ☆<br>promises    ★★★<br>math + number + string + array + object APIs   ★★★<br>binary and octal literals    ★<br>reflect api    ☆<br>tail calls    ★★  </p>
-</blockquote>
-<p>文章推荐的新特性，仅使用三星的。  </p>
-<p>另外推荐阅读<a href="http://www.csdn.net/tag/%E6%8E%A2%E7%A7%98es6/news" target="_blank" rel="external">探秘ES6</a> 系列</p>
-<p><strong>ES6的新特性是否通过babel转换后还有兼容问题？</strong><br>团队中又同学正在验证，我们验证的环境是IE9+,ff,chrome，我们最终会使用三星特性加上兼容性ok的。</p>
-<p><strong>开发效率是否会有提高？</strong><br>后面会通过做一个小的新需求，或者重构一个小模块去验证。  </p>
-<p><strong>编译器高亮支持？</strong><br>sublime Text 下面<br><a href="https://github.com/babel/babel-sublime" target="_blank" rel="external">https://github.com/babel/babel-sublime</a><br>或者<br><a href="https://github.com/voronianski/oceanic-next-color-scheme" target="_blank" rel="external">https://github.com/voronianski/oceanic-next-color-scheme</a></p>
-<p>其实问题就这么多，比想象中简单许多，未来可能还有坑，但是至少我们开始尝试了。</p>
-<h2 id="红利">红利</h2><ol>
-<li>语法有问题时，编译报错——语法检查</li>
-<li>面向未来——未来很多源码都是预编译类型</li>
-<li>开阔前端思路</li>
-<li>能读懂以后牛逼框架的源码， angular2 使用typescript</li>
-</ol>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1237,7 +1230,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
