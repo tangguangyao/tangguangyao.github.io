@@ -39,27 +39,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  
-之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：对于一个AMD的模式下
-文件d.js如下
-12345678define(function (require) &amp;#123;	// ... 很多代码	require(&apos;a&apos;);	// ... 很多代码	require(">
+<meta name="description" content="最近接到一个任务，打开首页性能优化。  
+目标：95分位值下，看到页面框架主体内容6s（优化前10s左右），优化提升40%，看到操作详细内容9s（优化前12s左右），优化提升25%。  
+侧面看出我们系统的庞大程度吧，这个不值得骄傲，项目比较悠久，历史包袱比较沉重。
+95分位值解释95分位值目前是我们看性能指标的一个重要参考点。  
+举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AMD的一道面试题">
-<meta property="og:url" content="http://tangguangyao.github.io/2016/01/14/AMD的一道面试题/index.html">
+<meta property="og:title" content="我是如何优化网站首页性能的">
+<meta property="og:url" content="http://tangguangyao.github.io/2016/03/01/我是如何优化网站首页性能的/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  
-之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：对于一个AMD的模式下
-文件d.js如下
-12345678define(function (require) &amp;#123;	// ... 很多代码	require(&apos;a&apos;);	// ... 很多代码	require(">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/amd.jpg">
+<meta property="og:description" content="最近接到一个任务，打开首页性能优化。  
+目标：95分位值下，看到页面框架主体内容6s（优化前10s左右），优化提升40%，看到操作详细内容9s（优化前12s左右），优化提升25%。  
+侧面看出我们系统的庞大程度吧，这个不值得骄傲，项目比较悠久，历史包袱比较沉重。
+95分位值解释95分位值目前是我们看性能指标的一个重要参考点。  
+举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/fix.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2016-01-14T06:08:17.000Z">
+<meta property="og:updated_time" content="2016-03-01T13:53:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AMD的一道面试题">
-<meta name="twitter:description" content="模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  
-之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：对于一个AMD的模式下
-文件d.js如下
-12345678define(function (require) &amp;#123;	// ... 很多代码	require(&apos;a&apos;);	// ... 很多代码	require(">
+<meta name="twitter:title" content="我是如何优化网站首页性能的">
+<meta name="twitter:description" content="最近接到一个任务，打开首页性能优化。  
+目标：95分位值下，看到页面框架主体内容6s（优化前10s左右），优化提升40%，看到操作详细内容9s（优化前12s左右），优化提升25%。  
+侧面看出我们系统的庞大程度吧，这个不值得骄傲，项目比较悠久，历史包袱比较沉重。
+95分位值解释95分位值目前是我们看性能指标的一个重要参考点。  
+举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -71,7 +74,7 @@
 
 
 
-  <title> AMD的一道面试题 | Yao's 前端修炼之路 </title>
+  <title> 我是如何优化网站首页性能的 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -175,7 +178,7 @@
           
           
             
-              AMD的一道面试题
+              我是如何优化网站首页性能的
             
           
         </h1>
@@ -184,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2016-01-14T10:59:49+08:00" content="2016-01-14">
-            2016-01-14
+          <time itemprop="dateCreated" datetime="2016-03-01T13:50:39+08:00" content="2016-03-01">
+            2016-03-01
           </time>
         </span>
 
@@ -204,43 +207,57 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="/img/res/amd.jpg" alt="AMD的一道面试题"></p>
-<p>模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  </p>
-<p>之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：<br>对于一个AMD的模式下</p>
-<p>文件<code>d.js</code>如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><code>a.js</code>,<code>b.js</code>,<code>c.js</code> 文件分别是什么时候加载的，如何加载的？</p>
-<p>题目不难</p>
-<p>答案是<code>a.js</code> 和 <code>c.js</code> 是在加载完<code>d.js</code>后就加载。<br><code>b.js</code>是在执行到这一行时异步加载的。</p>
-<p>具体分析：</p>
-<p>我没有看过<code>require.js</code>的源码，我们使用的是<code>esl.js</code>（也是一个AMD的模块加载器）,但是他们的实现原理应该差不多。</p>
-<p>我从<code>esl.js</code>的角度解读一下：</p>
-<h3 id="同步加载，异步加载">同步加载，异步加载</h3><p>首先大家需要知道AMD里面一个同步加载和异步加载的概念。</p>
-<p>从概念上面理解，同步就是当我执行到<code>require(&#39;a&#39;);</code>时，我需要同步的执行<code>a.js</code>里面的内容，也就是需要在执行到这句话时<code>a.js</code>必须已经加载好了，这样才能到达同步。</p>
-<p>而对于 <code>require([&#39;b&#39;], function (b) {});</code>,我执行到这一步时，是异步的发出请求，然后异步等待<code>b.js</code>的返回+执行。</p>
-<h3 id="同步加载的实现原理">同步加载的实现原理</h3><p>我们从概念上面理解的同步加载的原理，现在看看<code>esl.js</code>的实践。<br>这里面需要处理两个核心步骤  </p>
-<ol>
-<li>执行到<code>require(&#39;a&#39;);</code>时，<code>a.js</code>必须已经加载好了；</li>
-<li><code>a.js</code>文件里面的所有<code>require(&#39;*&#39;)</code>，也都必须加载好了，保证在执行<code>a.js</code>时，所有<code>a.js</code>依赖的同步文件都能同步执行；</li>
+        <span itemprop="articleBody"><p><img src="/img/res/fix.jpg" alt="我是如何优化网站首页性能的"></p>
+<p>最近接到一个任务，打开首页性能优化。  </p>
+<p>目标：<br>95分位值下，看到页面框架主体内容6s（优化前10s左右），优化提升40%，看到操作详细内容9s（优化前12s左右），优化提升25%。  </p>
+<p>侧面看出我们系统的庞大程度吧，这个不值得骄傲，项目比较悠久，历史包袱比较沉重。</p>
+<h2 id="95分位值解释">95分位值解释</h2><p>95分位值目前是我们看性能指标的一个重要参考点。  </p>
+<p>举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，95分位值就是取出第95个用户的数据做统计。  </p>
+<p>为什么是95%，因为跟进高T的优化经验，95%的数据取点最能放大问题。50%,80%的取点暴露的问题不明显。  </p>
+<p>当我把最慢的那一批人的性能优化好了，哪些快的自然就解决了。</p>
+<h2 id="优化难点">优化难点</h2><ol>
+<li>面试经常问到的页面优化点，例如图片合并，js合并，css合并，js压缩等等都已经做了。常规优化点没有什么空间可以优化。</li>
+<li>代码比较老。注释上面都是12-13年的代码。</li>
+<li>改动需要尽量的少，功能点不能改，时间比较紧张，QA没有人力支援，所以需要代码改动比较小的情况下，不重构的情况下挖掘优化点。</li>
 </ol>
-<p>对于第一步的实现，大概原理是这样的，在加载好了<code>d.js</code>后，会正则匹配一次文件里面的同步依赖<code>require(&#39;*&#39;);</code>，例如匹配出了 <code>a.js</code>和<code>c.js</code>，然后继续加载<code>a.js</code>和<code>c.js</code>。  </p>
-<p>对于第二部，其实就是一个递归处理，直到没有下一步的依赖为止。</p>
-<h3 id="同步加载另外一种处理方法">同步加载另外一种处理方法</h3><p>上面有一部正则逻辑，可见如果使用这种方式，在执行代码前，js需要全部正则一次所有模块化代码的。这样性能是不是有一个无谓的耗损。  </p>
-<p>那么我们一般怎么处理了？  </p>
-<p>大家一般都了解过打包编译，例如在使用<code>Requirejs</code>时，线上环境的代码会经过<code>r.js</code>处理一次。  </p>
-<p>那么<code>d.js</code>文件应该会处理如下 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">define(</span><br><span class="line">	<span class="string">'path/b'</span>,</span><br><span class="line">	[<span class="string">'require'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>define方法会增加第一个和第二个参数  </p>
-<p>第一个参数是按照路径生成一个具名id<br>第二个参数是此文件所依赖的同步文件</p>
-<p>这时当模块在解析这个<code>b,js</code>文件时，发现如果存在第二个参数，就会直接解析所需依赖部分，而省去了正则这一步。  </p>
-<p>我们正则这一步转换到了打包编译中去分析，这样就省掉了浏览器加载时去正则所有AMD文件这一步。  </p>
-<p>那么为什么我们不在开发环境中直接使用<code>[&#39;require&#39;, &#39;a&#39;, &#39;b&#39;]</code>方式，我理解目的是为了提高开发便捷性，我们不需要再增加一个<code>require(&#39;*&#39;)</code>都在中括号内配置一次，同样删除时也不用去删掉配置。  </p>
-<p>因为这一步完全可以在编译时处理。  </p>
-<h3 id="打包编译的延生">打包编译的延生</h3><p>不知道大家有没有看过编译后的代码和开发环境代码的区别，对于这个<code>b.js</code>文件，编译后应该是： </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">define(</span><br><span class="line">	<span class="string">'path/a'</span>,</span><br><span class="line">	[<span class="string">'require'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">define(</span><br><span class="line">	<span class="string">'path/c'</span>,</span><br><span class="line">	[<span class="string">'require'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">define(</span><br><span class="line">	<span class="string">'path/b'</span>,</span><br><span class="line">	[<span class="string">'require'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>上面可见，<code>a.js</code>和<code>c.js</code>这两个文件被合并到了<code>d.js</code>中，所有文件都加上了具名id。而且这个id的生成规则是更具路径生成的。  </p>
-<p>而我们异步加载的<code>b.js</code>文件就没有被打包进来。这是因为我们期望<code>b.js</code>是懒加载的，当使用时在加载，这样也能达到按需加载的目的。</p>
-<h3 id="微信公众号">微信公众号</h3><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+<h2 id="任务拆分">任务拆分</h2><p>优化性能这种任务其实比较难制定计划，除非经验特别丰富。   </p>
+<h3 id="第一步：是梳理代码">第一步：是梳理代码</h3><p>当然也不是看我所有的老业务代码，看的重点是看各个模块的加载逻辑，展现逻辑，看入口即可。  </p>
+<h3 id="第二部：删遗留代码">第二部：删遗留代码</h3><p>大概了解整个首页的初始化流程后，梳理了简单的逻辑后，发现第一个任务，删代码。  </p>
+<p>梳理大概结构后，目测有大量下线功能的代码任然依赖在系统中，之前的下线逻辑应该是仅仅屏蔽了入口，而没有清理代码。  </p>
+<p>所以我第一个具体的工作就是找出下线的业务代码将他清理，不完全统计，清理代码量开发环境下至少5W行。<br>清理代码好处很多： </p>
+<ol>
+<li>减少无用代码的初始化消耗</li>
+<li>减少静态资源</li>
+<li>让代码更加清晰，减少无用代码的干扰  </li>
+</ol>
+<p>删除无用代码其实是个脏活，吃力不讨好，删除的代码如果还有地方引用，那么删除了就是引入了一个bug。</p>
+<p>删除代码这个工作又没有什么显性的收益，还费工费时。其实就是一个里子的工作，把大家看不到的地方做好。</p>
+<h3 id="第三部：优化初始化逻辑">第三部：优化初始化逻辑</h3><p>尽量让不是完全依赖的ajax并行，减少串行。当前系统有两个展示模块有串行关系。梳理业务后，尽量调整成为并行。  </p>
+<p>这里是修改代码的地方之一，修改越少越好，因为一旦修改多了，就不好控制了，就需要QA介入，那么整个项目的周期就会大大延长。</p>
+<h3 id="第四部：ajax预取">第四部：ajax预取</h3><p>这个是一个经验，在加载模块静态资源前，可以并行的请求这些模块的ajax内容。原本逻辑是，加载完毕个个模块的静态资源，然后开始加载静态资源需要的ajax。这样一个明显优势是，ajax可以提前，节省<code>min(ajax请求时间，静态资源加载时间)</code>。</p>
+<p>这里修改的另外一个地方：同理，这个地方没有业务逻辑，所以需要和业务完全解耦着做。</p>
+<h3 id="第五部：优化打包合并">第五部：优化打包合并</h3><p>打包这部分难度比较大，优化空间也相对较多。<br>这里分了两部分：  </p>
+<h4 id="一：首屏不展示部分按需加载">一：首屏不展示部分按需加载</h4><p>目前看很多应该按需加载的内容全部都合并到了一起，放在首屏加载了。例如点击一个按钮出来一个操作页面弹框。<br>当时注释：  </p>
+<blockquote>
+<p>代码加起来压缩完大概200kb左右，没必要拆的太细,如果代码达到500KB以上，再进一步考虑细拆</p>
+</blockquote>
+<p>实际情况是，这个部分的代码压缩混淆后达到了1.1MB。<br>这种情况就是当初开发人员设想是美好的，后续业务开发人员没有意识或者了解到当初的规定，业务越来越多，代码也就越来越多。  </p>
+<p>这种情况其实比较常见，因为打包合并这种其实是尽量对业务人员透明的，这种合并后的内容，其实在开发环境体现不出来，只有刻意的查看和优化时才能注意到。  </p>
+<h4 id="二：_打包合并重复的部分删除">二： 打包合并重复的部分删除</h4><p>还是上面的原因，打包合并对于开发人员和开发环境透明，很长一段时间后，会发现大量打包重复，比较明显的就是底层依赖库个个文件重复引用。这种不会引发bug，但是会影响首屏静态资源的加载和静态资源的解析。</p>
+<p>一和二的成果很明显：静态资源网络压缩后（gz），1.9mb优化到了1.1mb，整体提升了42%。</p>
+<h4 id="三：_疑难散文件清理">三： 疑难散文件清理</h4><p>之前优化过几次散文件，由于成本比较大，遗留了一些散文件。这次就是集中处理了一下，散文件其实是比较严重的，一个散文件就会浪费一个请求。95分位值下，一个散文件可能就是100ms的影响。所以不要小看散文件对于性能的影响。</p>
+<p>成果是减少5个js静态资源请求，2个css请求。</p>
+<h2 id="优化感受">优化感受</h2><p>这些优化本周会上线，期待数据会比较好看。如果本周效果不是很明显，后面的优化空间其实就非常小了，暂时不考虑cdn，依赖后端这些方法，仅仅从前端出发。  </p>
+<p>优化其实就是一个没有那么明确计划的任务，往往有可能对着页面一遍一遍看加载流程或者把源代码挨个扫一遍找找柑橘，一个突发奇想，一个奇淫技巧，一个业务展示效果的调整就能达到。</p>
+<p>后续看看是否达标，性能不达标的话，还会有《我是如何优化网站首页性能的（番外篇）》。/(ㄒoㄒ)/~~</p>
+<h2 id="优化感受2">优化感受2</h2><p>优化就是细节完善，举个例子：  </p>
+<ol>
+<li>有时一个js散文件可能多消耗50ms，但是一旦出现10个，20个影响就叠加起来了。</li>
+<li>一个底层库被重复打包了，可能多了几千行，静态资源增加了几k，加载上可能就是几ms，加上与解析几毫米。但是一旦重复的静态资源多了，问题就来了。上万行，上百K的资源都是拖慢系统的根源。难以想象我这次粗滤的清理了一下，清理了0.6MB的资源。  </li>
+</ol>
+<p>优化没有止境，这一版上线后，肯定还有很多遗留的地方，后续看看效果，继续优化。</p>
+<p>ps:最后发现自己整理完这么多，也没有做什么，感觉后面还需努力</p>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
 </span>
       
     </div>
@@ -252,13 +269,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/20/当扔给你一个bug时，你会怎么办/" rel="prev">当扔给你一个bug时，你会怎么办</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/05/前端发展论战/" rel="next">前端发展论战</a>
+              <a href="/2016/02/28/react融合进系统的体验/" rel="next">react融合进系统的体验</a>
             
           </div>
         </div>
@@ -362,7 +377,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步加载，异步加载"><span class="nav-number">1.</span> <span class="nav-text">同步加载，异步加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步加载的实现原理"><span class="nav-number">2.</span> <span class="nav-text">同步加载的实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步加载另外一种处理方法"><span class="nav-number">3.</span> <span class="nav-text">同步加载另外一种处理方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包编译的延生"><span class="nav-number">4.</span> <span class="nav-text">打包编译的延生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#95分位值解释"><span class="nav-number">1.</span> <span class="nav-text">95分位值解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化难点"><span class="nav-number">2.</span> <span class="nav-text">优化难点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务拆分"><span class="nav-number">3.</span> <span class="nav-text">任务拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：是梳理代码"><span class="nav-number">3.1.</span> <span class="nav-text">第一步：是梳理代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部：删遗留代码"><span class="nav-number">3.2.</span> <span class="nav-text">第二部：删遗留代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三部：优化初始化逻辑"><span class="nav-number">3.3.</span> <span class="nav-text">第三部：优化初始化逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四部：ajax预取"><span class="nav-number">3.4.</span> <span class="nav-text">第四部：ajax预取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五部：优化打包合并"><span class="nav-number">3.5.</span> <span class="nav-text">第五部：优化打包合并</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一：首屏不展示部分按需加载"><span class="nav-number">3.5.1.</span> <span class="nav-text">一：首屏不展示部分按需加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二：_打包合并重复的部分删除"><span class="nav-number">3.5.2.</span> <span class="nav-text">二： 打包合并重复的部分删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三：_疑难散文件清理"><span class="nav-number">3.5.3.</span> <span class="nav-text">三： 疑难散文件清理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化感受"><span class="nav-number">4.</span> <span class="nav-text">优化感受</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化感受2"><span class="nav-number">5.</span> <span class="nav-text">优化感受2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">6.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

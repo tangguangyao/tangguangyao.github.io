@@ -40,26 +40,29 @@
 
 
 <meta name="description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得心得一
+同事实践的心得以下内容都摘自同事使用后的一些感想
+心得一
 
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开">
+从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react融合进系统的体验">
 <meta property="og:url" content="http://tangguangyao.github.io/2016/02/28/react融合进系统的体验/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
 <meta property="og:description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得心得一
+同事实践的心得以下内容都摘自同事使用后的一些感想
+心得一
 
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开">
+从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react.jpg">
 <meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2016-02-29T12:02:04.000Z">
+<meta property="og:updated_time" content="2016-02-29T12:11:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react融合进系统的体验">
 <meta name="twitter:description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得心得一
+同事实践的心得以下内容都摘自同事使用后的一些感想
+心得一
 
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开">
+从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -206,7 +209,8 @@
       
         <span itemprop="articleBody"><p><img src="/img/res/react.jpg" alt="react融合进系统的体验"></p>
 <h2 id="引入的背景">引入的背景</h2><p>在一个庞大的商业系统中引入react这种数据驱动的模式。<br>希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。</p>
-<h2 id="同事实践的心得">同事实践的心得</h2><p>心得一</p>
+<h2 id="同事实践的心得">同事实践的心得</h2><p>以下内容都摘自同事使用后的一些感想</p>
+<p>心得一</p>
 <blockquote>
 <p>从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开发很不一样，偏激一点的说，相比以前用$搬弄DOM节点，我觉得这样的前端开发更“严肃”了。我希望能够推动团队迎接，适应，实现这个变化，这对于一个技术人员，而不仅仅是前端技术人员都是有益的。</p>
 </blockquote>
@@ -241,7 +245,7 @@
 <h3 id="提高开发效率">提高开发效率</h3><p>这个是写给老板们看的，花这么大力气去引入一个新技术对于公司的收益就是提高开发人员的效率。  </p>
 <p>当然这个提高的效率的前提是对于开发人员有更高的要求的。</p>
 <h3 id="提高系统的健壮性">提高系统的健壮性</h3><p>react的模式是可以在某种程度上面融入UT的。<br>以及一个很好的数据驱动模式维护性和扩展性是比现有系统强的。</p>
-<h3 id="回放用户行为">回放用户行为</h3><p>数据驱动好处就是可以通过数据记录用户的页面状态，用数据就能恢复页面快照，需要分析用户行为，只需要收集到系统的数据变化流即可。</p>
+<h3 id="回放用户行为">回放用户行为</h3><p>数据驱动好处就是可以通过数据记录用户的页面状态，用数据就能恢复页面快照，需要分析用户行为，只需要收集到页面的数据变化流即可。</p>
 <h2 id="react引入的挑战">react引入的挑战</h2><ol>
 <li>数据驱动最合适的是从根部重构。但是目前我们只能从叶子模块一点点往根部重构。其实是一个反向过程。  </li>
 <li>数据驱动模式对于开发人员要求比较高，能不能设计一种模式降低要求，避免出现不同水平的开发者开发出层次不齐的业务模块。</li>
@@ -258,6 +262,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/01/我是如何优化网站首页性能的/" rel="prev">我是如何优化网站首页性能的</a>
             
           </div>
 
@@ -325,7 +331,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
