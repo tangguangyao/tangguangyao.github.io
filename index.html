@@ -165,6 +165,115 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/09/两个独立系统间的模块互相调用/" itemprop="url">
+                两个独立系统间的模块互相调用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-09T21:35:28+08:00" content="2016-03-09">
+            2016-03-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>面试时经常问的一个问题是，你最近或者做过的项目中难度最大是什么，然后顺着其中的技术点挖一些更深入的内容，看看候选人了解多少，理解程度。  </p>
+<p>然后突然想了想我做的有什么难度比较大的项目，可以给大家分享下。  </p>
+<p>今天介绍下我一年前完成的一个两个独立网站的模块打通，换句话说就是A系统可以直接使用B系统的业务模块。   </p>
+<h2 id="背景介绍">背景介绍</h2><p>A系统是一个古老的系统，B系统是一个新做的系统，（原本是希望A系统的功能全部迁移到B系统上的，但是由于各种原因搁置了）当时结果导致两个系统在同时使用和升级。  </p>
+<p>随着业务的开发，很多需求在A和B系统之间产生了关联性，例如B系统上线了一个新产品，然后为了增加入口和使用度，需要在A系统上可以直接调用新产品的某个功能。直观的解决方案是A系统上面复制粘贴一份B系统上面这个产品的功能，但是问题就来了，未来维护起来怎么办，同时维护两份代码？以后这样的需求多了怎么办，重复代码越来越多？  </p>
+<p>另外一个解决办法就是A,B两个系统间的融合。当然这样评估的一个前提是A和B虽然是两个系统，但是大家开发模式，底层依赖还是相似的。</p>
+<h2 id="需求分析">需求分析</h2><p><img src="/img/res/contact1.jpg" alt="需求拆解"></p>
+<p>上面是这两个系统的基本架构，拆分成线上线下两个部分。  </p>
+<p><code>A</code>网站有两个业务模块<code>A1</code>和<code>A2</code>。</p>
+<p><code>B</code>网站有三个业务模块，<code>B1</code>,<code>B2</code>,<code>B3</code>。  </p>
+<p>现在的需求是B1这个模块不仅能在B系统中运行，而且可以共享到A系统中。</p>
+<p>目标如下图：  </p>
+<p><img src="/img/res/contact2.jpg" alt="需求拆解"></p>
+<p>那么问题来了： </p>
+<p><img src="/img/res/contact3.jpg" alt="需求拆解"></p>
+<h3 id="问题一">问题一</h3><p>支持业务代码的底层dep和common不一样。<br>随着时间的推移，dep依赖第一个是引入的库有些差别，第二个更加严重是是大部分库的版本已经不一样了。   </p>
+<p>业务模块的底层就像是生态环境，如果生态环境差别越大，那么这两个生态融合在一起的困难也就越大。  </p>
+<h3 id="问题二">问题二</h3><p>B1这个模块在A系统中调用时，如何找对路径。<br>举个例子：<br>B系统中有一个 <code>module/b/c/d.js</code>;<br>B1中require了一个 module/b/c/d.js，在B系统中是可以正确访问到的。  </p>
+<p>但是如果在A系统中调用到B1的require的module/b/c/d.js。它是会找到A系统中的<code>module/b/c/d.js</code>;  </p>
+<p>这只是其中的一个例子，由于系统中的AMD模式，路径的寻找也是一个坑点。  </p>
+<p>当然对于上面的问题可以通过<code>map</code>方式（esl.js中有个map，require.js应该也有对应的）。当时是用过另外一种方式解决的。</p>
+<h3 id="问题三">问题三</h3><p>编译两个问题，<br>一是路径问题，当时坑我最深的。<br>二是业务模块独立打包，A系统中应该是仅仅需要B1这个业务，而不是所有B系统中的代码。  </p>
+<h3 id="问题四">问题四</h3><p>如何对开发人员透明，这个很关键。如果系统融合了，一线的开发人员需要为此做很多事情，就比较失败了。  </p>
+<p>所以整个调用过程如何让开发无感知，B系统中正常开发一个模块，A系统通过一个api就能直接使用了，也不需要区分线上线下。</p>
+<h2 id="具体步骤">具体步骤</h2><p>主要问题抛出了，后面就是看如何一一对应的解决问题了。  </p>
+<p>当然了上面介绍的以外，还有很多细节问题，例如融合后样式冲突这种很多细节上面的坑。只是这些没有上面四个问题那么严重。  </p>
+<h3 id="第一步，底层打平">第一步，底层打平</h3><ol>
+<li>dep打平（1）A系统中补充B系统中新增的库，相对简单</li>
+<li>dep打平（2）A和B系统中有差异的库，都升级到同样版本，这个非常坑，由于很多使用的是公司或者部门内部的库，升级不想外部jquery一样对开发透明，他们的升级绝对不是透明的，哪怕是百度最火的echart。所以解决升级库的兼容问题是一个工作量很大的活。  </li>
+<li>common基础依赖合并。找出不同内容互补，然后相同又冲突的内容，修改打补丁方式，虽然有坑，但是经理了dep的升级，觉得还ok。</li>
+</ol>
+<p>完成上面三步后的一个期望的成果是，B1模块以及依赖的内容可以直接复制到A系统中，在A里面可以直接调用打开。  </p>
+<p>注意一些细节就是初始化是否相同，A和B如果初始化不一样，可能在A系统调用B1时，B1有些内容缺少初始化过程。（这种就是属于细节上的坑了）</p>
+<h3 id="第二部，处理path路径">第二部，处理path路径</h3><p>当时处理思路比较简单，B1模块前面统一加上B1这个前缀，这样就能够在require时找到指定的路径了。  </p>
+<p>这个地方的难点在于打包编译，因为破坏了默认的打包规则，而且根据一些打包的扩展配置也无法达到期望。  </p>
+<p>当时解决的方式是仔细的研究了打包编译流程，很大程度上面重写了或者说hack了默认的打包规则。  </p>
+<p>其实打包编译都研究到这里了，也就顺便把问题三解决了。当时的对于打包的研究已经可以安装需要随意打包了。 </p>
+<p>这里的预期效果就是B1模块在B自己的系统中，A中可以调用打开了 </p>
+<h3 id="第三部，对开发人员透明">第三部，对开发人员透明</h3><p>完成上面步骤后，有一个遗留问题是，线上打开的方式和线下打开的方式不一样，对于开发人员非常不友好。  </p>
+<p>所以这一步应该是优化过程，让这个功能更加完善，所以写了一个简单的api，开发人员只需要调用api即可，不需要考虑线上和线下逻辑。这个复杂的逻辑包含到了api中处理。  </p>
+<h2 id="项目难点">项目难点</h2><p>我个人认为这个项目的难点：  </p>
+<ol>
+<li>对于两个系统的架构要非常熟悉</li>
+<li>对于打包编译需要非常熟悉，因为一旦涉及到线上和线下，编译就是必须要了解的内容</li>
+<li>对于系统底层代码要熟悉，因为在升级dep过程中，很多版本兼容bug必须要定位到底层代码中</li>
+<li>对于AMD需要熟悉，当时定位甚至发现了esl.js和require.js在某种场景的细微区别</li>
+</ol>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/01/我是如何优化网站首页性能的/" itemprop="url">
                 我是如何优化网站首页性能的
               </a>
@@ -206,8 +315,8 @@
 </ol>
 <p>侧面看出我们系统的庞大程度吧，这个不值得骄傲，项目比较悠久，历史包袱比较沉重，后面计划node同构方式去重构，但是现阶段需要一个低成本，短时间的方案去提高现有性能作为过渡。</p>
 <h2 id="95分位值解释">95分位值解释</h2><p>95分位值目前是我们看性能指标的一个重要参考点。  </p>
-<p>举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，95分位值就是取出第95个用户的数据做统计。  </p>
-<p>为什么是95%，因为跟进高T的优化经验，95%的数据取点最能放大问题。50%,80%的取点暴露的问题不明显。  </p>
+<p>举例：收集用户打开的时间，从快到慢排列，比如是100个用户数据，95分位值就是取出第95个用户的数据做统计。 50分位值就是第50个人的数据。</p>
+<p>为什么是95%，因为跟进高T的优化经验，95分位值的数据取点最能放大问题。50,80的取点暴露的问题不明显。 </p>
 <p>当我把最慢的那一批人的性能优化好了，哪些快的自然就解决了。</p>
 <h2 id="优化难点">优化难点</h2><ol>
 <li>面试经常问到的页面优化点，例如图片合并，js合并，css合并，js压缩等等都已经做了。常规优化点没有什么空间可以优化。</li>
@@ -217,7 +326,7 @@
 <h2 id="任务拆分">任务拆分</h2><p>优化性能这种任务其实比较难制定计划，除非经验特别丰富。   </p>
 <h3 id="第一步：是梳理代码">第一步：是梳理代码</h3><p>当然也不是看所有的老业务代码，看的重点是看各个模块的加载逻辑，展现逻辑，看入口即可。  </p>
 <h3 id="第二部：删遗留代码">第二部：删遗留代码</h3><p>大概了解整个首页的初始化流程后，梳理了简单的逻辑后，发现第一个任务，删代码。  </p>
-<p>梳理大概结构后，目测有大量下线功能的代码任然依赖在系统中，之前的下线逻辑应该是仅仅屏蔽了入口，而没有清理代码。  </p>
+<p>梳理大概结构后，目测有大量下线功能的代码任然遗留在系统中，之前的下线逻辑应该是仅仅屏蔽了入口，而没有清理代码。  </p>
 <p>所以我第一个具体的工作就是找出下线的业务代码并将他清理，不完全统计，清理代码量开发环境下至少5W行。 </p>
 <p>清理代码好处很多： </p>
 <ol>
@@ -231,7 +340,7 @@
 <p>这里是修改代码的地方之一，修改越少越好，因为一旦修改多了，就不好控制了，就需要QA介入，那么整个项目的周期就会大大延长。</p>
 <h3 id="第四部：ajax预取">第四部：ajax预取</h3><p>这个是上一个项目经验积累，在加载模块静态资源前，可以并行的请求这些模块的ajax内容。原本逻辑是，加载完毕各个模块的静态资源，然后模块内部开始加载静态资源需要的ajax。这样就避免不了静态资源的请求和静态资源里面ajax的请求形成了一个串行关系。<br>预取的一个明显优势是，ajax可以提前  </p>
 <p>节省的时间 = <code>min(ajax请求时间，静态资源加载时间)</code>。</p>
-<p>这里修改的另外一个地方：同理，这个地方没有业务逻辑，所以需要和业务完全解耦着做。</p>
+<p>这里是修改的另外一个地方：同理，这个地方没有业务逻辑，所以需要和业务完全解耦着做。</p>
 <h3 id="第五部：优化打包合并">第五部：优化打包合并</h3><p>打包这部分难度比较大，优化空间也相对较多。<br>这里分了两部分：  </p>
 <h4 id="一：首屏不展示部分按需加载">一：首屏不展示部分按需加载</h4><p>目前看很多应该按需加载的内容全部都合并到了一起，放在首屏加载了。例如点击一个按钮出来一个操作页面弹框。其实这个弹框的代码首屏展示是完全不需要。  </p>
 <p>当时注释：  </p>
@@ -246,7 +355,7 @@
 <p>一和二的成果很明显：静态资源网络压缩后（gz），1.9mb优化到了1.1mb，整体提升了42%。</p>
 <h4 id="三：_疑难散文件清理">三： 疑难散文件清理</h4><p>之前优化过几次散文件，由于成本比较大，遗留了一些散文件。这次就是集中处理了一下，散文件其实是比较严重的，一个散文件就会浪费一个请求。95分位值下，一个散文件可能就是100ms的影响。所以不要小看散文件对于性能的影响。</p>
 <p>成果是减少5个js静态资源请求，2个css请求。</p>
-<h2 id="优化感受">优化感受</h2><p>这些优化本周会上线，期待数据会比较好看。如果本周效果不是很明显，后面的优化空间其实就非常小了，暂时不考虑cdn，依赖后端这些方法，仅仅从前端出发。  </p>
+<h2 id="优化感受">优化感受</h2><p>这些优化本周会上线，期待数据会比较好看。如果本周效果不是很明显，后面的优化空间其实就非常小了，暂时不考虑cdn，依赖后端这些方法，仅仅从静态资源出发。  </p>
 <p>优化其实就是一个没有那么明确计划的任务，往往有可能对着页面一遍一遍看加载流程或者把源代码挨个扫一遍找找感觉，一个突发奇想，一个奇淫技巧，一个业务展示效果的调整就能达到。</p>
 <p>后续看看是否达标，性能不达标的话，还会有《我是如何优化网站首页性能的（番外篇）》。/(ㄒoㄒ)/~~</p>
 <h2 id="优化感受2">优化感受2</h2><p>优化就是细节完善，举个例子：  </p>
@@ -1109,116 +1218,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/12/09/如何在项目中实现热更新（中）/" itemprop="url">
-                如何在项目中实现热更新（中）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-12-09T22:14:30+08:00" content="2015-12-09">
-            2015-12-09
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/update02.jpg" alt="如何在项目中修改代码后实现热更新"></p>
-<p>上一篇文章说的是一个大体的概括，本篇主要分享一些node层面实现的细节。</p>
-<p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
-<h2 id="如何使用">如何使用</h2><blockquote>
-<p>npm install -g ehu（mac下需要sudo，windows下需要管理员权限）  </p>
-<p>在原来执行edp webserver start命令的路径 执行 ehu（不再需要执行 edp webserver start）  </p>
-<p>原来端口号8848修改为8844（原8848依旧可以使用，但不支持热更新）</p>
-</blockquote>
-<p>首先使用的方式很简单，为此特意将工具打包到npm上，以后就算有升级，仅仅需要大家update即可。  </p>
-<p>另外从使用角度，也尽量集成化（一句命令行即可），避免为了这个工具的使用而做太多额外的事情。</p>
-<h2 id="依赖的框架">依赖的框架</h2><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"async"</span>: <span class="string">"^1.5.0"</span>,</span><br><span class="line">    <span class="string">"commander"</span>: <span class="string">"^2.9.0"</span>,</span><br><span class="line">    <span class="string">"express"</span>: <span class="string">"^4.13.3"</span>,</span><br><span class="line">    <span class="string">"express-http-proxy"</span>: <span class="string">"^0.6.0"</span>,</span><br><span class="line">    <span class="string">"lodash"</span>: <span class="string">"^3.10.1"</span>,</span><br><span class="line">    <span class="string">"socket.io"</span>: <span class="string">"^1.3.7"</span>,</span><br><span class="line">    <span class="string">"watch"</span>: <span class="string">"^0.16.0"</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>几个必要的<br><code>watch</code>——监听文件变化<br><code>socket.io</code>——和浏览器的实时通讯<br><code>express</code>——搭建一个服务<br><code>express-http-proxy</code>——代理<br><code>commander</code>——便于自己写node命令  </p>
-<p>工具类：<br><code>async</code> 和 <code>lodash</code> </p>
-<h2 id="框架的思想">框架的思想</h2><p>先看看昨天对于这个工具提出的几个要求</p>
-<blockquote>
-<ol>
-<li>esl必然是需要修改的，但是如何对开发人员透明？首先是不能让大家都做这种修改。</li>
-<li>页面中也必须加入socket.io支持，那么我们如何在不影响其他人员开发的情况下加入？</li>
-<li>我们做的属于beta版本，如何选择性的使用？ehu工具和以前的开发模式随意切换？</li>
-<li>安装方便，能否只是作为一个工具，即插即用，不需要繁琐的配置？</li>
-</ol>
-</blockquote>
-<p>对于1和2，我们其实是需要修改/添加一些代码的，但是代码都不希望提交到项目的开发环境，因为这些代码生成环境完全不需要。  </p>
-<p>所以我们的解决方案是：拦截，改写（偷梁换柱）   </p>
-<p>举个例子，当我们需要对esl做一些改造时，我们处理方式是当路由指向esl.js时，我们换成另外一个esl-ehu.js(esl-ehu.js是对esl.js改造后的)返回去，这样就对开发环境的代码透明了。  </p>
-<p>socket.io的支持也是同理，我们可以在返回html时，改写html的代码，加入对于socket.io的引入。  </p>
-<p>上面的思路其实来源于之前项目构建打包。</p>
-<p>对于3，我们希望在使用工具时，任然能很快切换到以前模式，这样做兼容的目的是希望工具更有竞争力，能吸引大家使用。 </p>
-<p>我们的解决方案是：内部实现一个子线程，端口号依然是以前的，而且访问这个端口，就绕过了这个工具。  </p>
-<p>对于子线程child_process，我们还遇到一个问题，就是子线程跑系统的时候，经常挂掉，今天刚刚找到一个解决方案，后面会单开一个文章讲这个坑。  </p>
-<p>对于4，其实就是使用npm方式</p>
-<h2 id="技术细节">技术细节</h2><p>第一步：搭建一个新服务作为底层，去托管住我们现在edp服务，新服务上有一个路由配置，对于我们需要处理的，拦截。对于不用处理的直接代理给edp</p>
-<p>代码参考</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mid = express();</span><br><span class="line">mid.all(<span class="string">'*'</span>, httpProxy(config.defaultServer, &#123;</span><br><span class="line">    <span class="comment">// 先走特殊规则，否则就代理到默认web server</span></span><br><span class="line">    filter: <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !ruleRoute(req, res);</span><br><span class="line">    &#125;,</span><br><span class="line">    forwardPath: <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> URL.parse(req.url).path;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br><span class="line"><span class="comment">// 由express-http-proxy托管路由</span></span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">'/'</span>, mid);</span><br></pre></td></tr></table></figure>
-<p><code>ruleRoute</code>就是一些拦截处理</p>
-<p>在此之前，启动下子进程</p>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> child = <span class="keyword">require</span>(<span class="string">'child_process'</span>);</span><br><span class="line"><span class="built_in">var</span> cli = child<span class="built_in">.</span>exec(defaultServerCLI);</span><br><span class="line">cli<span class="built_in">.</span>stdout<span class="built_in">.</span><span class="keyword">on</span>(<span class="string">'data'</span>, function (<span class="keyword">log</span>) &#123;</span><br><span class="line">    <span class="subst">!</span>isServerStarted <span class="subst">&amp;&amp;</span> (cb(<span class="built_in">null</span>, <span class="keyword">log</span>));</span><br><span class="line">    isServerStarted <span class="subst">&amp;&amp;</span> console<span class="built_in">.</span><span class="keyword">log</span>(<span class="keyword">log</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>此处有坑，后面单开文章描述</p>
-<p>第二步： 因为上面拦截后的返回的文件已经支持socket.io，esl等底层已经修改了，所以下面是需要去监听文件通知浏览器做对应处理。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 启动socket.<span class="built_in">io</span>服务</span><br><span class="line"><span class="built_in">io</span> = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(server);</span><br><span class="line"><span class="built_in">io</span>.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(socket)</span></span> &#123;</span><br><span class="line">    socket.emit(<span class="string">'hello'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">// 监视文件改动</span><br><span class="line">initWatch();</span><br></pre></td></tr></table></figure>
-<p>第三步： 做一些集成工作</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">program</span></span><br><span class="line">    .version(<span class="string">'0.0.6'</span>)</span><br><span class="line">    .usage(<span class="string">'[options]'</span>)</span><br><span class="line">    .option(<span class="string">'-p, --port &lt;n&gt;'</span>, <span class="string">'Set the port'</span>, setPort)</span><br><span class="line">    .option(<span class="string">'-n, --noServerCLI'</span>, <span class="string">'...'</span>, <span class="built_in">no</span>ServerCLI)</span><br><span class="line">    .parse(process.argv);</span><br></pre></td></tr></table></figure>
-<p>集成到node命令中</p>
-<p>第四步： 默认配置</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span>.exports = </span>&#123;</span><br><span class="line">    <span class="comment">// 默认的服务器</span></span><br><span class="line">    defaultServer: <span class="string">'http://127.0.0.1:8848'</span>,</span><br><span class="line">    <span class="comment">// 默认的服务器启动命令</span></span><br><span class="line">    defaultServerCLI: <span class="string">'edp webserver start'</span>,</span><br><span class="line">    <span class="comment">// 从服务器根目录到需要监控的文件夹中间path</span></span><br><span class="line">    baseDir: <span class="string">'nirvana-workspace'</span>,</span><br><span class="line">    <span class="comment">// hot update 需要watch的文件夹（不包括baseDir）</span></span><br><span class="line">    watchDirs: <span class="string">'src'</span>,</span><br><span class="line">    <span class="comment">// 入口文件（不包括baseDir）</span></span><br><span class="line">    indexHTML: <span class="string">'main.html'</span>,</span><br><span class="line">    <span class="comment">// ehu启动端口号（不可与默认的服务器端口号冲突）</span></span><br><span class="line">    port: <span class="number">8844</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>源码中有很多逻辑是处理配置的</p>
-<h2 id="最后一篇预告">最后一篇预告</h2><p>分享一下esl等基础框架的改造，和浏览器监听到通信后的修改。</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1257,7 +1256,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
