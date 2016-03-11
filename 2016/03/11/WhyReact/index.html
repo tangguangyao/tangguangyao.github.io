@@ -64,11 +64,10 @@
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react3.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react4.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react5.png">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/react6.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react7.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react8.png">
 <meta property="og:image" content="http://tangguangyao.github.io/img/res/react9.png">
-<meta property="og:updated_time" content="2016-03-11T09:11:33.000Z">
+<meta property="og:updated_time" content="2016-03-11T09:28:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Why React">
 <meta name="twitter:description" content="无法用语言准确表达思维时，就用公式；一个不行，那就两个
@@ -251,7 +250,13 @@
 <p>现在，系统中通信链路条数变成了n，系统复杂度完全在我们掌控之中。当然这样做也是有弊端的，所有数据放在一个model中，这个model必然很庞大，维护起来需要一定技巧，相应地出现了flux和redux等框架专门用于管理model，目前我们没有引入，准备使用ER.model，加强命名规范，来临时解决这一问题。</p>
 <p><img src="/img/res/react5.png" alt="react5">  </p>
 <p>最关键，上图绿色链路的创建过程是半自动化的，只需要把修改model的回调函数mode.dispatch通过props一层层传递下去。当然，绿色链路的创建可以利用react.context做成全自动，但react官方对context的使用有疑虑，并且API在将来可能会修改，所以暂时没有引入。</p>
-<p><img src="/img/res/react6.png" alt="react6">   </p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>Context is an advanced and experimental feature. The API is likely to change in future releases.</p>
+<p>Most applications will never need to use context. Especially if you are just getting started with React, you likely do not want to use context. Using context will make your code harder to understand because it makes the data flow less clear. It is similar to using global variables to pass state through your application.</p>
+<p><strong>If you have to use context, use it sparingly.</strong></p>
+<p>Regardless of whether you’re building an application or a library, try to isolate your use of context to a small area and avoid using the context API directly when possible so that it’s easier to upgrade when the API changes.</p>
+</blockquote>
 <h2 id="当前我们如何测试ui和业务模块？">当前我们如何测试ui和业务模块？</h2><p>答案是测试基本靠手。怎么测试交互？目前有基于web driver的OneUX SDK方案。这个方案用脚本模仿了鼠标键盘操作，允许我们实现自动化测试。<br>但问题不在这里，而是工作量的问题。模拟操作的方式，归根到底是QA把手动测试过程用脚本记录下来。如果测试一次性通过，手动测试和写脚本的工作量是一致的。</p>
 <p><img src="/img/res/react7.png" alt="react7">    </p>
 <p>在React中，自动化测试变得非常简单。还记得React基本原则1么？props + state是渲染界面view的唯一依据。因此，用户在页面的交互行为，最终都转化成props或state的变化。   </p>
