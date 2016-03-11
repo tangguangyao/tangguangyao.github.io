@@ -202,7 +202,7 @@
 <p>本文假设读者已了解react的基本概念，并有少量react开发实践。如果没有，请先阅读<br><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/03/react.html</a></p>
 <h2 id="当前我们如何开发业务？">当前我们如何开发业务？</h2><p><img src="/img/res/react1.png" alt="react1"></p>
 <blockquote>
-<p>微信不支持公式，所以我这边截图。<br>补充一下f表示一次用m生成v的渲染方法<br>g是界面发生交互时，对m做修改的方法  </p>
+<p>备注：微信不支持公式，所以我这边截图。<br>补充一下f表示一次用m生成v的渲染方法<br>g是界面发生交互时，对m做修改的方法  </p>
 </blockquote>
 <h2 id="当前业务模块之间如何通信？">当前业务模块之间如何通信？</h2><ol>
 <li>回调模式：callback</li>
@@ -217,7 +217,7 @@
 </ol>
 <p>在目前系统中，只存在兄弟通信和父子通信，不存在跨树通信，即孩子不能跟叔叔直接通信。如果要跟叔叔通信，必须借助祖先中转。</p>
 <p>现在开始简化模型：</p>
-<p>a. 假设系统中模块之间的链路能双向通信，这样可以将有向链路换成无向链路；<br>b. 假设任意两个模块之间都可以存在链路，但只允许存在一条链路，这样之前不同的链路类型下降成单条链路的一个参数，并且将祖先中转缩短成直接通信；<br>c. 把系统中的模块看作顶点，模块间通信链路看作边，则系统变成了无向图。<br><img src="/img/res/react4.png" alt="react4">   </p>
+<p>a. <strong>假设系统中模块之间的链路能双向通信，</strong>这样可以将有向链路换成无向链路；<br>b. <strong>假设任意两个模块之间都可以存在链路，但只允许存在一条链路，</strong>这样之前不同的链路类型下降成单条链路的一个参数，并且将祖先中转缩短成直接通信；<br>c. <strong>把系统中的模块看作顶点，模块间通信链路看作边，则系统变成了无向图。</strong><br><img src="/img/res/react4.png" alt="react4">   </p>
 <p>这是模型简化后的链路数量，而目前我们系统中的链路数比这多得多，因为我们允许节点间有多条链路，而且链路是单向通信的。  </p>
 <p>我们开发业务时很大一部分工作量就是创建各种通信链路，随着系统复杂性不断增加，图越来越复杂，代码逻辑就没人能看懂了，<strong>因为数据在系统中的流动是没有规律的。</strong></p>
 <p><strong>React基本原则2：在React中，数据流是单向的。</strong>数据总是自顶而下流动，内部不允许出现反向数据流。React简化通信的方法相当粗暴，既然管理不好通信，那么干脆禁止通信。</p>
@@ -234,7 +234,7 @@
 </blockquote>
 <h2 id="当前我们如何测试ui和业务模块？">当前我们如何测试ui和业务模块？</h2><p>答案是测试基本靠手。怎么测试交互？目前有基于web driver的OneUX SDK方案。这个方案用脚本模仿了鼠标键盘操作，允许我们实现自动化测试。<br>但问题不在这里，而是工作量的问题。模拟操作的方式，归根到底是QA把手动测试过程用脚本记录下来。如果测试一次性通过，手动测试和写脚本的工作量是一致的。</p>
 <p><img src="/img/res/react7.png" alt="react7">    </p>
-<p>在React中，自动化测试变得非常简单。还记得React基本原则1么？props + state是渲染界面view的唯一依据。因此，用户在页面的交互行为，最终都转化成props或state的变化。   </p>
+<p>在React中，自动化测试变得非常简单。还记得<strong>React基本原则1</strong>么？props + state是渲染界面view的<strong>唯一依据</strong>。因此，用户在页面的交互行为，最终都转化成props或state的变化。   </p>
 <p><img src="/img/res/react8.png" alt="react8"> </p>
 <p><img src="/img/res/react9.png" alt="react9"> </p>
 </span>
