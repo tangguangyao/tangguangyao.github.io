@@ -165,6 +165,102 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/11/WhyReact/" itemprop="url">
+                Why React
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-11T16:38:45+08:00" content="2016-03-11">
+            2016-03-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>无法用语言准确表达思维时，就用公式；一个不行，那就两个</p>
+<p>—— 李老师</p>
+<p>本文假设读者已了解react的基本概念，并有少量react开发实践。如果没有，请先阅读<br><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/03/react.html</a></p>
+<h2 id="当前我们如何开发业务？">当前我们如何开发业务？</h2><p><img src="/img/res/react1.png" alt="react1"></p>
+<blockquote>
+<p>微信不支持公式，所以我这边截图。<br>补充一下f表示一次用m生成v的渲染方法<br>g是界面发生交互时，对m做修改的方法  </p>
+</blockquote>
+<h2 id="当前业务模块之间如何通信？">当前业务模块之间如何通信？</h2><ol>
+<li>回调模式：callback</li>
+<li>观察者模式：on / fire (addEventListener / removeEventListener)</li>
+<li>伪总线模式：fcContextChange</li>
+</ol>
+<p>三种模式没有本质区别：</p>
+<ol>
+<li>回调模式，一次创建一条通信链路，此链路工作时不与其他链路发生干扰。<br><img src="/img/res/react2.png" alt="react2">  </li>
+<li>观察者模式，一次创建多条通信链路，每条链路工作时与其他链路发生干扰。<br><img src="/img/res/react3.png" alt="react3"></li>
+<li>伪总线模式，是一种特殊的观察者模式，信息的发出者是一个固定的模块。  </li>
+</ol>
+<p>在目前系统中，只存在兄弟通信和父子通信，不存在跨树通信，即孩子不能跟叔叔直接通信。如果要跟叔叔通信，必须借助祖先中转。</p>
+<p>现在开始简化模型：</p>
+<p>a. 假设系统中模块之间的链路能双向通信，这样可以将有向链路换成无向链路；<br>b. 假设任意两个模块之间都可以存在链路，但只允许存在一条链路，这样之前不同的链路类型下降成单条链路的一个参数，并且将祖先中转缩短成直接通信；<br>c. 把系统中的模块看作顶点，模块间通信链路看作边，则系统变成了无向图。<br><img src="/img/res/react4.png" alt="react4">   </p>
+<p>这是模型简化后的链路数量，而目前我们系统中的链路数比这多得多，因为我们允许节点间有多条链路，而且链路是单向通信的。  </p>
+<p>我们开发业务时很大一部分工作量就是创建各种通信链路，随着系统复杂性不断增加，图越来越复杂，代码逻辑就没人能看懂了，<strong>因为数据在系统中的流动是没有规律的。</strong></p>
+<p><strong>React基本原则2：在React中，数据流是单向的。</strong>数据总是自顶而下流动，内部不允许出现反向数据流。React简化通信的方法相当粗暴，既然管理不好通信，那么干脆禁止通信。</p>
+<p>如何用React满足我们的通信需求？React的做法是：<br>a. 把整个应用抽象成一个数据集;<br>b. 每个子模块使用数据集的一部分做渲染，涉及渲染的数据通过props向下传递；<br>c. 每个子模块都可以直接修改最顶层的数据集。</p>
+<p>现在，系统中通信链路条数变成了n，系统复杂度完全在我们掌控之中。当然这样做也是有弊端的，所有数据放在一个model中，这个model必然很庞大，维护起来需要一定技巧，相应地出现了flux和redux等框架专门用于管理model，目前我们没有引入，准备使用ER.model，加强命名规范，来临时解决这一问题。</p>
+<p><img src="/img/res/react5.png" alt="react5">  </p>
+<p>最关键，上图绿色链路的创建过程是半自动化的，只需要把修改model的回调函数mode.dispatch通过props一层层传递下去。当然，绿色链路的创建可以利用react.context做成全自动，但react官方对context的使用有疑虑，并且API在将来可能会修改，所以暂时没有引入。</p>
+<p><img src="/img/res/react6.png" alt="react6">   </p>
+<h2 id="当前我们如何测试ui和业务模块？">当前我们如何测试ui和业务模块？</h2><p>答案是测试基本靠手。怎么测试交互？目前有基于web driver的OneUX SDK方案。这个方案用脚本模仿了鼠标键盘操作，允许我们实现自动化测试。<br>但问题不在这里，而是工作量的问题。模拟操作的方式，归根到底是QA把手动测试过程用脚本记录下来。如果测试一次性通过，手动测试和写脚本的工作量是一致的。</p>
+<p><img src="/img/res/react7.png" alt="react7">    </p>
+<p>在React中，自动化测试变得非常简单。还记得React基本原则1么？props + state是渲染界面view的唯一依据。因此，用户在页面的交互行为，最终都转化成props或state的变化。   </p>
+<p><img src="/img/res/react8.png" alt="react8"> </p>
+<p><img src="/img/res/react9.png" alt="react9"> </p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/09/两个独立系统间的模块互相调用/" itemprop="url">
                 两个独立系统间的模块互相调用
               </a>
@@ -1129,97 +1225,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/12/15/如何在项目中实现热更新（下）/" itemprop="url">
-                如何在项目中实现热更新（下）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-12-15T14:20:59+08:00" content="2015-12-15">
-            2015-12-15
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/update03.jpg" alt="如何在项目中修改代码后实现热更新"></p>
-<p>本篇文章是最后一篇，主要讲一下在浏览器端的一些实现。和浏览器热更新的细节。</p>
-<p>工具源码<a href="https://github.com/homkai/ehu" target="_blank" rel="external">EHU(esl-hot-update)</a></p>
-<h2 id="浏览器端依赖">浏览器端依赖</h2><p><code>socket.io</code>——浏览器端仅仅依赖socket这个去和服务端通信  </p>
-<p>通信逻辑</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">socket.on(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    log(getLogMsgPrefix(), <span class="string">'HotUpdate已启动！'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 检测到文件改动</span></span><br><span class="line">socket.on(<span class="string">'hotUpdate'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(file)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// log(getLogMsgPrefix(), '检测到文件改动', file);</span></span><br><span class="line">    <span class="comment">// ....处理文件修改后对应热更新逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="对css/less更新的处理">对css/less更新的处理</h2><p>这个原理比较简单，页面监听到样式的修改，重新加载一次样式即可，简单的覆盖。  </p>
-<p>但是存在一个潜在问题，因为样式是简单的覆盖，所以，如果修改是删除了样式，是无法生效的。</p>
-<p>举例：<br>修改前：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#E8E8E8</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br></pre></td></tr></table></figure>
-<p>修改后：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span></span></span>;</span><br></pre></td></tr></table></figure>
-<p>删除的<code>border</code>和<code>margin-top</code>其实是没有生效的  </p>
-<p>这个也是后期需要解决的一个问题。</p>
-<h2 id="对模板更新的处理">对模板更新的处理</h2><p>目前项目中使用的是tpl的模板引擎。  </p>
-<p>现在就遇到一个问题，在热更新时，模板引擎其实是重复加载模板的，那么就涉及到重复加载是否后面的会覆盖前面问题。  </p>
-<p>查看加载模板的源码后，发现根据配置有三个选择，<code>覆盖</code>，<code>忽略</code>和<code>报错</code>， 我们业务中使用的配置是遇到重复后会报错处理，所以我们需要在不修改业务默认属性的情况下，添加一些逻辑。 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [esl-hot-update] 重新加载需要覆盖</span></span><br><span class="line"><span class="built_in">window</span>.EHU_HOT_UPDATE_OPTIONS</span><br><span class="line">&amp;&amp; <span class="built_in">window</span>.EHU_HOT_UPDATE_OPTIONS.etpl.isOverride</span><br><span class="line">&amp;&amp; (namingConflict = <span class="string">'override'</span>);</span><br><span class="line"><span class="keyword">switch</span> (namingConflict) &#123;</span><br><span class="line">    <span class="comment">/* jshint ignore:start */</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'override'</span>:</span><br><span class="line">        engine.targets[name] = target;</span><br><span class="line">        context.targets.push(name);</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'ignore'</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">/* jshint ignore:end */</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Target exists: '</span> + name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>window.EHU_HOT_UPDATE_OPTIONS.etpl.isOverride</code>这个是修改后自己实现的控制配置修改的逻辑。  </p>
-<p>然后这个文件加入到服务端的路由中，请求时替换。</p>
-<h2 id="对js更新的处理">对js更新的处理</h2><p>这里逻辑比较复杂，因为需要修改底层的AMD模块加载的逻辑。  </p>
-<p>js没有模板那么简单，不是直接覆盖，因为在AMD模式中，每一个文件，都是被上一个文件调用执行的结果。  </p>
-<p>所以我们处理的逻辑是不仅需要重新加载修改的文件，并且递归所有直接或者间接调用他的文件，全部重新加载。  </p>
-<p>所以从上面的特点可以看出，这个工具目前阶段主要适用于业务模块的开发，因为业务的依赖不会特别深，对于dep中的核心文件修改，就不是很合适，一旦文件比较底层，热跟新是重新加载的模块也会非常多。</p>
-<p>另外也有很多其他的坑，还在不断优化中。  </p>
-<h2 id="总结">总结</h2><p>这次实践其实就是业务中遇到的问题（系统太庞大，调试太麻烦），如何解决问题，如何把解决的思路变成一个解决方案，分享给团队。  </p>
-<p>因为自己解决了，和形成一个解决方案还是有非常大的差别的，例如我们在形成方案的过程中，就尝试了很多新东西，踩了很多坑。  </p>
-<p>目前还有个坑就是chrome浏览器，调试的Source资源时，如果一个资源重复加载，内存中会更新，但是对应的资源没有更新，导致断点时，映射不对（断点失效），目前暂时的解决方案是，每次请求时添加时间戳，让Source映射的资源强制更新。这个可以正常断点，但是断点没有记忆功能（坑啊，因为文件变了）。</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1258,7 +1263,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
