@@ -1,0 +1,754 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="前端修炼之路" />
+
+
+
+  <meta name="keywords" content="前端,javascript" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="下面是我们部门总结的内部开发规范（试行版本），欢迎提意见。
+部门FE React 组件开发规范适用范围部门FE 所有基于React开发的（包含fcui2）组件，欢迎提意见。
+要求
+必须：表示绝对要求这样做。
+必须不：表示绝对不要求这样做。
+应该/建议：表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。
+应该不/不建议：表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React组内开发规范">
+<meta property="og:url" content="http://tangguangyao.github.io/2016/03/17/React组内开发规范/index.html">
+<meta property="og:site_name" content="Yao's 前端修炼之路">
+<meta property="og:description" content="下面是我们部门总结的内部开发规范（试行版本），欢迎提意见。
+部门FE React 组件开发规范适用范围部门FE 所有基于React开发的（包含fcui2）组件，欢迎提意见。
+要求
+必须：表示绝对要求这样做。
+必须不：表示绝对不要求这样做。
+应该/建议：表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。
+应该不/不建议：表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/codeStyle.jpg">
+<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
+<meta property="og:updated_time" content="2016-03-17T09:40:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React组内开发规范">
+<meta name="twitter:description" content="下面是我们部门总结的内部开发规范（试行版本），欢迎提意见。
+部门FE React 组件开发规范适用范围部门FE 所有基于React开发的（包含fcui2）组件，欢迎提意见。
+要求
+必须：表示绝对要求这样做。
+必须不：表示绝对不要求这样做。
+应该/建议：表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。
+应该不/不建议：表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> React组内开发规范 | Yao's 前端修炼之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e35a2df9e882a5f8ed351d0f022fa689";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Yao's 前端修炼之路</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              React组内开发规范
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-17T17:03:16+08:00" content="2016-03-17">
+            2016-03-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="/img/res/codeStyle.jpg" alt="React组内开发规范"></p>
+<p>下面是我们部门总结的内部开发规范（试行版本），欢迎提意见。</p>
+<h1 id="部门FE_React_组件开发规范">部门FE React 组件开发规范</h1><h2 id="适用范围">适用范围</h2><p>部门FE 所有基于React开发的（包含fcui2）组件，欢迎提意见。</p>
+<h2 id="要求">要求</h2><ul>
+<li>必须：表示绝对要求这样做。</li>
+<li>必须不：表示绝对不要求这样做。</li>
+<li>应该/建议：表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。</li>
+<li>应该不/不建议：表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。</li>
+<li>可以：表示这个要求完全是可选的，你可以这样做，也可以不这样做。</li>
+</ul>
+<h2 id="基本概念_[basic-concepts]">基本概念 [basic-concepts]</h2><ul>
+<li>实例化生命周期<ul>
+<li><code>getDefaultProps</code></li>
+<li><code>getInitialState</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>render</code></li>
+<li><code>componentDidMount</code>    </li>
+</ul>
+</li>
+<li>更新期生命周期<ul>
+<li><code>getInitialState</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>render</code></li>
+<li><code>componentDidMount</code>   </li>
+</ul>
+</li>
+<li>运行期生命周期<ul>
+<li><code>componentWillReceiveProps</code></li>
+<li><code>shouldComponentUpdate</code></li>
+<li><code>componentWillUpdate</code></li>
+<li><code>render</code></li>
+<li><code>componentDidUpdate</code></li>
+</ul>
+</li>
+<li>销毁期生命周期<ul>
+<li><code>componentWillUnmount</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="核心依赖_[deps]（针对内部UI库）">核心依赖 [deps]（针对内部UI库）</h2><ul>
+<li><strong>必须</strong>在UI内只依赖React，underscore。</li>
+<li><strong>必须不</strong>在UI内部任何地方使用jQuery等直接操作DOM的库</li>
+</ul>
+<h2 id="JSX书写_[jsx]">JSX书写 [jsx]</h2><blockquote>
+<p>参考：<a href="https://github.com/airbnb/javascript/" target="_blank" rel="external">Airbnb的style guide</a>。</p>
+</blockquote>
+<ul>
+<li><strong>必须</strong>命名JSX文件为.jsx.js。</li>
+<li><strong>必须</strong>使用PascalCase作为文件名。</li>
+<li><strong>必须</strong>只包含一个React Component在一个JSX文件中。</li>
+<li><strong>必须</strong>令文件名与所包含的React Component名字相同。</li>
+<li><p><strong>必须</strong>只能使用<code>React.createClass()</code>来创建一个React Component。</p>
+<blockquote>
+<p>虽然ES6 Class和pure function都可以创建React Component，<br>但ES6 Class不能使用mixin做扩展，与目前的扩展方法冲突；<br>Pure function较难掌握和管理。</p>
+</blockquote>
+</li>
+<li><p><strong>必须</strong>使用JSX语法来生成组件的DOM片段。</p>
+</li>
+<li><strong>必须不</strong>能在JSX中出现<code>React.createElement()</code>。</li>
+<li><strong>必须</strong>遵守下面示例中的DOM片段对齐方式。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo superLongParam=<span class="string">"bar"</span></span><br><span class="line">     anotherSuperLongParam=<span class="string">"baz"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  superLongParam=<span class="string">"bar"</span></span><br><span class="line">  anotherSuperLongParam=<span class="string">"baz"</span></span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if props fit in one line then keep it on the same line</span></span><br><span class="line">&lt;Foo bar=<span class="string">"bar"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// children get indented normally</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  superLongParam=<span class="string">"bar"</span></span><br><span class="line">  anotherSuperLongParam=<span class="string">"baz"</span></span><br><span class="line">&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="title">Quux</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Foo</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>在DOM片段中使用双引号<code>&quot;</code>。</p>
+<blockquote>
+<p>Why？JSX attributes <a href="http://eslint.org/docs/rules/jsx-quotes" target="_blank" rel="external">can’t contain escaped quotes</a>, so double quotes make conjunctions like <code>&quot;don&#39;t&quot;</code> easier to type.</p>
+<p>Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo bar=<span class="string">'bar'</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo bar=<span class="string">"bar"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo style=&#123;&#123; left: <span class="string">"20px"</span> &#125;&#125; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo style=&#123;&#123; left: <span class="string">'20px'</span> &#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>在自关闭标签前加一个空格。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// very bad</span></span><br><span class="line">&lt;Foo                 /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line"> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>书写propTypes，规定每个可接受属性的类型，并对propTypes加以jsdoc说明。</p>
+</li>
+<li><p><strong>必须</strong>使用camalCase来命名props。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  UserName=<span class="string">"hello"</span></span><br><span class="line">  phone_number=&#123;<span class="number">12345678</span>&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  userName=<span class="string">"hello"</span></span><br><span class="line">  phoneNumber=&#123;<span class="number">12345678</span>&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>当props的值为字面值true时，省略<code>={true}</code>。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  hidden=&#123;<span class="literal">true</span>&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  hidden</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>在DOM片段前后加一对括号<code>()</code>，当DOM片段在一行以上时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span> <span class="attribute">className</span>=<span class="value">"long body"</span> <span class="attribute">foo</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="title">MyChild</span> /&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span>;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span> <span class="attribute">className</span>=<span class="value">"long body"</span> <span class="attribute">foo</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">MyChild</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span></span><br><span class="line">  )</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good, when single line</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">const</span> body = <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>hello<span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span>&gt;</span>&#123;body&#125;<span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>将组件写成自关闭标签，当组件没有children时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo className=<span class="string">"stuff"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="title">Foo</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="tag">&lt;<span class="title">Foo</span> <span class="attribute">className</span>=<span class="value">"stuff"</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>将关闭标签另起一行，当组件有多个props时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  bar=<span class="string">"bar"</span></span><br><span class="line">  baz=<span class="string">"baz"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  bar=<span class="string">"bar"</span></span><br><span class="line">  baz=<span class="string">"baz"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>将bind handler到this的动作放到构造函数中。</p>
+<blockquote>
+<p>Why? A bind call in the render path creates a brand new function on every single render.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  onClickDiv() &#123;</span><br><span class="line">    <span class="comment">// do stuff</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.onClickDiv.bind(this)&#125;</span> /&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">class extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line"></span><br><span class="line">    this.onClickDiv = this.onClickDiv.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onClickDiv() &#123;</span><br><span class="line">    // do stuff</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return <span class="tag">&lt;<span class="title">div</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.onClickDiv&#125;</span> /&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>以如下的顺序排列JSX文件中的方法。</p>
+<ol>
+<li><code>displayName</code></li>
+<li><code>propTypes</code></li>
+<li><code>contextTypes</code></li>
+<li><code>childContextTypes</code></li>
+<li><code>mixins</code></li>
+<li><code>statics</code></li>
+<li><code>defaultProps</code></li>
+<li><code>getDefaultProps</code></li>
+<li><code>getInitialState</code></li>
+<li><code>getChildContext</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>componentDidMount</code></li>
+<li><code>componentWillReceiveProps</code></li>
+<li><code>shouldComponentUpdate</code></li>
+<li><code>componentWillUpdate</code></li>
+<li><code>componentDidUpdate</code></li>
+<li><code>componentWillUnmount</code></li>
+<li><em>clickHandlers or eventHandlers</em> like <code>onClickSubmit()</code> or <code>onChangeDescription()</code></li>
+<li><em>getter methods for <code>render</code></em> like <code>getSelectReason()</code> or <code>getFooterContent()</code></li>
+<li><em>Optional render methods</em> like <code>renderNavigation()</code> or <code>renderProfilePicture()</code></li>
+<li><code>render</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="更多的通用组件规范_[general-guide]">更多的通用组件规范 [general-guide]</h2><p><em>[基本的JSX书写规范] (#jsx-jsx)基础上，更多的通用的React组件开发规范。</em></p>
+<ul>
+<li><strong>必须</strong>将所有UI组件实现为[Pure Renderer] (<a href="https://facebook.github.io/react/docs/pure-render-mixin.html)。" target="_blank" rel="external">https://facebook.github.io/react/docs/pure-render-mixin.html)。</a></li>
+<li><strong>必须</strong>在props中存放所有外部导入的配置，包括显示控制参数、显示数据源、当前值（如果是input类型组件）、回调方法等。state相同时，对于一个特定的props，对应的组件展现结果唯一。</li>
+<li><strong>必须</strong>在state中存放组件运行期的状态，如输入框是否通过了校验、鼠标是否悬浮在按钮上等。props相同时，对于一组特定的state，对应的组件展现效果唯一。</li>
+<li><strong>不应该</strong>在state中存在[通过props运算来的属性] (<a href="https://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html)。" target="_blank" rel="external">https://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html)。</a></li>
+<li><strong>建议</strong>父子关系的组件间传递props时，使用[rest-spread语法] (<a href="https://facebook.github.io/react/docs/transferring-props.html)。" target="_blank" rel="external">https://facebook.github.io/react/docs/transferring-props.html)。</a></li>
+<li><strong>必须</strong>仅在实例化生命周期中绑定window或body事件。</li>
+<li><strong>必须</strong>在销毁期生命周期中解绑window或body事件。</li>
+<li><strong>必须不</strong>允许在运行期生命周期中声明表达式函数。bind函数也不允许。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">render() &#123;</span><br><span class="line">    <span class="keyword">var</span> cleverFunction = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&#123;</span><br><span class="line">    cleverFunction() &#123;&#125;,</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// just use this.cleverFunction</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>不建议</strong>在运行期生命周期中使用时间复杂度O(n<sup>2</sup>)及以上阶的算法。</li>
+<li><strong>必须不</strong>允许出现观察者模式，如自定义<code>addEventListener</code>方法，或<code>on</code>, <code>fire</code>等。</li>
+<li><strong>必须</strong>只能通过以下2种方法设置组件内部状态：<ul>
+<li>通过父组件的<code>render</code>方法，改变子组件的props。</li>
+<li>通过子组件的<code>setState</code>方法。</li>
+</ul>
+</li>
+<li><strong>必须不</strong>允许为组件提供<code>setXXX</code>方法来改变其内部状态，除非该<code>setXXX</code>方法中仅包含一个<code>setState</code>调用，且完成了一个充分复杂的state转换。</li>
+<li><strong>必须</strong>为所有回调在<code>getDefaultProps</code>给出空函数默认值<code>_.noop</code>。</li>
+<li><strong>可以</strong>提供与组件内部数据结构紧密相关的操作方法。这些方法可以实现为一个纯函数，即只依赖其所有的参数来得到其结果。这些方法可以放在组件的<code>static</code>域中。</li>
+</ul>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/14/性能监控的95分位值意义/" rel="next">性能监控的95分位值意义</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/weixin.jpg" alt="Yao Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Yao Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">前端修炼之路</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#部门FE_React_组件开发规范"><span class="nav-number">1.</span> <span class="nav-text">部门FE React 组件开发规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#适用范围"><span class="nav-number">1.1.</span> <span class="nav-text">适用范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求"><span class="nav-number">1.2.</span> <span class="nav-text">要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念_[basic-concepts]"><span class="nav-number">1.3.</span> <span class="nav-text">基本概念 [basic-concepts]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心依赖_[deps]（针对内部UI库）"><span class="nav-number">1.4.</span> <span class="nav-text">核心依赖 [deps]（针对内部UI库）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX书写_[jsx]"><span class="nav-number">1.5.</span> <span class="nav-text">JSX书写 [jsx]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多的通用组件规范_[general-guide]"><span class="nav-number">1.6.</span> <span class="nav-text">更多的通用组件规范 [general-guide]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">1.7.</span> <span class="nav-text">微信公众号</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yao Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

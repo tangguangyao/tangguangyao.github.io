@@ -165,6 +165,226 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/17/React组内开发规范/" itemprop="url">
+                React组内开发规范
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-17T17:03:16+08:00" content="2016-03-17">
+            2016-03-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><img src="/img/res/codeStyle.jpg" alt="React组内开发规范"></p>
+<p>下面是我们部门总结的内部开发规范（试行版本），欢迎提意见。</p>
+<h1 id="部门FE_React_组件开发规范">部门FE React 组件开发规范</h1><h2 id="适用范围">适用范围</h2><p>部门FE 所有基于React开发的（包含fcui2）组件，欢迎提意见。</p>
+<h2 id="要求">要求</h2><ul>
+<li>必须：表示绝对要求这样做。</li>
+<li>必须不：表示绝对不要求这样做。</li>
+<li>应该/建议：表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。</li>
+<li>应该不/不建议：表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。</li>
+<li>可以：表示这个要求完全是可选的，你可以这样做，也可以不这样做。</li>
+</ul>
+<h2 id="基本概念_[basic-concepts]">基本概念 [basic-concepts]</h2><ul>
+<li>实例化生命周期<ul>
+<li><code>getDefaultProps</code></li>
+<li><code>getInitialState</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>render</code></li>
+<li><code>componentDidMount</code>    </li>
+</ul>
+</li>
+<li>更新期生命周期<ul>
+<li><code>getInitialState</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>render</code></li>
+<li><code>componentDidMount</code>   </li>
+</ul>
+</li>
+<li>运行期生命周期<ul>
+<li><code>componentWillReceiveProps</code></li>
+<li><code>shouldComponentUpdate</code></li>
+<li><code>componentWillUpdate</code></li>
+<li><code>render</code></li>
+<li><code>componentDidUpdate</code></li>
+</ul>
+</li>
+<li>销毁期生命周期<ul>
+<li><code>componentWillUnmount</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="核心依赖_[deps]（针对内部UI库）">核心依赖 [deps]（针对内部UI库）</h2><ul>
+<li><strong>必须</strong>在UI内只依赖React，underscore。</li>
+<li><strong>必须不</strong>在UI内部任何地方使用jQuery等直接操作DOM的库</li>
+</ul>
+<h2 id="JSX书写_[jsx]">JSX书写 [jsx]</h2><blockquote>
+<p>参考：<a href="https://github.com/airbnb/javascript/" target="_blank" rel="external">Airbnb的style guide</a>。</p>
+</blockquote>
+<ul>
+<li><strong>必须</strong>命名JSX文件为.jsx.js。</li>
+<li><strong>必须</strong>使用PascalCase作为文件名。</li>
+<li><strong>必须</strong>只包含一个React Component在一个JSX文件中。</li>
+<li><strong>必须</strong>令文件名与所包含的React Component名字相同。</li>
+<li><p><strong>必须</strong>只能使用<code>React.createClass()</code>来创建一个React Component。</p>
+<blockquote>
+<p>虽然ES6 Class和pure function都可以创建React Component，<br>但ES6 Class不能使用mixin做扩展，与目前的扩展方法冲突；<br>Pure function较难掌握和管理。</p>
+</blockquote>
+</li>
+<li><p><strong>必须</strong>使用JSX语法来生成组件的DOM片段。</p>
+</li>
+<li><strong>必须不</strong>能在JSX中出现<code>React.createElement()</code>。</li>
+<li><strong>必须</strong>遵守下面示例中的DOM片段对齐方式。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo superLongParam=<span class="string">"bar"</span></span><br><span class="line">     anotherSuperLongParam=<span class="string">"baz"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  superLongParam=<span class="string">"bar"</span></span><br><span class="line">  anotherSuperLongParam=<span class="string">"baz"</span></span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if props fit in one line then keep it on the same line</span></span><br><span class="line">&lt;Foo bar=<span class="string">"bar"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// children get indented normally</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  superLongParam=<span class="string">"bar"</span></span><br><span class="line">  anotherSuperLongParam=<span class="string">"baz"</span></span><br><span class="line">&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="title">Quux</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Foo</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>在DOM片段中使用双引号<code>&quot;</code>。</p>
+<blockquote>
+<p>Why？JSX attributes <a href="http://eslint.org/docs/rules/jsx-quotes" target="_blank" rel="external">can’t contain escaped quotes</a>, so double quotes make conjunctions like <code>&quot;don&#39;t&quot;</code> easier to type.</p>
+<p>Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo bar=<span class="string">'bar'</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo bar=<span class="string">"bar"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo style=&#123;&#123; left: <span class="string">"20px"</span> &#125;&#125; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo style=&#123;&#123; left: <span class="string">'20px'</span> &#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>在自关闭标签前加一个空格。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// very bad</span></span><br><span class="line">&lt;Foo                 /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line"> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>书写propTypes，规定每个可接受属性的类型，并对propTypes加以jsdoc说明。</p>
+</li>
+<li><p><strong>必须</strong>使用camalCase来命名props。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  UserName=<span class="string">"hello"</span></span><br><span class="line">  phone_number=&#123;<span class="number">12345678</span>&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  userName=<span class="string">"hello"</span></span><br><span class="line">  phoneNumber=&#123;<span class="number">12345678</span>&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>当props的值为字面值true时，省略<code>={true}</code>。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  hidden=&#123;<span class="literal">true</span>&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  hidden</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>在DOM片段前后加一对括号<code>()</code>，当DOM片段在一行以上时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span> <span class="attribute">className</span>=<span class="value">"long body"</span> <span class="attribute">foo</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="title">MyChild</span> /&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span>;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span> <span class="attribute">className</span>=<span class="value">"long body"</span> <span class="attribute">foo</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">MyChild</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span></span><br><span class="line">  )</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good, when single line</span></span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">const</span> body = <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>hello<span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">MyComponent</span>&gt;</span>&#123;body&#125;<span class="tag">&lt;/<span class="title">MyComponent</span>&gt;</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>将组件写成自关闭标签，当组件没有children时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo className=<span class="string">"stuff"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="title">Foo</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="tag">&lt;<span class="title">Foo</span> <span class="attribute">className</span>=<span class="value">"stuff"</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须</strong>将关闭标签另起一行，当组件有多个props时。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  bar=<span class="string">"bar"</span></span><br><span class="line">  baz=<span class="string">"baz"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&lt;Foo</span><br><span class="line">  bar=<span class="string">"bar"</span></span><br><span class="line">  baz=<span class="string">"baz"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>将bind handler到this的动作放到构造函数中。</p>
+<blockquote>
+<p>Why? A bind call in the render path creates a brand new function on every single render.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  onClickDiv() &#123;</span><br><span class="line">    <span class="comment">// do stuff</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.onClickDiv.bind(this)&#125;</span> /&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">class extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line"></span><br><span class="line">    this.onClickDiv = this.onClickDiv.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onClickDiv() &#123;</span><br><span class="line">    // do stuff</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return <span class="tag">&lt;<span class="title">div</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.onClickDiv&#125;</span> /&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>必须</strong>以如下的顺序排列JSX文件中的方法。</p>
+<ol>
+<li><code>displayName</code></li>
+<li><code>propTypes</code></li>
+<li><code>contextTypes</code></li>
+<li><code>childContextTypes</code></li>
+<li><code>mixins</code></li>
+<li><code>statics</code></li>
+<li><code>defaultProps</code></li>
+<li><code>getDefaultProps</code></li>
+<li><code>getInitialState</code></li>
+<li><code>getChildContext</code></li>
+<li><code>componentWillMount</code></li>
+<li><code>componentDidMount</code></li>
+<li><code>componentWillReceiveProps</code></li>
+<li><code>shouldComponentUpdate</code></li>
+<li><code>componentWillUpdate</code></li>
+<li><code>componentDidUpdate</code></li>
+<li><code>componentWillUnmount</code></li>
+<li><em>clickHandlers or eventHandlers</em> like <code>onClickSubmit()</code> or <code>onChangeDescription()</code></li>
+<li><em>getter methods for <code>render</code></em> like <code>getSelectReason()</code> or <code>getFooterContent()</code></li>
+<li><em>Optional render methods</em> like <code>renderNavigation()</code> or <code>renderProfilePicture()</code></li>
+<li><code>render</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="更多的通用组件规范_[general-guide]">更多的通用组件规范 [general-guide]</h2><p><em>[基本的JSX书写规范] (#jsx-jsx)基础上，更多的通用的React组件开发规范。</em></p>
+<ul>
+<li><strong>必须</strong>将所有UI组件实现为[Pure Renderer] (<a href="https://facebook.github.io/react/docs/pure-render-mixin.html)。" target="_blank" rel="external">https://facebook.github.io/react/docs/pure-render-mixin.html)。</a></li>
+<li><strong>必须</strong>在props中存放所有外部导入的配置，包括显示控制参数、显示数据源、当前值（如果是input类型组件）、回调方法等。state相同时，对于一个特定的props，对应的组件展现结果唯一。</li>
+<li><strong>必须</strong>在state中存放组件运行期的状态，如输入框是否通过了校验、鼠标是否悬浮在按钮上等。props相同时，对于一组特定的state，对应的组件展现效果唯一。</li>
+<li><strong>不应该</strong>在state中存在[通过props运算来的属性] (<a href="https://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html)。" target="_blank" rel="external">https://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html)。</a></li>
+<li><strong>建议</strong>父子关系的组件间传递props时，使用[rest-spread语法] (<a href="https://facebook.github.io/react/docs/transferring-props.html)。" target="_blank" rel="external">https://facebook.github.io/react/docs/transferring-props.html)。</a></li>
+<li><strong>必须</strong>仅在实例化生命周期中绑定window或body事件。</li>
+<li><strong>必须</strong>在销毁期生命周期中解绑window或body事件。</li>
+<li><strong>必须不</strong>允许在运行期生命周期中声明表达式函数。bind函数也不允许。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">render() &#123;</span><br><span class="line">    <span class="keyword">var</span> cleverFunction = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">&#123;</span><br><span class="line">    cleverFunction() &#123;&#125;,</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// just use this.cleverFunction</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>不建议</strong>在运行期生命周期中使用时间复杂度O(n<sup>2</sup>)及以上阶的算法。</li>
+<li><strong>必须不</strong>允许出现观察者模式，如自定义<code>addEventListener</code>方法，或<code>on</code>, <code>fire</code>等。</li>
+<li><strong>必须</strong>只能通过以下2种方法设置组件内部状态：<ul>
+<li>通过父组件的<code>render</code>方法，改变子组件的props。</li>
+<li>通过子组件的<code>setState</code>方法。</li>
+</ul>
+</li>
+<li><strong>必须不</strong>允许为组件提供<code>setXXX</code>方法来改变其内部状态，除非该<code>setXXX</code>方法中仅包含一个<code>setState</code>调用，且完成了一个充分复杂的state转换。</li>
+<li><strong>必须</strong>为所有回调在<code>getDefaultProps</code>给出空函数默认值<code>_.noop</code>。</li>
+<li><strong>可以</strong>提供与组件内部数据结构紧密相关的操作方法。这些方法可以实现为一个纯函数，即只依赖其所有的参数来得到其结果。这些方法可以放在组件的<code>static</code>域中。</li>
+</ul>
+<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/14/性能监控的95分位值意义/" itemprop="url">
                 性能监控的95分位值意义
               </a>
@@ -197,7 +417,7 @@
 
       
         
-          <span itemprop="articleBody"><p>在<a href="http://tangguangyao.github.io/2016/03/01/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E7%BD%91%E7%AB%99%E9%A6%96%E9%A1%B5%E6%80%A7%E8%83%BD%E7%9A%84/">我是如何优化网站首页性能的</a>一篇文章中提到过95分位值的概念。</p>
+          <span itemprop="articleBody"><p>在<a href="http://tangguangyao.github.io/2016/03/01/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E7%BD%91%E7%AB%99%E9%A6%96%E9%A1%B5%E6%80%A7%E8%83%BD%E7%9A%84/">我是如何优化网站首页性能的</a>一篇文章中提到过95分位值的概念。下面从最近实际数据看看95分位值对于性能优化的参考价值。</p>
 <h2 id="真实数据">真实数据</h2><p>最近优化有了一些效果，就正好借着具体的实例数据来看看95分位值的意义。  </p>
 <p>看下面一张图：  </p>
 <p>性能平均值  </p>
@@ -1108,93 +1328,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/01/05/前端发展论战/" itemprop="url">
-                前端发展论战
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-01-05T13:54:45+08:00" content="2016-01-05">
-            2016-01-05
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/topics.jpg" alt="前端发展论战"></p>
-<h2 id="最近很热的讨论">最近很热的讨论</h2><blockquote>
-<p>关于『真阿当』对目前流行前端技术的批判 <a href="https://www.zhihu.com/question/38924821" target="_blank" rel="external">https://www.zhihu.com/question/38924821</a></p>
-<p>Winter - 我眼中的前端框架jQuery，Angular，React，Vue——以及我看前端架构<a href="http://weibo.com/p/1001603924826640228007" target="_blank" rel="external">http://weibo.com/p/1001603924826640228007</a></p>
-<p>关于前端工具变化过快的讨论 <a href="https://www.zhihu.com/question/34449620" target="_blank" rel="external">https://www.zhihu.com/question/34449620</a></p>
-<p>我感觉到的前端变化 <a href="http://bbear.me/wo-suo-gan-jue-dao-de-qian-duan-bian-hua/" target="_blank" rel="external">http://bbear.me/wo-suo-gan-jue-dao-de-qian-duan-bian-hua/</a></p>
-</blockquote>
-<p>上面几篇文章对于前端的发展讨论较多。</p>
-<h2 id="前端变化过快的看法">前端变化过快的看法</h2><p>首先，不得不承认前端变化确实太快，对于我而言，react还在了解，没有真正的落地业务时，vue又开始兴起，马上angular2可能又会开始火。。。 </p>
-<p>变化如此之快，我们该如何面对？  </p>
-<p>第一，我觉得首先需要避免盲目追新，如果对于新框架只是简单的写写demo，意义是不大的。</p>
-<p>为什么了？如果没有复杂的项目支撑，你会踩不到框架的坑，你不会体会到框架哪里设计的巧妙，哪里设计的不足。你也很少有机会为了研究巧妙的实现去看部分的源码。而这个过程其实是使用框架的精髓。  </p>
-<p>第二，更加深入的加强基础技能，框架会不断更新，更新也会越来越快，只有不断强化一些基础技能，才能够很快的去了解新框架，达到新框架即学即用的能力。</p>
-<p>如何提高基础技能呢？就研究下你现在用的框架，或者找一个你觉得很好的框架，深入研究下他的设计思路，源码等等，反复研究，反复体会，花上3个月深入研究一个。当你研究透了，你在看其他框架，相信我，你看的角度会变。</p>
-<h2 id="我们对于新技术如何使用">我们对于新技术如何使用</h2><p>现在团队使用的还是百度自己一套mvc框架，但是当我们在尝试新技术时，我们其实可以很快的即学即用的，es6，react，vue这些的使用并没有什么障碍。</p>
-<p>即使我们目前工作都是集中在pc端，我们团队的成员也是可以迅速上手移动端的开发的，我理解很大一部分因素都是基础能力比较扎实。</p>
-<p>所以我感觉，请放心，如果没有用到最新的技术，不要害怕。</p>
-<h2 id="前端的发展">前端的发展</h2><p>个人感觉未来的前端更加偏向解决方案的方式，一个合格的架构师能够根据业务，以及开发成员的状态，选择最合适的开发方式，合作方式。</p>
-<p>未来的框架，工程化方案会越来越多，你需要做到的是，能够即插即用的能力。在面对一个新框架时，能够快速判断出框架是否适合于业务，是否能提高开发效率。</p>
-<p>回到阿当的微博</p>
-<blockquote>
-<p>sass和less最近是不是被提起得少了?backbone呢?响应式设计呢?今天说得起劲的angular和rect，是不是半年后也逐渐消停了呢?一切不接地气的性价比不高的伪高端，都会消停的。我相信jquery还能坚挺5年，不相信rect和angular能热过两年。踩jquery的一直不会停，新时髦也不会停。话放在这儿，两年后咱看看。</p>
-</blockquote>
-<p>我理解，大家不要把注意力放到各种各样的框架上，打好基础，什么新框架都能hold住，岂不是最好。</p>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1233,7 +1366,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
