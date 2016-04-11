@@ -39,30 +39,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得以下内容都摘自同事使用后的一些感想
-心得一
-
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
+<meta name="description" content="之前谈到过很多次数据驱动的理解，这次通过实际项目检验了一下自己的想法。
+相关文件《前端数据驱动的价值》  
+《前端数据驱动的陷阱》  
+之前可以说是纸上谈兵，都是写写简单demo，没有实战过，这次分享一下实战的经验。
+项目详设详设的重要性对于复杂一点的项目，做一个详细设计非常重要。有人会疑惑，前端还需要详设吗？根据我的经验，详设非常重要，非常体现能力。对于一个新人，详设能够给开发做一些提前准备。对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react融合进系统的体验">
-<meta property="og:url" content="http://tangguangyao.github.io/2016/02/28/react融合进系统的体验/index.html">
+<meta property="og:title" content="数据驱动模式借助react的实践探索">
+<meta property="og:url" content="http://tangguangyao.github.io/2016/04/07/数据驱动模式借助react的实践探索/index.html">
 <meta property="og:site_name" content="Yao's 前端修炼之路">
-<meta property="og:description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得以下内容都摘自同事使用后的一些感想
-心得一
-
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
-<meta property="og:image" content="http://tangguangyao.github.io/img/res/react.jpg">
-<meta property="og:image" content="http://tangguangyao.github.io/img/weixin.jpg">
-<meta property="og:updated_time" content="2016-02-29T12:11:05.000Z">
+<meta property="og:description" content="之前谈到过很多次数据驱动的理解，这次通过实际项目检验了一下自己的想法。
+相关文件《前端数据驱动的价值》  
+《前端数据驱动的陷阱》  
+之前可以说是纸上谈兵，都是写写简单demo，没有实战过，这次分享一下实战的经验。
+项目详设详设的重要性对于复杂一点的项目，做一个详细设计非常重要。有人会疑惑，前端还需要详设吗？根据我的经验，详设非常重要，非常体现能力。对于一个新人，详设能够给开发做一些提前准备。对">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/redux.jpeg">
+<meta property="og:image" content="http://tangguangyao.github.io/img/res/redux2.png">
+<meta property="og:updated_time" content="2016-04-11T12:52:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react融合进系统的体验">
-<meta name="twitter:description" content="引入的背景在一个庞大的商业系统中引入react这种数据驱动的模式。希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。
-同事实践的心得以下内容都摘自同事使用后的一些感想
-心得一
-
-从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组">
+<meta name="twitter:title" content="数据驱动模式借助react的实践探索">
+<meta name="twitter:description" content="之前谈到过很多次数据驱动的理解，这次通过实际项目检验了一下自己的想法。
+相关文件《前端数据驱动的价值》  
+《前端数据驱动的陷阱》  
+之前可以说是纸上谈兵，都是写写简单demo，没有实战过，这次分享一下实战的经验。
+项目详设详设的重要性对于复杂一点的项目，做一个详细设计非常重要。有人会疑惑，前端还需要详设吗？根据我的经验，详设非常重要，非常体现能力。对于一个新人，详设能够给开发做一些提前准备。对">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -74,7 +74,7 @@
 
 
 
-  <title> react融合进系统的体验 | Yao's 前端修炼之路 </title>
+  <title> 数据驱动模式借助react的实践探索 | Yao's 前端修炼之路 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -178,7 +178,7 @@
           
           
             
-              react融合进系统的体验
+              数据驱动模式借助react的实践探索
             
           
         </h1>
@@ -187,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2016-02-28T22:22:59+08:00" content="2016-02-28">
-            2016-02-28
+          <time itemprop="dateCreated" datetime="2016-04-07T20:24:09+08:00" content="2016-04-07">
+            2016-04-07
           </time>
         </span>
 
@@ -207,51 +207,43 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="/img/res/react.jpg" alt="react融合进系统的体验"></p>
-<h2 id="引入的背景">引入的背景</h2><p>在一个庞大的商业系统中引入react这种数据驱动的模式。<br>希望能够一点点重构去替换以前的模块，逐步的将系统重要部分底层框架替换成react。</p>
-<h2 id="同事实践的心得">同事实践的心得</h2><p>以下内容都摘自同事使用后的一些感想</p>
-<p>心得一</p>
-<blockquote>
-<p>从过程化开发向面向数据的开发转化。后者要求开发者对数据结构和算法和业务需求本身要有理解。React开发的核心是设计一套数据结构使其既方便业务用户界面的展示又能方便的实现业务功能——表现为一组操作数据结构的算法。这与传统的前端开发很不一样，偏激一点的说，相比以前用$搬弄DOM节点，我觉得这样的前端开发更“严肃”了。我希望能够推动团队迎接，适应，实现这个变化，这对于一个技术人员，而不仅仅是前端技术人员都是有益的。</p>
-</blockquote>
-<p>心得二</p>
-<blockquote>
-<p>1．React单向数据流原则是核心中的核心，即整个系统中只存在自上至下的数据流，反向数据流通过绑定自动完成，不存在兄弟间横向数据流。</p>
-<p>2．控制数据流属于最强的开发规范，必定会给开发业务的同学带来巨大的思维挑战，从系统整体质量和维护性来看，必须牺牲业务开发的编程自由度。目前就是自由度太高，导致出现五花八门的业务实现，代码根本没法看。</p>
-</blockquote>
-<p>心得三</p>
-<blockquote>
-<p>其实之前我们也是数据驱动视图的，生命周期时用初始化数据渲染了视图，自然这时有了一层数据到视图的映射逻辑关系。数据改变之后绑定视图映射关系会写在model onchange handler中。</p>
-<p>这样会有一些问题：</p>
-<p>1.数据到设图的映射逻辑关系可能写了两遍，而且会发散在template, action, view等各个地方</p>
-<p>2.初始化时数据和视图的关系是同步的，但是初始化之后这两者就可能就不一致，很可能handler没写用jquery直接操作DOM了。</p>
-<p>初级阶段觉得React的好处是，把映射关系收敛到render方法中，有一层封装让我们直接操作DOM变得更难。数据如果在任何时候都能表达视图，是有很多事情可以想象的。</p>
-</blockquote>
-<p>心得四</p>
-<blockquote>
-<p>我们需要在React方面思考的技术问题，有下面这些点：</p>
-<p>UI组件应当有稳定一致的开发规范。</p>
-<p>UI组件应当有充分的UT 。（并尝试是否可以为业务组件加UT）</p>
-<p>UI组件乃至业务组件内的数据结构是否应该有一个统一的模式（如immutable或者更轻量的模式），使得对于数据结构的任意位置的修改，都可以有事件冒出做一些统一的处理。</p>
-<p>多个兄弟的组件之间的通信有什么范式？</p>
-<p>父子组件之间双向通信有什么范式？</p>
-<p>目前实现了ER-React，即一个React模块对外表现为一个ER模块。未来在此基础上，将一个ER-React模块的父模块实现为React后，是要脱掉ER-React的ER，变为React-React呢？还是实现为React-ER-React呢？</p>
-<p>按照React的开发模式，随着我们自下而上的重构业务，很自然的，下面的组件的“Model”部分会逐渐“上浮“与上层的组件的Model合并成为一个更大的Model。如此往复，我们自然会形成“整个应用只有一个大Model”的局面。我们需要在这一切发生之前想明白这个“大Model”内部要如何组织，会以何种形式存在，并以何种形式和各个组件交互。</p>
-<p>类似，从View的角度看，我们最终会形成“整个应用就是一个大的React组件”。对于每一个业务动作，整个应用都会重新render。这个render的性能迟早我们需要关心。如何控制这个render的性能使之不会影响用户体验？</p>
-</blockquote>
-<h2 id="react引入的意义">react引入的意义</h2><h3 id="活力">活力</h3><p>引入后我觉得最重要的成就就是让一个系统拥有升级换代的活力。就像注入新鲜血液一样，系统能够跟上时代的变化。  </p>
-<p>对于一个庞大的商业系统而言，系统底层的稳定性是一个很重要的点。不过如果能在在系统上面做一些侵入性的改造，让一个稳定的系统充满活力还是很有意义的。  </p>
-<p>首先对于业务开发人员，很明显，他们在原有系统上面开发了这么久以后，对于新技术的引入是非常欢迎的，他们是非常乐意去学习新技术的。  </p>
-<h3 id="提高开发效率">提高开发效率</h3><p>这个是写给老板们看的，花这么大力气去引入一个新技术对于公司的收益就是提高开发人员的效率。  </p>
-<p>当然这个提高的效率的前提是对于开发人员有更高的要求的。</p>
-<h3 id="提高系统的健壮性">提高系统的健壮性</h3><p>react的模式是可以在某种程度上面融入UT的。<br>以及一个很好的数据驱动模式维护性和扩展性是比现有系统强的。</p>
-<h3 id="回放用户行为">回放用户行为</h3><p>数据驱动好处就是可以通过数据记录用户的页面状态，用数据就能恢复页面快照，需要分析用户行为，只需要收集到页面的数据变化流即可。</p>
-<h2 id="react引入的挑战">react引入的挑战</h2><ol>
-<li>数据驱动最合适的是从根部重构。但是目前我们只能从叶子模块一点点往根部重构。其实是一个反向过程。  </li>
-<li>数据驱动模式对于开发人员要求比较高，能不能设计一种模式降低要求，避免出现不同水平的开发者开发出层次不齐的业务模块。</li>
-<li>引入新的模式一个缺点就是以前模式成为了技术债务。因为一个系统存在多种模式，意味着新人学习成本会增加很多。多种模式的共存，如果维护不好，也会出现一种很混乱的现象。</li>
+        <span itemprop="articleBody"><p>之前谈到过很多次数据驱动的理解，这次通过实际项目检验了一下自己的想法。</p>
+<h2 id="相关文件">相关文件</h2><p><a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>  </p>
+<p><a href="http://tangguangyao.github.io/2016/02/17/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%99%B7%E9%98%B1/">《前端数据驱动的陷阱》</a>  </p>
+<p>之前可以说是纸上谈兵，都是写写简单demo，没有实战过，这次分享一下实战的经验。</p>
+<h2 id="项目详设">项目详设</h2><h3 id="详设的重要性">详设的重要性</h3><p>对于复杂一点的项目，做一个详细设计非常重要。有人会疑惑，前端还需要详设吗？<br>根据我的经验，详设非常重要，非常体现能力。<br>对于一个新人，详设能够给开发做一些提前准备。<br>对于一个老手，详设可以提前预见一些隐藏的坑。<br>对于一个高手，详设需要达到随便给一个有点经验的人，都能直接写代码。</p>
+<p>在某种程度上，详设在整个开发周期中占得比重越大，能力就越强。<br>新人可能只占5%，高手肯能占到50%以上（架构完全想清楚了，然后剩下用代码去实践设计）。</p>
+<h3 id="react详设的步骤">react详设的步骤</h3><ol>
+<li>吃透业务，这个不管用什么选型都很重要</li>
+<li>顶层数据结构，model必须梳理清晰，model需要能够完整的覆盖业务</li>
+<li>业务React Component中每一个的props，state布局，props，state中每一项的用处，计算方式，与顶层数据结构的映射函数</li>
+<li>业务React Component中每一个的Action对于的model改变</li>
+<li>model上面添加和后端的关联</li>
 </ol>
-<h2 id="微信公众号">微信公众号</h2><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
+<p>基本上上面梳理清楚了，后面就可以直接写代码了。</p>
+<h2 id="道和术">道和术</h2><p>网上看到很多讲解redux+react的实践思路，设计模型。感觉都是实践方式上面的讲解。  </p>
+<p>比较经典的一张图：<br><img src="/img/res/redux.jpeg" alt="redux"></p>
+<p>今天我这边想换一种思路去解释他。  </p>
+<h3 id="数据驱动+react实践的一个前提">数据驱动+react实践的一个前提</h3><p>相信react的性能！<br>相信react的性能！<br>相信react的性能！  </p>
+<h3 id="快照概念">快照概念</h3><p>model能力超级强大，请记住，每个model都必须能够对应一种页面状态（能够像恢复快照一样）。model和页面状态存在一种一一对应的关系。  </p>
+<p>如下图：  </p>
+<p><img src="/img/res/redux2.png" alt="redux">  </p>
+<p>每一个M都和下面的页面对应，用M1可以render出第一个页面，M2可以render第二个页面。  </p>
+<p>当用户有交互行为时，通过action改变M1到M2，这时大家注意了，慢动作：用户对M1的页面一做了一个操作（action）让M1产生了改变M’,这时M1变成了M2,对应的页面也由页面一<strong>刷新</strong>成了M2对应的页面二。同理，M2通过交互变成了M3,页面也会<strong>刷新</strong>成M3对应的页面三。  </p>
+<p>注意我强调了<strong>刷新</strong>两个字。  </p>
+<p>核心就是页面的行为使得数据改变，数据渲染出相应的页面。  </p>
+<p>这个就是我所理解的数据驱动。</p>
+<p>为了达到上面目的，其实我们有意忽略了性能问题。就是用户每次操作都会重新渲染数据，生成对应页面。</p>
+<p>那么性能问题如何解决，这时react就出场了，性能上，我们需要借助react的虚拟<code>dom</code>，去比较每一次页面修改的最小<code>diff</code>，然后重新渲染<code>diff</code>部分。所以我上面提到，你需要相信react的性能。   </p>
+<p>从上面看，代码其实可以分为两大部分：  </p>
+<ol>
+<li>render: 根据model写渲染逻辑，这部分就交给react,大家仔细看看react的生命周期，都是围绕render的</li>
+<li>change model: 根据用户的action，修改model的数据，这部分交给redux的模式</li>
+</ol>
+<h2 id="数据驱动副产物">数据驱动副产物</h2><h3 id="单元测试">单元测试</h3><p>某种程度上，前端是非常难去写单侧的，因为涉及到dom，哪怕是时间允许，单侧的使用度也不是很高。<br>对于数据驱动这种模式，至少从数据层，可以规避dom，做一层数据变化的效验（这个和写服务端单侧差不多）。然后有精力和时间，可以加一层model-render-dom逻辑的测试。</p>
+<h3 id="用户行为回放">用户行为回放</h3><p>回答上面那个图片，通过model可以记录一个页面的快照，那么如果对于单个用户，单个终端，按照时间轴记录一连串的model，我们就可以回放用户的操作行为。<br>以及利用大数据去批量分析用户行为数据。</p>
+<h2 id="数据驱动的思考">数据驱动的思考</h2><p>这种模式某种程度上，是为了提高开发效率，减少页面的复杂度（参考<a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>），减少开发的复杂度。  </p>
+<p>想想5-6年前，还是多页面时代，每个模块都是一个页面，数据都由后端去套模板。然后用户每个操作基本上都会触发一些刷新。数据驱动和有点类似，只是借用react在单页面上实现了。前端也承担了更多的数据处理工作。  </p>
 </span>
       
     </div>
@@ -263,13 +255,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/01/我是如何优化网站首页性能的/" rel="prev">我是如何优化网站首页性能的</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/17/前端数据驱动的陷阱/" rel="next">前端数据驱动的陷阱</a>
+              <a href="/2016/03/17/React组内开发规范/" rel="next">React组内开发规范</a>
             
           </div>
         </div>
@@ -373,7 +363,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入的背景"><span class="nav-number">1.</span> <span class="nav-text">引入的背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同事实践的心得"><span class="nav-number">2.</span> <span class="nav-text">同事实践的心得</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react引入的意义"><span class="nav-number">3.</span> <span class="nav-text">react引入的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#活力"><span class="nav-number">3.1.</span> <span class="nav-text">活力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高开发效率"><span class="nav-number">3.2.</span> <span class="nav-text">提高开发效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高系统的健壮性"><span class="nav-number">3.3.</span> <span class="nav-text">提高系统的健壮性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回放用户行为"><span class="nav-number">3.4.</span> <span class="nav-text">回放用户行为</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react引入的挑战"><span class="nav-number">4.</span> <span class="nav-text">react引入的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">5.</span> <span class="nav-text">微信公众号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文件"><span class="nav-number">1.</span> <span class="nav-text">相关文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目详设"><span class="nav-number">2.</span> <span class="nav-text">项目详设</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详设的重要性"><span class="nav-number">2.1.</span> <span class="nav-text">详设的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#react详设的步骤"><span class="nav-number">2.2.</span> <span class="nav-text">react详设的步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#道和术"><span class="nav-number">3.</span> <span class="nav-text">道和术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据驱动+react实践的一个前提"><span class="nav-number">3.1.</span> <span class="nav-text">数据驱动+react实践的一个前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快照概念"><span class="nav-number">3.2.</span> <span class="nav-text">快照概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动副产物"><span class="nav-number">4.</span> <span class="nav-text">数据驱动副产物</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单元测试"><span class="nav-number">4.1.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户行为回放"><span class="nav-number">4.2.</span> <span class="nav-text">用户行为回放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动的思考"><span class="nav-number">5.</span> <span class="nav-text">数据驱动的思考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

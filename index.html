@@ -165,6 +165,105 @@
           
           
             
+              <a class="post-title-link" href="/2016/04/07/数据驱动模式借助react的实践探索/" itemprop="url">
+                数据驱动模式借助react的实践探索
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-04-07T20:24:09+08:00" content="2016-04-07">
+            2016-04-07
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>之前谈到过很多次数据驱动的理解，这次通过实际项目检验了一下自己的想法。</p>
+<h2 id="相关文件">相关文件</h2><p><a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>  </p>
+<p><a href="http://tangguangyao.github.io/2016/02/17/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%99%B7%E9%98%B1/">《前端数据驱动的陷阱》</a>  </p>
+<p>之前可以说是纸上谈兵，都是写写简单demo，没有实战过，这次分享一下实战的经验。</p>
+<h2 id="项目详设">项目详设</h2><h3 id="详设的重要性">详设的重要性</h3><p>对于复杂一点的项目，做一个详细设计非常重要。有人会疑惑，前端还需要详设吗？<br>根据我的经验，详设非常重要，非常体现能力。<br>对于一个新人，详设能够给开发做一些提前准备。<br>对于一个老手，详设可以提前预见一些隐藏的坑。<br>对于一个高手，详设需要达到随便给一个有点经验的人，都能直接写代码。</p>
+<p>在某种程度上，详设在整个开发周期中占得比重越大，能力就越强。<br>新人可能只占5%，高手肯能占到50%以上（架构完全想清楚了，然后剩下用代码去实践设计）。</p>
+<h3 id="react详设的步骤">react详设的步骤</h3><ol>
+<li>吃透业务，这个不管用什么选型都很重要</li>
+<li>顶层数据结构，model必须梳理清晰，model需要能够完整的覆盖业务</li>
+<li>业务React Component中每一个的props，state布局，props，state中每一项的用处，计算方式，与顶层数据结构的映射函数</li>
+<li>业务React Component中每一个的Action对于的model改变</li>
+<li>model上面添加和后端的关联</li>
+</ol>
+<p>基本上上面梳理清楚了，后面就可以直接写代码了。</p>
+<h2 id="道和术">道和术</h2><p>网上看到很多讲解redux+react的实践思路，设计模型。感觉都是实践方式上面的讲解。  </p>
+<p>比较经典的一张图：<br><img src="/img/res/redux.jpeg" alt="redux"></p>
+<p>今天我这边想换一种思路去解释他。  </p>
+<h3 id="数据驱动+react实践的一个前提">数据驱动+react实践的一个前提</h3><p>相信react的性能！<br>相信react的性能！<br>相信react的性能！  </p>
+<h3 id="快照概念">快照概念</h3><p>model能力超级强大，请记住，每个model都必须能够对应一种页面状态（能够像恢复快照一样）。model和页面状态存在一种一一对应的关系。  </p>
+<p>如下图：  </p>
+<p><img src="/img/res/redux2.png" alt="redux">  </p>
+<p>每一个M都和下面的页面对应，用M1可以render出第一个页面，M2可以render第二个页面。  </p>
+<p>当用户有交互行为时，通过action改变M1到M2，这时大家注意了，慢动作：用户对M1的页面一做了一个操作（action）让M1产生了改变M’,这时M1变成了M2,对应的页面也由页面一<strong>刷新</strong>成了M2对应的页面二。同理，M2通过交互变成了M3,页面也会<strong>刷新</strong>成M3对应的页面三。  </p>
+<p>注意我强调了<strong>刷新</strong>两个字。  </p>
+<p>核心就是页面的行为使得数据改变，数据渲染出相应的页面。  </p>
+<p>这个就是我所理解的数据驱动。</p>
+<p>为了达到上面目的，其实我们有意忽略了性能问题。就是用户每次操作都会重新渲染数据，生成对应页面。</p>
+<p>那么性能问题如何解决，这时react就出场了，性能上，我们需要借助react的虚拟<code>dom</code>，去比较每一次页面修改的最小<code>diff</code>，然后重新渲染<code>diff</code>部分。所以我上面提到，你需要相信react的性能。   </p>
+<p>从上面看，代码其实可以分为两大部分：  </p>
+<ol>
+<li>render: 根据model写渲染逻辑，这部分就交给react,大家仔细看看react的生命周期，都是围绕render的</li>
+<li>change model: 根据用户的action，修改model的数据，这部分交给redux的模式</li>
+</ol>
+<h2 id="数据驱动副产物">数据驱动副产物</h2><h3 id="单元测试">单元测试</h3><p>某种程度上，前端是非常难去写单侧的，因为涉及到dom，哪怕是时间允许，单侧的使用度也不是很高。<br>对于数据驱动这种模式，至少从数据层，可以规避dom，做一层数据变化的效验（这个和写服务端单侧差不多）。然后有精力和时间，可以加一层model-render-dom逻辑的测试。</p>
+<h3 id="用户行为回放">用户行为回放</h3><p>回答上面那个图片，通过model可以记录一个页面的快照，那么如果对于单个用户，单个终端，按照时间轴记录一连串的model，我们就可以回放用户的操作行为。<br>以及利用大数据去批量分析用户行为数据。</p>
+<h2 id="数据驱动的思考">数据驱动的思考</h2><p>这种模式某种程度上，是为了提高开发效率，减少页面的复杂度（参考<a href="http://tangguangyao.github.io/2016/01/30/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E4%BB%B7%E5%80%BC/">《前端数据驱动的价值》</a>），减少开发的复杂度。  </p>
+<p>想想5-6年前，还是多页面时代，每个模块都是一个页面，数据都由后端去套模板。然后用户每个操作基本上都会触发一些刷新。数据驱动和有点类似，只是借用react在单页面上实现了。前端也承担了更多的数据处理工作。  </p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/17/React组内开发规范/" itemprop="url">
                 React组内开发规范
               </a>
@@ -1229,110 +1328,11 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/01/14/AMD的一道面试题/" itemprop="url">
-                AMD的一道面试题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-01-14T10:59:49+08:00" content="2016-01-14">
-            2016-01-14
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p><img src="/img/res/amd.jpg" alt="AMD的一道面试题"></p>
-<p>模块化现在应该已经成为了稍微复杂一点前端开发的标配了。在es6中，都已经支持了的模块化。  </p>
-<p>之前的面试中，一直感觉模块化AMD,CMD没有什么可以问的，不过昨天面试突然想到一个题目：<br>对于一个AMD的模式下</p>
-<p>文件<code>d.js</code>如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">	<span class="comment">// ... 很多代码</span></span><br><span class="line">	<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><code>a.js</code>,<code>b.js</code>,<code>c.js</code> 文件分别是什么时候加载的，如何加载的？</p>
-<p>题目不难</p>
-<p>答案是<code>a.js</code> 和 <code>c.js</code> 是在加载完<code>d.js</code>后就加载。<br><code>b.js</code>是在执行到这一行时异步加载的。</p>
-<p>具体分析：</p>
-<p>我没有看过<code>require.js</code>的源码，我们使用的是<code>esl.js</code>（也是一个AMD的模块加载器）,但是他们的实现原理应该差不多。</p>
-<p>我从<code>esl.js</code>的角度解读一下：</p>
-<h3 id="同步加载，异步加载">同步加载，异步加载</h3><p>首先大家需要知道AMD里面一个同步加载和异步加载的概念。</p>
-<p>从概念上面理解，同步就是当我执行到<code>require(&#39;a&#39;);</code>时，我需要同步的执行<code>a.js</code>里面的内容，也就是需要在执行到这句话时<code>a.js</code>必须已经加载好了，这样才能到达同步。</p>
-<p>而对于 <code>require([&#39;b&#39;], function (b) {});</code>,我执行到这一步时，是异步的发出请求，然后异步等待<code>b.js</code>的返回+执行。</p>
-<h3 id="同步加载的实现原理">同步加载的实现原理</h3><p>我们从概念上面理解的同步加载的原理，现在看看<code>esl.js</code>的实践。<br>这里面需要处理两个核心步骤  </p>
-<ol>
-<li>执行到<code>require(&#39;a&#39;);</code>时，<code>a.js</code>必须已经加载好了；</li>
-<li><code>a.js</code>文件里面的所有<code>require(&#39;*&#39;)</code>，也都必须加载好了，保证在执行<code>a.js</code>时，所有<code>a.js</code>依赖的同步文件都能同步执行；</li>
-</ol>
-<p>对于第一步的实现，大概原理是这样的，在加载好了<code>d.js</code>后，会正则匹配一次文件里面的同步依赖<code>require(&#39;*&#39;);</code>，例如匹配出了 <code>a.js</code>和<code>c.js</code>，然后继续加载<code>a.js</code>和<code>c.js</code>。  </p>
-<p>对于第二部，其实就是一个递归处理，直到没有下一步的依赖为止。</p>
-<h3 id="同步加载另外一种处理方法">同步加载另外一种处理方法</h3><p>上面有一部正则逻辑，可见如果使用这种方式，在执行代码前，js需要全部正则一次所有模块化代码的。这样性能是不是有一个无谓的耗损。  </p>
-<p>那么我们一般怎么处理了？  </p>
-<p>大家一般都了解过打包编译，例如在使用<code>Requirejs</code>时，线上环境的代码会经过<code>r.js</code>处理一次。  </p>
-<p>那么<code>d.js</code>文件应该会处理如下 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">define(</span><br><span class="line">	<span class="string">'path/b'</span>,</span><br><span class="line">	[<span class="string">'require'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>define方法会增加第一个和第二个参数  </p>
-<p>第一个参数是按照路径生成一个具名id<br>第二个参数是此文件所依赖的同步文件</p>
-<p>这时当模块在解析这个<code>b,js</code>文件时，发现如果存在第二个参数，就会直接解析所需依赖部分，而省去了正则这一步。  </p>
-<p>我们正则这一步转换到了打包编译中去分析，这样就省掉了浏览器加载时去正则所有AMD文件这一步。  </p>
-<p>那么为什么我们不在开发环境中直接使用<code>[&#39;require&#39;, &#39;a&#39;, &#39;b&#39;]</code>方式，我理解目的是为了提高开发便捷性，我们不需要再增加一个<code>require(&#39;*&#39;)</code>都在中括号内配置一次，同样删除时也不用去删掉配置。  </p>
-<p>因为这一步完全可以在编译时处理。  </p>
-<h3 id="打包编译的延生">打包编译的延生</h3><p>不知道大家有没有看过编译后的代码和开发环境代码的区别，对于这个<code>b.js</code>文件，编译后应该是： </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">define(</span><br><span class="line">	<span class="string">'path/a'</span>,</span><br><span class="line">	[<span class="string">'require'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">define(</span><br><span class="line">	<span class="string">'path/c'</span>,</span><br><span class="line">	[<span class="string">'require'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">define(</span><br><span class="line">	<span class="string">'path/b'</span>,</span><br><span class="line">	[<span class="string">'require'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>],</span><br><span class="line">	<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>([<span class="string">'b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;&#125;);</span><br><span class="line">		<span class="comment">// ... 很多代码</span></span><br><span class="line">		<span class="built_in">require</span>(<span class="string">'c'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>上面可见，<code>a.js</code>和<code>c.js</code>这两个文件被合并到了<code>d.js</code>中，所有文件都加上了具名id。而且这个id的生成规则是更具路径生成的。  </p>
-<p>而我们异步加载的<code>b.js</code>文件就没有被打包进来。这是因为我们期望<code>b.js</code>是懒加载的，当使用时在加载，这样也能达到按需加载的目的。</p>
-<h3 id="微信公众号">微信公众号</h3><p><img src="/img/weixin.jpg" alt="前端修炼"></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </nav>
 
  </div>
@@ -1366,7 +1366,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
